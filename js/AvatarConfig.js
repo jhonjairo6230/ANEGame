@@ -108,11 +108,13 @@ RutaEspectral.AvatarConfig.prototype = {
         hairSelected = hair0;
         title = game.add.text(400, 17, 'Arma tu personaje', {
             fontSize: '40px',
-            fill: '#40abed'
+            fill: '#40abed',
+            font: 'Myriad pro'
         });
         subtitle = game.add.text(500, 60, 'comencemos nuestra aventura', {
             fontSize: '20px',
-            fill: '#fff'
+            fill: '#fff',
+            font: 'Myriad pro'
         });
         this.optionsBtns();
     },

@@ -1,0 +1,2 @@
+var game;
+var RutaEspectral = {};

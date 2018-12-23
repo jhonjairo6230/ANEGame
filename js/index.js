@@ -1,13 +1,71 @@
 var player;
 var title;
 var subtitle;
-var initPosBtnX = 400,
-    initPosBtnY = 110,
-    distanceBtn = 80,
-    distanceSectionBtn = 5;
+var buttonPosition = {
+    initPosBtnX: 400,
+    initPosBtnY: 110,
+    distanceBtn: 80,
+    distanceSectionBtn: 5
+};
+
+var buttonSize = {
+    width: 75,
+    height: 75
+};
+
+var hairPositions = {
+    hx0: 150,
+    hy0: 120,
+    hx1: 130,
+    hy1: 115,
+    hx2: 160,
+    hy2: 140,
+    hx3: 140,
+    hy3: 112,
+    hx4: 165,
+    hy4: 140,
+    hx5: 165,
+    hy5: 110
+}
+var armPostions = {
+    ax0: 140,
+    ay0: 230,
+    ax1: 120,
+    ay1: 230,
+    ax2: 145,
+    ay2: 230,
+    ax3: 145,
+    ay3: 230
+}
+
+var footPositions = {
+    fx0: 160,
+    fy0: 325,
+    fx1: 173,
+    fy1: 325,
+    fx2: 155,
+    fy2: 320,
+    fx3: 155,
+    fy3: 320
+}
+
+var headPositions = {
+    headX0: 170,
+    headY0: 150,
+    headX1: 170,
+    headY1: 150,
+    headX2: 170,
+    headY2: 150,
+    headX3: 170,
+    headY3: 150
+}
+
 var headBtn0, headBtn1, headBtn2, headBtn3;
-var head2;
-var body1;
+var head0, head1, head2, head3, hair0, hair1, hair2, hair3, hair4, hair5;
+
+var headSelected, hairSelected, footSelected, armSelected;
+
+var foot0, arm0;
 var menuBtn0, menuBtn1, menuBtn2, menuBtn3, backBtn;
 var clicked = false;
 var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game', {
@@ -17,48 +75,37 @@ var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game', {
 });
 
 function preload() {
-    // for (var i = 0; i < 4; i++) {
-    //     game.load.spritesheet('menuBtn' + i, 'assets/buttons/menuBtn' + i + '.png', 100, 50);
-    // }
     for (var i = 0; i < 6; i++) {
-        if (i < 2) {
-            game.load.spritesheet('coatBtn' + i, 'assets/buttons/CoatBtn' + i + '.png', 75, 75);
-            //game.load.spritesheet('coatBtn' + i, 'assets/buttons/CoatBtn' + i + '.png', 75, 100);
-
-            game.load.spritesheet('pantBtn' + i, 'assets/buttons/PantBtn' + i + '.png', 75, 75);
-            //game.load.spritesheet('pantBtn' + i, 'assets/buttons/PantBtn' + i + '.png', 75, 75);
-
-            game.load.spritesheet('skirtBtn' + i, 'assets/buttons/SkirtBtn' + i + '.png', 75, 75);
-
-            game.load.spritesheet('wcoatBtn' + i, 'assets/buttons/WcoatBtn' + i + '.png', 75, 75);
-        }
         if (i < 4) {
-            game.load.spritesheet('headBtn' + i, 'assets/buttons/HeadBtn' + i + '.png', 75, 75);
+            game.load.spritesheet('footBtn' + i, 'assets/buttons/FootBtn' + i + '.png', buttonSize.width, buttonSize.height);
+            game.load.image('foot' + i, 'assets/avatarOptions/foot' + i + '.png');
+
+            game.load.spritesheet('armBtn' + i, 'assets/buttons/ArmBtn' + i + '.png', buttonSize.width, buttonSize.height);
+            game.load.image('arm' + i, 'assets/avatarOptions/arm' + i + '.png');
+
+            game.load.spritesheet('headBtn' + i, 'assets/buttons/HeadBtn' + i + '.png', buttonSize.width, buttonSize.height);
             game.load.image('head' + i, 'assets/avatarOptions/head' + i + '.png');
         }
         if (i < 6) {
-            game.load.spritesheet('hairBtn' + i, 'assets/buttons/HairBtn' + i + '.png', 75, 75);
+            game.load.spritesheet('hairBtn' + i, 'assets/buttons/HairBtn' + i + '.png', buttonSize.width, buttonSize.height);
+            game.load.image('hair' + i, 'assets/avatarOptions/hair' + i + '.png');
         }
     }
-    //game.load.spritesheet('backBtn', 'assets/buttons/backBtn.png', 200, 102);
-    game.load.spritesheet('playBtn', 'assets/buttons/playBtn.png', 200, 102);
     game.load.image('background', 'assets/backgrounds/Background1.png');
-    game.load.image('hair1', 'assets/avatarOptions/hair1.png');
-    game.load.image('hair2', 'assets/avatarOptions/hair2.png');
-    game.load.image('hair3', 'assets/avatarOptions/hair3.png');
-    game.load.image('hair4', 'assets/avatarOptions/hair4.png');
-    game.load.image('hair5', 'assets/avatarOptions/hair5.png');
-    game.load.image('hair6', 'assets/avatarOptions/hair6.png');
-
-    game.load.image('body1', 'assets/avatarOptions/body1.png');
 }
 
 function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.add.sprite(0, 0, 'background');
-    head0 = game.add.sprite(170, 140, 'head0');
-    hair3 = game.add.sprite(150, 80, 'hair3');
-    body1 = game.add.sprite(150, 220, 'body1');
+
+    head0 = game.add.sprite(headPositions.headX0, headPositions.headY0, 'head0');
+    headSelected = head0;
+    foot0 = game.add.sprite(footPositions.fx3, footPositions.fy3, 'foot3');
+    footSelected = foot0
+    arm0 = game.add.sprite(armPostions.ax0, armPostions.ay0, 'arm0');
+    armSelected = arm0;
+    hair0 = game.add.sprite(hairPositions.hx0, hairPositions.hy0, 'hair0');
+    hairSelected = hair0;
     title = game.add.text(400, 17, 'Arma tu personaje', {
         fontSize: '40px',
         fill: '#40abed'
@@ -68,35 +115,31 @@ function create() {
         fill: '#fff'
     });
     optionsBtns();
-    //game.add.button(50, game.world.height - 120, 'playBtn', playAction, this, 2, 1, 0);
-    //initMainMenuBtns();
 }
 
 function optionsBtns() {
     //head Buttons
-    game.add.button(initPosBtnX, initPosBtnY, 'headBtn0', actionHead, this, 2, 1, 0);
-    game.add.button(initPosBtnX + distanceBtn, initPosBtnY, 'headBtn1', actionHead, this, 2, 1, 0);
-    game.add.button(initPosBtnX, initPosBtnY + distanceBtn, 'headBtn2', actionHead, this, 2, 1, 0);
-    game.add.button(initPosBtnX + distanceBtn, initPosBtnY + distanceBtn, 'headBtn3', actionHead, this, 2, 1, 0);
-    //Coat Buttons
-    game.add.button(initPosBtnX, initPosBtnY + distanceSectionBtn + (2 * distanceBtn), 'coatBtn0', actionCoat, this, 2, 1, 0);
-    game.add.button(initPosBtnX + distanceBtn, initPosBtnY + distanceSectionBtn + (2 * distanceBtn), 'coatBtn1', actionCoat, this, 2, 1, 0);
-    //pant Buttons
-    game.add.button(initPosBtnX, initPosBtnY + (distanceSectionBtn * 2) + (3 * distanceBtn), 'pantBtn0', actionPant, this, 2, 1, 0);
-    game.add.button(initPosBtnX + distanceBtn, initPosBtnY + (distanceSectionBtn * 2) + (3 * distanceBtn), 'pantBtn1', actionPant, this, 2, 1, 0);
-    //hair Bbuttons
-    game.add.button(initPosBtnX + (2 * distanceBtn) + distanceSectionBtn, initPosBtnY, 'hairBtn0', actionHair, this, 2, 1, 0);
-    game.add.button(initPosBtnX + (3 * distanceBtn) + distanceSectionBtn, initPosBtnY, 'hairBtn1', actionPant, this, 2, 1, 0);
-    game.add.button(initPosBtnX + (4 * distanceBtn) + distanceSectionBtn, initPosBtnY, 'hairBtn2', actionPant, this, 2, 1, 0);
-    game.add.button(initPosBtnX + (2 * distanceBtn) + distanceSectionBtn, initPosBtnY + distanceBtn, 'hairBtn3', actionPant, this, 2, 1, 0);
-    game.add.button(initPosBtnX + (3 * distanceBtn) + distanceSectionBtn, initPosBtnY + distanceBtn, 'hairBtn4', actionPant, this, 2, 1, 0);
-    game.add.button(initPosBtnX + (4 * distanceBtn) + distanceSectionBtn, initPosBtnY + distanceBtn, 'hairBtn5', actionPant, this, 2, 1, 0);
-    //WCoat Buttons
-    game.add.button(initPosBtnX + (2 * distanceBtn) + distanceSectionBtn, initPosBtnY + distanceSectionBtn + (2 * distanceBtn), 'wcoatBtn0', actionPant, this, 2, 1, 0);
-    game.add.button(initPosBtnX + (3 * distanceBtn) + distanceSectionBtn, initPosBtnY + distanceSectionBtn + (2 * distanceBtn), 'wcoatBtn1', actionPant, this, 2, 1, 0);
-    //Skirt Buttons
-    game.add.button(initPosBtnX + (2 * distanceBtn) + distanceSectionBtn, initPosBtnY + (distanceSectionBtn * 2) + (3 * distanceBtn), 'skirtBtn0', actionPant, this, 2, 1, 0);
-    game.add.button(initPosBtnX + (3 * distanceBtn) + distanceSectionBtn, initPosBtnY + (distanceSectionBtn * 2) + (3 * distanceBtn), 'skirtBtn1', actionPant, this, 2, 1, 0);
+    game.add.button(buttonPosition.initPosBtnX, buttonPosition.initPosBtnY, 'headBtn0', actionHead, this, 1, 1, 0);
+    game.add.button(buttonPosition.initPosBtnX + buttonPosition.distanceBtn, buttonPosition.initPosBtnY, 'headBtn1', actionHead, this, 1, 1, 0);
+    game.add.button(buttonPosition.initPosBtnX, buttonPosition.initPosBtnY + buttonPosition.distanceBtn, 'headBtn2', actionHead, this, 1, 1, 0);
+    game.add.button(buttonPosition.initPosBtnX + buttonPosition.distanceBtn, buttonPosition.initPosBtnY + buttonPosition.distanceBtn, 'headBtn3', actionHead, this, 1, 1, 0);
+    //arm Buttons
+    game.add.button(buttonPosition.initPosBtnX, buttonPosition.initPosBtnY + buttonPosition.distanceSectionBtn + (2 * buttonPosition.distanceBtn), 'armBtn0', actionArm, this, 1, 1, 0);
+    game.add.button(buttonPosition.initPosBtnX + buttonPosition.distanceBtn, buttonPosition.initPosBtnY + buttonPosition.distanceSectionBtn + (2 * buttonPosition.distanceBtn), 'armBtn1', actionArm, this, 1, 1, 0);
+    game.add.button(buttonPosition.initPosBtnX + (2 * buttonPosition.distanceBtn) + buttonPosition.distanceSectionBtn, buttonPosition.initPosBtnY + buttonPosition.distanceSectionBtn + (2 * buttonPosition.distanceBtn), 'armBtn2', actionArm, this, 1, 1, 0);
+    game.add.button(buttonPosition.initPosBtnX + (3 * buttonPosition.distanceBtn) + buttonPosition.distanceSectionBtn, buttonPosition.initPosBtnY + buttonPosition.distanceSectionBtn + (2 * buttonPosition.distanceBtn), 'armBtn3', actionArm, this, 1, 1, 0);
+    //foot Buttons
+    game.add.button(buttonPosition.initPosBtnX, buttonPosition.initPosBtnY + (buttonPosition.distanceSectionBtn * 2) + (3 * buttonPosition.distanceBtn), 'footBtn0', actionFoot, this, 1, 1, 0);
+    game.add.button(buttonPosition.initPosBtnX + buttonPosition.distanceBtn, buttonPosition.initPosBtnY + (buttonPosition.distanceSectionBtn * 2) + (3 * buttonPosition.distanceBtn), 'footBtn1', actionFoot, this, 1, 1, 0);
+    game.add.button(buttonPosition.initPosBtnX + (2 * buttonPosition.distanceBtn) + buttonPosition.distanceSectionBtn, buttonPosition.initPosBtnY + (buttonPosition.distanceSectionBtn * 2) + (3 * buttonPosition.distanceBtn), 'footBtn2', actionFoot, this, 1, 1, 0);
+    game.add.button(buttonPosition.initPosBtnX + (3 * buttonPosition.distanceBtn) + buttonPosition.distanceSectionBtn, buttonPosition.initPosBtnY + (buttonPosition.distanceSectionBtn * 2) + (3 * buttonPosition.distanceBtn), 'footBtn3', actionFoot, this, 1, 1, 0);
+    //hair Buttons
+    game.add.button(buttonPosition.initPosBtnX + (2 * buttonPosition.distanceBtn) + buttonPosition.distanceSectionBtn, buttonPosition.initPosBtnY, 'hairBtn0', actionHair, this, 1, 1, 0);
+    game.add.button(buttonPosition.initPosBtnX + (3 * buttonPosition.distanceBtn) + buttonPosition.distanceSectionBtn, buttonPosition.initPosBtnY, 'hairBtn1', actionHair, this, 1, 1, 0);
+    game.add.button(buttonPosition.initPosBtnX + (4 * buttonPosition.distanceBtn) + buttonPosition.distanceSectionBtn, buttonPosition.initPosBtnY, 'hairBtn2', actionHair, this, 1, 1, 0);
+    game.add.button(buttonPosition.initPosBtnX + (2 * buttonPosition.distanceBtn) + buttonPosition.distanceSectionBtn, buttonPosition.initPosBtnY + buttonPosition.distanceBtn, 'hairBtn3', actionHair, this, 1, 1, 0);
+    game.add.button(buttonPosition.initPosBtnX + (3 * buttonPosition.distanceBtn) + buttonPosition.distanceSectionBtn, buttonPosition.initPosBtnY + buttonPosition.distanceBtn, 'hairBtn4', actionHair, this, 1, 1, 0);
+    game.add.button(buttonPosition.initPosBtnX + (4 * buttonPosition.distanceBtn) + buttonPosition.distanceSectionBtn, buttonPosition.initPosBtnY + buttonPosition.distanceBtn, 'hairBtn5', actionHair, this, 1, 1, 0);
 }
 
 
@@ -105,54 +148,117 @@ function update() {}
 function playAction() {}
 
 function actionHair(e) {
-
+    console.log('clave:' + e.key);
+    hairSelected.kill();
+    switch (e.key) {
+        case 'hairBtn0':
+            hair0 = game.add.sprite(hairPositions.hx0, hairPositions.hy0, 'hair0');
+            hairSelected = hair0;
+            break;
+        case 'hairBtn1':
+            hair1 = game.add.sprite(hairPositions.hx1, hairPositions.hy1, 'hair1');
+            hairSelected = hair1;
+            break;
+        case 'hairBtn2':
+            hair2 = game.add.sprite(hairPositions.hx2, hairPositions.hy2, 'hair2');
+            hairSelected = hair2;
+            break;
+        case 'hairBtn3':
+            hair3 = game.add.sprite(hairPositions.hx3, hairPositions.hy3, 'hair3');
+            hairSelected = hair3;
+            armSelected.kill();
+            armSelected = game.add.sprite(armSelected.position.x, armSelected.position.y, armSelected.key);
+            break;
+        case 'hairBtn4':
+            hair4 = game.add.sprite(hairPositions.hx4, hairPositions.hy4, 'hair4');
+            hairSelected = hair4;
+            break;
+        case 'hairBtn5':
+            hair5 = game.add.sprite(hairPositions.hx5, hairPositions.hy5, 'hair5');
+            hairSelected = hair5;
+            break;
+        default:
+            break;
+    }
 }
 
 function actionHead(e) {
     console.log('clave:' + e.key);
-    deleteAllHead();
+    //deleteAllHead();
+    headSelected.kill();
     switch (e.key) {
         case 'headBtn0':
-            head0 = game.add.sprite(170, 140, 'head0');
+            head0 = game.add.sprite(headPositions.headX0, headPositions.headY0, 'head0');
+            headSelected = head0;
             break;
         case 'headBtn1':
-            head1 = game.add.sprite(170, 140, 'head1');
+            head1 = game.add.sprite(headPositions.headX1, headPositions.headY1, 'head1');
+            headSelected = head1;
             break;
         case 'headBtn2':
-            head2 = game.add.sprite(170, 140, 'head2');
+            head2 = game.add.sprite(headPositions.headX2, headPositions.headY2, 'head2');
+            headSelected = head2;
             break;
         case 'headBtn3':
-            head3 = game.add.sprite(170, 140, 'head3');
+            head3 = game.add.sprite(headPositions.headX3, headPositions.headY3, 'head3');
+            headSelected = head3;
+            break;
+        default:
+            break;
+    }
+    hairSelected.kill();
+    hairSelected = game.add.sprite(hairSelected.position.x, hairSelected.position.y, hairSelected.key);
+}
+
+function actionArm(e) {
+    console.log('clave:' + e.key);
+    armSelected.kill();
+    //deleteAllHead();
+    switch (e.key) {
+        case 'armBtn0':
+            arm0 = game.add.sprite(armPostions.ax0, armPostions.ay1, 'arm0');
+            armSelected = arm0;
+            break;
+        case 'armBtn1':
+            arm1 = game.add.sprite(armPostions.ax1, armPostions.ay1, 'arm1');
+            armSelected = arm1;
+            break;
+        case 'armBtn2':
+            arm2 = game.add.sprite(armPostions.ax2, armPostions.ay2, 'arm2');
+            armSelected = arm2;
+            break;
+        case 'armBtn3':
+            arm3 = game.add.sprite(armPostions.ax3, armPostions.ay3, 'arm3');
+            armSelected = arm3;
             break;
         default:
             break;
     }
 }
 
-function actionCoat(e) {
+function actionFoot(e) {
     console.log('clave:' + e.key);
-    //deleteAllHead();
+    footSelected.kill()
     switch (e.key) {
-        case 'coatBtn0':
-            head0 = game.add.sprite(170, 140, 'head0');
+        case 'footBtn0':
+            foot0 = game.add.sprite(footPositions.fx0, footPositions.fy0, 'foot0');
+            footSelected = foot0;
             break;
-        case 'coatBtn1':
-            head1 = game.add.sprite(170, 140, 'head1');
+        case 'footBtn1':
+            foot1 = game.add.sprite(footPositions.fx1, footPositions.fy1, 'foot1');
+            footSelected = foot1;
             break;
-        default:
+        case 'footBtn2':
+            foot2 = game.add.sprite(footPositions.fx2, footPositions.fy2, 'foot2');
+            footSelected = foot2;
+            armSelected.kill();
+            armSelected = game.add.sprite(armSelected.position.x, armSelected.position.y, armSelected.key);
             break;
-    }
-}
-
-function actionPant(e) {
-    console.log('clave:' + e.key);
-    //deleteAllHead();
-    switch (e.key) {
-        case 'pantBtn0':
-            head0 = game.add.sprite(170, 140, 'head0');
-            break;
-        case 'pantBtn1':
-            head1 = game.add.sprite(170, 140, 'head1');
+        case 'footBtn3':
+            foot3 = game.add.sprite(footPositions.fx3, footPositions.fy3, 'foot3');
+            footSelected = foot3;
+            armSelected.kill();
+            armSelected = game.add.sprite(armSelected.position.x, armSelected.position.y, armSelected.key);
             break;
         default:
             break;
@@ -160,16 +266,31 @@ function actionPant(e) {
 }
 
 function deleteAllHead() {
-    if (headBtn0) {
-        headBtn0.kill();
+    if (head0) {
+        head0.kill();
     }
-    if (headBtn1) {
-        headBtn1.kill();
+    if (head1) {
+        head1.kill();
     }
-    if (headBtn2) {
-        headBtn2.kill();
+    if (head2) {
+        head2.kill();
     }
-    if (headBtn3) {
-        headBtn3.kill();
+    if (head3) {
+        head3.kill();
+    }
+}
+
+function deleteAllHair() {
+    if (head0) {
+        head0.kill();
+    }
+    if (head1) {
+        head1.kill();
+    }
+    if (head2) {
+        head2.kill();
+    }
+    if (head3) {
+        head3.kill();
     }
 }

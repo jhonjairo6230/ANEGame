@@ -23,6 +23,6 @@ RutaEspectral.AvatarSelected.prototype = {
         });
     },
     playGame: function (e) {
-        //this.state.start('AvatarConfig');
+        this.state.start('Level1');
     }
 };

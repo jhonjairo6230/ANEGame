@@ -1,4 +1,4 @@
-var player, platforms;
+var player, platforms, test;
 RutaEspectral.Level1 = function (game) {};
 RutaEspectral.Level1.prototype = {
     preload: function () {
@@ -49,6 +49,12 @@ RutaEspectral.Level1.prototype = {
         ledge.body.immovable = true;
         ledge = platforms.create(1100, game.world.height - 66, 'platform');
         ledge.body.immovable = true;
+        test = game.add.group();
+        test.enableBody = true;
+        var l = test.create(1300, game.world.height / 2, 'platform');
+
+        l.body.immovable = true;
+
         game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
         // Add the VirtualGamepad plugin to the game
         this.gamepad = this.game.plugins.add(Phaser.Plugin.VirtualGamepad);
@@ -59,6 +65,10 @@ RutaEspectral.Level1.prototype = {
     },
     update: function () {
         var hitPlatform = game.physics.arcade.collide(player, platforms);
+        var finishC = game.physics.arcade.collide(player, test);
+        if (finishC) {
+            this.state.start('Level2');
+        }
         player.body.velocity.x = 0;
         player.body.velocity.y = 0;
         if (this.joystick.properties.left) {

@@ -33,7 +33,7 @@ PhaserGame.prototype = {
         this.load.image('ground', 'assets/platform.png');
         this.load.image('star', 'assets/star.png');
         this.load.image('bomb', 'assets/bomb.png');
-        this.load.spritesheet('dude', 'assets/astronauta.png', 105, 136);
+        this.load.spritesheet('dude', 'assets/sprites/sprite12.png', 59, 100);
         // this.load.image('space', 'assets/space_bg.jpg');
         // this.load.image('ship', 'assets/ship.png');
         // this.load.image('laser', 'assets/laser.png');

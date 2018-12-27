@@ -5,8 +5,8 @@ RutaEspectral.AvatarSelected = function (game) {
 RutaEspectral.AvatarSelected.prototype = {
     preload: function () {
         game.load.image('background', 'assets/backgrounds/Background1.png');
-        game.load.spritesheet('playBtn', 'assets/buttons/playBtn.png', 164, 79);
-        game.load.spritesheet('backBtn', 'assets/buttons/backBtn.png', 139, 79);
+        game.load.spritesheet('playBtn', 'assets/buttons/nextBtn.png', 145.5, 79);
+        game.load.spritesheet('backBtn', 'assets/buttons/backBtn.png', 145.5, 79);
         game.load.image(headSelected.key, 'assets/avatarOptions/' + headSelected.key + '.png');
         game.load.image(footSelected.key, 'assets/avatarOptions/' + footSelected.key + '.png');
         game.load.image(hairSelected.key, 'assets/avatarOptions/' + hairSelected.key + '.png');

@@ -42,6 +42,7 @@ var RutaEspectral = {
     },
 };
 var headSelected, hairSelected, footSelected, armSelected;
+var velocityLevel1 = 80;
 var spriteSizes = [{
     width: 65.18,
     height: 100

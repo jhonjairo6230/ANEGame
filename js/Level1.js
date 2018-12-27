@@ -1,4 +1,4 @@
-var player, light, cursors, bordersWin, bordersLost, bar, text, initBtn, elements;
+var player, light, cursors, bordersWin, bordersLost, bar, text, initBtn, elements, spaceS;
 var isInit = false;
 var starts;
 RutaEspectral.Level1 = function (game) {};
@@ -14,9 +14,12 @@ RutaEspectral.Level1.prototype = {
         game.load.image('planet4', 'assets/level1/planet4.png');
         game.load.image('satellite', 'assets/level1/satelite.png');
         game.load.image('obstruction', 'assets/level1/obstruction.png');
+        game.load.image('winFlag', 'assets/level1/winFlag.png');
+        game.load.image('spaceSuit', 'assets/level1/spaceSuit.png');
         game.load.image('px', 'assets/pix.png');
+        game.load.image('bgLives', 'assets/level1/bgLives.png');
         game.load.image('star', 'assets/star.png');
-        game.load.spritesheet('playBtn', 'assets/buttons/playBtn.png', 164, 79);
+        game.load.spritesheet('playBtn', 'assets/buttons/play2Btn.png', 134, 78);
     },
     create: function () {
         game.add.tileSprite(0, 0, 1340, 600, 'background');
@@ -26,21 +29,23 @@ RutaEspectral.Level1.prototype = {
         //Add planets
         elements = game.add.group();
         elements.enableBody = true;
-        // var moon = elements.create(game.world.width - 229, 1, 'moon');
-        // moon.body.immovable = true;
+        var monE = game.add.group();
+        monE.enableBody = true;
+        var moon = monE.create(game.world.width - 170, 1, 'moon');
+        moon.body.immovable = true;
         var planet1 = elements.create(game.world.width - 300, 60, 'planet1');
         planet1.body.immovable = true;
         var planet2 = elements.create(450, 20, 'planet2');
         planet2.body.immovable = true;
         var planet3 = elements.create(700, 120, 'planet3');
         planet3.body.immovable = true;
-        var planet4 = elements.create(1100, 500, 'planet4');
+        var planet4 = elements.create(1100, 550, 'planet4');
         planet4.body.immovable = true;
         var planet5 = elements.create(750, 0, 'satellite');
         planet5.body.immovable = true;
-        var obstruction = elements.create(1000, 300, 'obstruction');
+        var obstruction = elements.create(900, 300, 'obstruction');
         obstruction.body.immovable = true;
-        obstruction = elements.create(600, 400, 'obstruction');
+        obstruction = elements.create(500, 400, 'obstruction');
         obstruction.body.immovable = true;
         light = game.add.group();
         light.enableBody = true;
@@ -55,17 +60,14 @@ RutaEspectral.Level1.prototype = {
         bordersWin.enableBody = true;
         bordersLost = game.add.group();
         bordersLost.enableBody = true;
-        var borderV = bordersWin.create(1338, 99, 'px');
         for (var i = 380; i < 400; i++) {
-            borderV = bordersWin.create(1338, i, 'px');
+            var borderV = bordersWin.create(1338, i, 'px');
             borderV.body.immovable = true;
         }
-        for (var i = 0; i < 1339; i++) {
-            var borderHB = bordersLost.create(i, 599, 'px');
-            borderHB.body.immovable = true;
-            var borderHT = bordersLost.create(i, 1, 'px');
-            borderHT.body.immovable = true;
-        }
+        var winFlag = bordersWin.create(game.world.width - 36, 360, 'winFlag');
+        borderV.body.immovable = true;
+        var stbackround = game.add.image(715, 0, 'bgLives');
+        stbackround.fixedToCamera = true;
         stars = game.add.group();
         stars.enableBody = true;
         stars.fixedToCamera = true;
@@ -79,26 +81,15 @@ RutaEspectral.Level1.prototype = {
         var finishLost = game.physics.arcade.collide(player, bordersLost);
         if (finishWin) {
             game.state.start('Level2');
-            // title = game.add.text(1000, game.world.height / 2, 'Otro nivel', {
-            //     fontSize: '25px',
-            //     fill: '#ffabed',
-            //     font: 'Myriad pro'
-            // });
         }
-        if (finishLost) {
-            // title = game.add.text(1000, game.world.height / 2, 'Pierde', {
-            //     fontSize: '25px',
-            //     fill: '#ffabfe',
-            //     font: 'Myriad pro'
-            // });
-        }
+        if (finishLost) {}
         if (isInit) {
             if (lostLive) {
                 countLives -= 1;
                 this.resetPlayer();
                 this.showLives();
                 if (countLives == 0) {
-                    game.state.start('Splash');
+                    game.state.start('Level1');
                     isInit = false;
                     countLives = 3;
                 }
@@ -106,34 +97,34 @@ RutaEspectral.Level1.prototype = {
             player.body.velocity.x = 0;
             cursors = game.input.keyboard.createCursorKeys();
             if (cursors.left.isDown) {
-                player.body.velocity.x = -120;
+                player.body.velocity.x = -velocityLevel1;
             }
             if (cursors.right.isDown) {
-                player.body.velocity.x = 120;
+                player.body.velocity.x = velocityLevel1;
             }
             if (cursors.up.isDown) {
-                player.body.velocity.y = -120;
+                player.body.velocity.y = -velocityLevel1;
             }
             if (cursors.down.isDown) {
-                player.body.velocity.y = 120;
+                player.body.velocity.y = velocityLevel1;
             }
         }
-
     },
     infoText(txt) {
         bar = game.add.graphics();
-        bar.beginFill(0x003300, 0.2);
-        bar.drawRect(200, 200, 500, 200);
+        bar.beginFill(0x003300, 0.4);
+        bar.drawRect(180, 180, 520, 180);
         var style = {
             font: "20px Myriad pro",
             fill: "#fff",
             wordWrap: true,
-            wordWrapWidth: 500,
+            wordWrapWidth: 480,
+            wordWrapHeight: 200,
             align: "center",
         };
         text = game.add.text(0, 0, txt, style);
         text.setTextBounds(200, 200, 500, 200);
-        initBtn = game.add.button(380, 380, 'playBtn', this.initLevel, this, 1, 1, 0);
+        initBtn = game.add.button(380, 355, 'playBtn', this.initLevel, this, 1, 1, 0);
     },
     initLevel() {
         bar.kill();
@@ -149,7 +140,7 @@ RutaEspectral.Level1.prototype = {
         player = game.add.sprite(219, 200, 'rocket');
         game.physics.arcade.enable(player);
         player.body.bounce.y = 0.2;
-        player.body.gravity.y = 300;
+        player.body.gravity.y = 200;
         player.body.collideWorldBounds = true;
         game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
     },
@@ -162,8 +153,8 @@ RutaEspectral.Level1.prototype = {
             var w = 0;
             for (var i = 0; i < countLives; i++) {
                 //  Create a star inside of the 'stars' group
-                var star = stars.create(776 - w, 0, 'star');
-                w += 24;
+                var star = stars.create(766 - w, 5, 'star');
+                w += 22;
             }
         }
     }

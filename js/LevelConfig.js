@@ -6,7 +6,7 @@
     game.state.add('AvatarSelected', RutaEspectral.AvatarSelected);
     game.state.add('Level1', RutaEspectral.Level1);
     game.state.add('Level2', RutaEspectral.Level2);
-    game.state.start('Splash');
+    game.state.start('Level1');
 
 
 })();

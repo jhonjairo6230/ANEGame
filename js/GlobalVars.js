@@ -39,7 +39,7 @@ var RutaEspectral = {
             return 11
         }
         return -1;
-    }
+    },
 };
 var headSelected, hairSelected, footSelected, armSelected;
 var spriteSizes = [{
@@ -81,4 +81,45 @@ var spriteSizes = [{
 }, {
     width: 59.91,
     height: 100
+}];
+
+var sayHelloSpriteSizes = [{
+    width: 241,
+    height: 300
+}, {
+    width: 247,
+    height: 300
+}, {
+    width: 236,
+    height: 300
+}, {
+    width: 242,
+    height: 300
+}, {
+    width: 239,
+    height: 300
+}, {
+    width: 234,
+    height: 300
+}, {
+    width: 234,
+    height: 300
+}, {
+    width: 233,
+    height: 300
+}, {
+    width: 216,
+    height: 300
+}, {
+    width: 236,
+    height: 300
+}, {
+    width: 225,
+    height: 300
+}, {
+    width: 223,
+    height: 300
+}, {
+    width: 224,
+    height: 300
 }];

@@ -26,9 +26,9 @@ RutaEspectral.Level1.prototype = {
         //Add planets
         elements = game.add.group();
         elements.enableBody = true;
-        var moon = elements.create(game.world.width - 229, 1, 'moon');
-        moon.body.immovable = true;
-        var planet1 = elements.create(game.world.width - 300, 120, 'planet1');
+        // var moon = elements.create(game.world.width - 229, 1, 'moon');
+        // moon.body.immovable = true;
+        var planet1 = elements.create(game.world.width - 300, 60, 'planet1');
         planet1.body.immovable = true;
         var planet2 = elements.create(450, 20, 'planet2');
         planet2.body.immovable = true;
@@ -78,19 +78,19 @@ RutaEspectral.Level1.prototype = {
         var finishWin = game.physics.arcade.collide(player, bordersWin);
         var finishLost = game.physics.arcade.collide(player, bordersLost);
         if (finishWin) {
-            // game.state.start('Level2');
-            title = game.add.text(1000, game.world.height / 2, 'Otro nivel', {
-                fontSize: '25px',
-                fill: '#ffabed',
-                font: 'Myriad pro'
-            });
+            game.state.start('Level2');
+            // title = game.add.text(1000, game.world.height / 2, 'Otro nivel', {
+            //     fontSize: '25px',
+            //     fill: '#ffabed',
+            //     font: 'Myriad pro'
+            // });
         }
         if (finishLost) {
-            title = game.add.text(1000, game.world.height / 2, 'Pierde', {
-                fontSize: '25px',
-                fill: '#ffabfe',
-                font: 'Myriad pro'
-            });
+            // title = game.add.text(1000, game.world.height / 2, 'Pierde', {
+            //     fontSize: '25px',
+            //     fill: '#ffabfe',
+            //     font: 'Myriad pro'
+            // });
         }
         if (isInit) {
             if (lostLive) {
@@ -100,6 +100,7 @@ RutaEspectral.Level1.prototype = {
                 if (countLives == 0) {
                     game.state.start('Splash');
                     isInit = false;
+                    countLives = 3;
                 }
             }
             player.body.velocity.x = 0;

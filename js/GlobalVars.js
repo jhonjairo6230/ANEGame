@@ -1,4 +1,5 @@
 var game;
+var countLives = 3;
 var RutaEspectral = {
     selectSprite: function (hairSelected, headSelected, armSelected, footSelected) {
         if (hairSelected == "hair0" && headSelected.key == "head0" && armSelected.key == "arm0" && footSelected.key == "foot2") {

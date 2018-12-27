@@ -1,6 +1,6 @@
 var player, light, cursors, bordersWin, bordersLost, bar, text, initBtn, elements;
 var isInit = false;
-var countLives = 2;
+var starts;
 RutaEspectral.Level1 = function (game) {};
 RutaEspectral.Level1.prototype = {
     preload: function () {
@@ -15,6 +15,7 @@ RutaEspectral.Level1.prototype = {
         game.load.image('satellite', 'assets/level1/satelite.png');
         game.load.image('obstruction', 'assets/level1/obstruction.png');
         game.load.image('px', 'assets/pix.png');
+        game.load.image('star', 'assets/star.png');
         game.load.spritesheet('playBtn', 'assets/buttons/playBtn.png', 164, 79);
     },
     create: function () {
@@ -65,6 +66,10 @@ RutaEspectral.Level1.prototype = {
             var borderHT = bordersLost.create(i, 1, 'px');
             borderHT.body.immovable = true;
         }
+        stars = game.add.group();
+        stars.enableBody = true;
+        stars.fixedToCamera = true;
+        this.showLives();
         this.infoText("sabias que el azul del cielo es una parte del espectro electromagnético,a que el cielo es un arco iris gigantesco, y el único color que vemos es el azul, pero encima de ese azul están todos los colores del arco iris, el rojo, el amarillo, verde, violeta. (luz visible)");
     },
     update: function () {
@@ -90,8 +95,11 @@ RutaEspectral.Level1.prototype = {
         if (isInit) {
             if (lostLive) {
                 countLives -= 1;
+                this.resetPlayer();
+                this.showLives();
                 if (countLives == 0) {
-                    // game.state.start('Level1');
+                    game.state.start('Splash');
+                    isInit = false;
                 }
             }
             player.body.velocity.x = 0;
@@ -131,11 +139,31 @@ RutaEspectral.Level1.prototype = {
         text.kill();
         initBtn.kill();
         isInit = true;
-        player = game.add.sprite(219, 100, 'rocket');
+        this.resetPlayer();
+    },
+    resetPlayer() {
+        if (player) {
+            player.kill();
+        }
+        player = game.add.sprite(219, 200, 'rocket');
         game.physics.arcade.enable(player);
         player.body.bounce.y = 0.2;
         player.body.gravity.y = 300;
         player.body.collideWorldBounds = true;
         game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+    },
+    showLives() {
+        if (stars) {
+            stars.kill();
+            stars = game.add.group();
+            stars.enableBody = true;
+            stars.fixedToCamera = true;
+            var w = 0;
+            for (var i = 0; i < countLives; i++) {
+                //  Create a star inside of the 'stars' group
+                var star = stars.create(776 - w, 0, 'star');
+                w += 24;
+            }
+        }
     }
 };

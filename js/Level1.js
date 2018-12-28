@@ -3,7 +3,8 @@ var isInit = false;
 var isSuitCollected = false;
 var isPaused = false;
 var starts;
-var randomObstructions = (Math.floor(Math.random() * (8 - 5) + 5));
+var stbackround;
+var randomObstructions = (Math.floor(Math.random() * (6 - 3) + 3));
 
 RutaEspectral.Level1 = function (game) {};
 RutaEspectral.Level1.prototype = {
@@ -33,6 +34,13 @@ RutaEspectral.Level1.prototype = {
         game.world.setBounds(0, 0, 1340, 600);
         game.renderer.roundPixels = true;
         game.physics.startSystem(Phaser.Physics.ARCADE);
+        //Timer
+        //  Create our Timer
+        timerL1 = game.time.create(false);
+        // Create a delayed event 1m and 30s from now
+        timerEvent = timerL1.add(Phaser.Timer.MINUTE * timeLevel1 + Phaser.Timer.SECOND * 0, this.endTimer, this);
+        // Start the timer
+        timerL1.start();
         //Add planets
         elements = game.add.group();
         elements.enableBody = true;
@@ -81,7 +89,7 @@ RutaEspectral.Level1.prototype = {
         var winFlag = bordersWin.create(game.world.width - 36, 360, 'winFlag');
         winFlag.body.immovable = true;
         borderV.body.immovable = true;
-        var stbackround = game.add.image(715, 0, 'bgLives');
+        stbackround = game.add.image(715, 0, 'bgLives');
         stbackround.fixedToCamera = true;
         stars = game.add.group();
         stars.enableBody = true;
@@ -241,5 +249,26 @@ RutaEspectral.Level1.prototype = {
                 break;
         }
         return element;
+    },
+    render: function () {
+        // If our timer is running, show the time in a nicely formatted way, else show 'Done!'
+        if (timerL1.running) {
+            timeRest = this.formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000));
+            game.debug.text(this.formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000)), 2, 14, "#0f0");
+        } else {
+            //game.debug.text("Done!", 2, 14, "#0f0");
+            isInit = false;
+            game.state.start('Level1');
+        }
+    },
+    endTimer: function () {
+        // Stop the timer when the delayed event triggers
+        timerL1.stop();
+    },
+    formatTime: function (s) {
+        // Convert seconds (s) to a nicely formatted and padded time string
+        var minutes = "0" + Math.floor(s / 60);
+        var seconds = "0" + (s - minutes * 60);
+        return minutes.substr(-2) + ":" + seconds.substr(-2);
     }
 };

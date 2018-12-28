@@ -12,6 +12,13 @@ RutaEspectral.Level1_1.prototype = {
         game.world.setBounds(0, 0, 1497, 500);
         game.renderer.roundPixels = true;
         game.physics.startSystem(Phaser.Physics.ARCADE);
+        var timeR = timeRest.split(":");
+        timerL1_1 = game.time.create(false);
+        // Create a delayed event 1m and 30s from now
+        timerEvent = timerL1_1.add(Phaser.Timer.MINUTE * timeR[0] + Phaser.Timer.SECOND * timeR[1], this.endTimer, this);
+        // Start the timer
+        // Start the timer
+        timerL1_1.start();
         waveCollition = game.add.group();
         waveCollition.enableBody = true;
         elements = game.add.group();
@@ -50,7 +57,11 @@ RutaEspectral.Level1_1.prototype = {
         for (var i = 0; i < 500; i++) {
             var borderV = bordersWin.create(1496, i, 'px');
             borderV.body.immovable = true;
-        }
+        };
+        var stbackround = game.add.image(640, 0, 'bgLives');
+        stbackround.fixedToCamera = true;
+        stbackround.scale.set(2, 1);
+        this.showLives();
         game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
     },
     update: function () {
@@ -91,5 +102,39 @@ RutaEspectral.Level1_1.prototype = {
     collectWave: function (player, wave) {
         // Removes the star from the screen
         wave.kill();
+    },
+    showLives() {
+        if (stars) {
+            stars.kill();
+            stars = game.add.group();
+            stars.enableBody = true;
+            stars.fixedToCamera = true;
+            var w = 0;
+            for (var i = 0; i < countLives; i++) {
+                //  Create a star inside of the 'stars' group
+                var star = stars.create(766 - w, 5, 'star');
+                w += 22;
+            }
+        }
+    },
+    render: function () {
+        // If our timer is running, show the time in a nicely formatted way, else show 'Done!'
+        if (timerL1_1.running) {
+            game.debug.text(this.formatTime(Math.round((timerEvent.delay - timerL1_1.ms) / 1000)), 2, 14, "#0f0");
+        } else {
+            //game.debug.text("Done!", 2, 14, "#0f0");
+            isInit = false;
+            game.state.start('Level1');
+        }
+    },
+    endTimer: function () {
+        // Stop the timer when the delayed event triggers
+        timerL1_1.stop();
+    },
+    formatTime: function (s) {
+        // Convert seconds (s) to a nicely formatted and padded time string
+        var minutes = "0" + Math.floor(s / 60);
+        var seconds = "0" + (s - minutes * 60);
+        return minutes.substr(-2) + ":" + seconds.substr(-2);
     }
 }

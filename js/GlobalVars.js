@@ -1,5 +1,7 @@
 var game;
 var countLives = 3;
+var timeLevel1 = 3;
+var timerL1, timeRest;
 var RutaEspectral = {
     selectSprite: function (hairSelected, headSelected, armSelected, footSelected) {
         if (hairSelected == "hair0" && (headSelected == "head0" || headSelected == "head1") && (armSelected == "arm0" || armSelected == "arm1") && (footSelected == "foot0" || footSelected == "foot1")) {

@@ -80,7 +80,7 @@ RutaEspectral.Level1.prototype = {
         spaceSuit = spaceS.create(750, 200 + (Math.random() * (220 - 0) + 0), 'spaceSuit');
         spaceSuit.body.immovable = true;
         this.showLives();
-        this.infoText("Sabias que el azul del cielo es una parte del espectro electromagnético,a que el cielo es un arco iris gigantesco, y el único color que vemos es el azul, pero encima de ese azul están todos los colores del arco iris, el rojo, el amarillo, verde, violeta. (luz visible)", 200, 550);
+        this.infoText("Sabias que el azul del cielo es una parte del espectro electromagnético,ya que el cielo es un arco iris gigantesco, y el único color que vemos es el azul, pero encima de ese azul están todos los colores del arco iris, el rojo, el amarillo, verde, violeta. (luz visible)", 200, 550);
     },
     update: function () {
         var borderCollition = game.physics.arcade.collide(player, light);

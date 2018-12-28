@@ -3,6 +3,8 @@ var isInit = false;
 var isSuitCollected = false;
 var isPaused = false;
 var starts;
+var randomObstructions = (Math.floor(Math.random() * (8 - 5) + 5));
+
 RutaEspectral.Level1 = function (game) {};
 RutaEspectral.Level1.prototype = {
     preload: function () {
@@ -15,7 +17,9 @@ RutaEspectral.Level1.prototype = {
         game.load.image('planet3', 'assets/level1/planet3.png');
         game.load.image('planet4', 'assets/level1/planet4.png');
         game.load.image('satellite', 'assets/level1/satelite.png');
-        game.load.image('obstruction', 'assets/level1/obstruction.png');
+        game.load.image('obstructionGroup', 'assets/level1/obstructionGroup.png');
+        game.load.image('obstruction1', 'assets/level1/obstruction1.png');
+        game.load.image('obstruction2', 'assets/level1/obstruction2.png');
         game.load.image('winFlag', 'assets/level1/winFlag.png');
         game.load.image('spaceSuit', 'assets/level1/spaceSuit.png');
         game.load.image('px', 'assets/pix.png');
@@ -36,20 +40,27 @@ RutaEspectral.Level1.prototype = {
         monE.enableBody = true;
         var moon = monE.create(game.world.width - 170, 1, 'moon');
         moon.body.immovable = true;
-        var planet1 = elements.create(game.world.width - 300, 60, 'planet1');
+        spaceS = game.add.group();
+        spaceS.enableBody = true;
+        var spacePos = this.determinePlanetPosition();
+        spaceSuit = spaceS.create(spacePos.w, spacePos.h, 'spaceSuit');
+        spaceSuit.body.immovable = true;
+        var planet1 = monE.create(1040, 60, 'planet1');
         planet1.body.immovable = true;
-        var planet2 = elements.create(450, 20, 'planet2');
+        var planet2 = monE.create(450, 20, 'planet2');
         planet2.body.immovable = true;
-        var planet3 = elements.create(700, 120, 'planet3');
+        var planet3 = monE.create(700, 120, 'planet3');
         planet3.body.immovable = true;
-        var planet4 = elements.create(1100, 550, 'planet4');
+        var planet4 = monE.create(1100, 550, 'planet4');
         planet4.body.immovable = true;
-        var planet5 = elements.create(750, 0, 'satellite');
+        var planet5 = monE.create(750, 0, 'satellite');
         planet5.body.immovable = true;
-        var obstruction = elements.create(900, 300, 'obstruction');
-        obstruction.body.immovable = true;
-        obstruction = elements.create(500, 400, 'obstruction');
-        obstruction.body.immovable = true;
+        for (var i = 0; i <= randomObstructions; i++) {
+            var obstruction = elements.create(this.randomPosition().w, this.randomPosition().h, 'obstruction1');
+            obstruction.body.immovable = true;
+            obstruction = elements.create(this.randomPosition().w, this.randomPosition().h, 'obstruction2');
+            obstruction.body.immovable = true;
+        }
         light = game.add.group();
         light.enableBody = true;
         var l = light.create(219, 500, 'px');
@@ -61,9 +72,9 @@ RutaEspectral.Level1.prototype = {
         }
         bordersWin = game.add.group();
         bordersWin.enableBody = true;
-        bordersLost = game.add.group();
-        bordersLost.enableBody = true;
-        for (var i = 380; i < 400; i++) {
+        // bordersLost = game.add.group();
+        // bordersLost.enableBody = true;
+        for (var i = 0; i < 600; i++) {
             var borderV = bordersWin.create(1338, i, 'px');
             borderV.body.immovable = true;
         }
@@ -75,35 +86,32 @@ RutaEspectral.Level1.prototype = {
         stars = game.add.group();
         stars.enableBody = true;
         stars.fixedToCamera = true;
-        spaceS = game.add.group();
-        spaceS.enableBody = true;
-        spaceSuit = spaceS.create(750, 200 + (Math.random() * (220 - 0) + 0), 'spaceSuit');
-        spaceSuit.body.immovable = true;
+
         this.showLives();
         this.infoText("Sabias que el azul del cielo es una parte del espectro electromagnético,ya que el cielo es un arco iris gigantesco, y el único color que vemos es el azul, pero encima de ese azul están todos los colores del arco iris, el rojo, el amarillo, verde, violeta. (luz visible)", 200, 550);
     },
     update: function () {
-        var borderCollition = game.physics.arcade.collide(player, light);
+        // var borderCollition = game.physics.arcade.collide(player, light);
         var suitCollition = game.physics.arcade.collide(player, spaceS);
         var lostLive = game.physics.arcade.collide(player, elements);
         var finishWin = game.physics.arcade.collide(player, bordersWin);
-        var finishLost = game.physics.arcade.collide(player, bordersLost);
+        // var finishLost = game.physics.arcade.collide(player, bordersLost);
         if (finishWin && isSuitCollected) {
-            game.state.start('Level2');
+            //game.state.start('Level2');
         } else if (finishWin) {
             game.paused = true;
             isPaused = true;
             this.resetPlayer();
             this.infoText("debes encontrar el traje espacial", 700, 300);
         }
-        if (finishLost) {}
+        // if (finishLost) {}
         if (isInit) {
             if (suitCollition) {
                 spaceSuit.kill();
                 isSuitCollected = true;
                 game.paused = true;
                 isPaused = true;
-                this.infoText("¡Encontraste el traje espacial!\n por tu gran azaña ganaste una vida", 400, 300);
+                this.infoText("¡No olvides de cuidarte! de la luz visible, luz infrarroja, Rayos ultravioletas, rayos X, rayos gamma, por cuanto algunas ondas que hacen parte del espectro electromagnético", player.position.x - 150, 480);
             }
             if (lostLive) {
                 countLives -= 1;
@@ -148,7 +156,7 @@ RutaEspectral.Level1.prototype = {
         if (!isPaused) {
             initBtn = game.add.button(380, 355, 'playBtn', this.initLevel, this, 1, 1, 0);
         } else {
-            continueBtn = game.add.button(width + 90, 355, 'continueBtn', this.initLevel, this, 1, 1, 0);
+            continueBtn = game.add.button(width + 150, 355, 'continueBtn', this.initLevel, this, 1, 1, 0);
         }
     },
     initLevel() {
@@ -162,6 +170,8 @@ RutaEspectral.Level1.prototype = {
             game.paused = false;
             isPaused = false;
             continueBtn.kill();
+            countLives += 1;
+            game.state.start('Level1_1');
         }
     },
     resetPlayer() {
@@ -188,5 +198,48 @@ RutaEspectral.Level1.prototype = {
                 w += 22;
             }
         }
+    },
+    randomPosition: function () {
+        return {
+            w: (400 + (Math.floor(Math.random() * (900 - 1) + 1))),
+            h: (Math.floor(Math.random() * (550 - 1) + 1))
+        };
+    },
+    determinePlanetPosition: function () {
+        var randomPlanet = Math.floor(Math.random() * 3);
+        var element;
+        switch (randomPlanet) {
+            case 0:
+                element = {
+                    w: 1040,
+                    h: 60
+                }
+                break;
+            case 1:
+                element = {
+                    w: 450,
+                    h: 20
+                }
+                break;
+            case 2:
+                element = {
+                    w: 700,
+                    h: 120
+                }
+                break;
+            case 3:
+                element = {
+                    w: 1100,
+                    h: 550
+                }
+                break;
+            default:
+                element = {
+                    w: 1100,
+                    h: 550
+                }
+                break;
+        }
+        return element;
     }
 };

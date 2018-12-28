@@ -13,9 +13,9 @@ RutaEspectral.AvatarSelected.prototype = {
         game.load.image(armSelected.key, 'assets/avatarOptions/' + armSelected.key + '.png');
         selectedSprite = RutaEspectral.selectSprite(hairSelected.key, headSelected.key, armSelected.key, footSelected.key);
         if (selectedSprite != -1) {
-            game.load.spritesheet('sprite' + selectedSprite, 'assets/sprites/sayHello/sprite' + selectedSprite + '.png', sayHelloSpriteSizes[selectedSprite].width, sayHelloSpriteSizes[selectedSprite].height);
+            game.load.spritesheet('sprite' + selectedSprite, 'assets/sprites/sayHello/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].widthHS, spriteSizes[selectedSprite].heightHS);
         } else {
-            game.load.spritesheet('spriteA', 'assets/sprites/sayHello/spriteA.png', sayHelloSpriteSizes[sayHelloSpriteSizes.length - 1].width, sayHelloSpriteSizes[sayHelloSpriteSizes.length - 1].height);
+            game.load.spritesheet('spriteA', 'assets/sprites/sayHello/spriteA.png', spriteSizes[spriteSizes.length - 1].widthHS, spriteSizes[spriteSizes.length - 1].heightHS);
             //game.load.spritesheet('sprite12', 'assets/sprites/sayHello/sprite0.png', 241, 300);
         }
     },
@@ -42,7 +42,7 @@ RutaEspectral.AvatarSelected.prototype = {
         });
     },
     playGame: function (e) {
-        this.state.start('Level1');
+        this.state.start('GoToShip');
     },
     backPress: function (e) {
         this.state.start('AvatarConfig');

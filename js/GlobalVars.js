@@ -115,189 +115,221 @@ var RutaEspectral = {
 };
 var headSelected, hairSelected, footSelected, armSelected;
 var velocityLevel1 = 80;
-var spriteSizes = [{
-    width: 65.18,
-    height: 100
-}, {
-    width: 69.09,
-    height: 100
-}, {
-    width: 70.55,
-    height: 100
-}, {
-    width: 68.18,
-    height: 100
-}, {
-    width: 67.73,
-    height: 100
-}, {
-    width: 71,
-    height: 100
-}, {
-    width: 69.82,
-    height: 100
-}, {
-    width: 67.1,
-    height: 100
-}, {
-    width: 68.91,
-    height: 100
-}, {
-    width: 67.1,
-    height: 100
-}, {
-    width: 67.55,
-    height: 100
-}, {
-    width: 63.82,
-    height: 100
-}, {
-    width: 59.91,
-    height: 100
-}];
 
-sayHelloSpriteSizes = [{
+var spriteSizes = [{
     name: "sprite0",
-    width: 234,
-    height: 300
+    widthHS: 234,
+    heightHS: 300,
+    width: 74.82,
+    height: 100
 }, {
     name: "sprite1",
-    width: 236,
-    height: 300
+    widthHS: 236,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite2",
-    width: 246,
-    height: 300
+    widthHS: 246,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite3",
-    width: 249,
-    height: 300
+    widthHS: 249,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite4",
-    width: 232,
-    height: 300
+    widthHS: 232,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite5",
-    width: 238,
-    height: 300
+    widthHS: 238,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite6",
-    width: 241,
-    height: 300
+    widthHS: 241,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite7",
-    width: 239,
-    height: 300
+    widthHS: 239,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite8",
-    width: 239,
-    height: 300
+    widthHS: 239,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite9",
-    width: 233,
-    height: 300
+    widthHS: 233,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite10",
-    width: 226,
-    height: 300
+    widthHS: 226,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite11",
-    width: 215,
-    height: 300
+    widthHS: 215,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite12",
-    width: 236,
-    height: 300
+    widthHS: 236,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite13",
+    widthHS: 234,
+    heightHS: 300,
     width: 234,
-    height: 300
+    height: 100
 }, {
     name: "sprite14",
-    width: 230,
-    height: 300
+    widthHS: 230,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite15",
-    width: 233,
-    height: 300
+    widthHS: 233,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite16",
+    widthHS: 234,
+    heightHS: 300,
     width: 234,
-    height: 300
+    height: 100
 }, {
     name: "sprite17",
-    width: 230,
-    height: 300
+    widthHS: 230,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite18",
-    width: 247,
-    height: 300
+    widthHS: 247,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite19",
-    width: 239,
-    height: 300
+    widthHS: 239,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite20",
-    width: 230,
-    height: 300
+    widthHS: 230,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite21",
-    width: 225,
-    height: 300
+    widthHS: 225,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite22",
+    widthHS: 234,
+    heightHS: 300,
     width: 234,
-    height: 300
+    height: 100
 }, {
     name: "sprite23",
-    width: 230,
-    height: 300
+    widthHS: 230,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite24",
-    width: 233,
-    height: 300
+    widthHS: 233,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite25",
-    width: 225,
-    height: 300
+    widthHS: 225,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite26",
-    width: 247,
-    height: 300
+    widthHS: 247,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite27",
-    width: 238,
-    height: 300
+    widthHS: 238,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite28",
-    width: 231,
-    height: 300
+    widthHS: 231,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite29",
-    width: 238,
-    height: 300
+    widthHS: 238,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite30",
-    width: 216,
-    height: 300
+    widthHS: 216,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite31",
-    width: 223,
-    height: 300
+    widthHS: 223,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite32",
-    width: 214,
-    height: 300
+    widthHS: 214,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite33",
-    width: 212,
-    height: 300
+    widthHS: 212,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite34",
-    width: 211,
-    height: 300
+    widthHS: 211,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }, {
     name: "sprite35",
-    width: 219,
-    height: 300
+    widthHS: 219,
+    heightHS: 300,
+    width: 234,
+    height: 100
 }];

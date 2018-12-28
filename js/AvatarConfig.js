@@ -69,13 +69,13 @@ RutaEspectral.AvatarConfig = function (game) {};
 RutaEspectral.AvatarConfig.prototype = {
     preload: function () {
         for (var i = 0; i < 6; i++) {
+            if (i < 2) {
+                game.load.spritesheet('armBtn' + i, 'assets/buttons/ArmBtn' + i + '.png', buttonSize.width, buttonSize.height);
+                game.load.image('arm' + i, 'assets/avatarOptions/arm' + i + '.png');
+            }
             if (i < 4) {
                 game.load.spritesheet('footBtn' + i, 'assets/buttons/FootBtn' + i + '.png', buttonSize.width, buttonSize.height);
                 game.load.image('foot' + i, 'assets/avatarOptions/foot' + i + '.png');
-
-                game.load.spritesheet('armBtn' + i, 'assets/buttons/ArmBtn' + i + '.png', buttonSize.width, buttonSize.height);
-                game.load.image('arm' + i, 'assets/avatarOptions/arm' + i + '.png');
-
                 game.load.spritesheet('headBtn' + i, 'assets/buttons/HeadBtn' + i + '.png', buttonSize.width, buttonSize.height);
                 game.load.image('head' + i, 'assets/avatarOptions/head' + i + '.png');
             }
@@ -120,8 +120,8 @@ RutaEspectral.AvatarConfig.prototype = {
         //arm Buttons
         game.add.button(buttonPosition.initPosBtnX, buttonPosition.initPosBtnY + buttonPosition.distanceSectionBtn + (2 * buttonPosition.distanceBtn), 'armBtn0', this.actionArm, this, 1, 1, 0);
         game.add.button(buttonPosition.initPosBtnX + buttonPosition.distanceBtn, buttonPosition.initPosBtnY + buttonPosition.distanceSectionBtn + (2 * buttonPosition.distanceBtn), 'armBtn1', this.actionArm, this, 1, 1, 0);
-        game.add.button(buttonPosition.initPosBtnX + (2 * buttonPosition.distanceBtn) + buttonPosition.distanceSectionBtn, buttonPosition.initPosBtnY + buttonPosition.distanceSectionBtn + (2 * buttonPosition.distanceBtn), 'armBtn2', this.actionArm, this, 1, 1, 0);
-        game.add.button(buttonPosition.initPosBtnX + (3 * buttonPosition.distanceBtn) + buttonPosition.distanceSectionBtn, buttonPosition.initPosBtnY + buttonPosition.distanceSectionBtn + (2 * buttonPosition.distanceBtn), 'armBtn3', this.actionArm, this, 1, 1, 0);
+        // game.add.button(buttonPosition.initPosBtnX + (2 * buttonPosition.distanceBtn) + buttonPosition.distanceSectionBtn, buttonPosition.initPosBtnY + buttonPosition.distanceSectionBtn + (2 * buttonPosition.distanceBtn), 'armBtn2', this.actionArm, this, 1, 1, 0);
+        // game.add.button(buttonPosition.initPosBtnX + (3 * buttonPosition.distanceBtn) + buttonPosition.distanceSectionBtn, buttonPosition.initPosBtnY + buttonPosition.distanceSectionBtn + (2 * buttonPosition.distanceBtn), 'armBtn3', this.actionArm, this, 1, 1, 0);
         //foot Buttons
         game.add.button(buttonPosition.initPosBtnX, buttonPosition.initPosBtnY + (buttonPosition.distanceSectionBtn * 2) + (3 * buttonPosition.distanceBtn), 'footBtn0', this.actionFoot, this, 1, 1, 0);
         game.add.button(buttonPosition.initPosBtnX + buttonPosition.distanceBtn, buttonPosition.initPosBtnY + (buttonPosition.distanceSectionBtn * 2) + (3 * buttonPosition.distanceBtn), 'footBtn1', this.actionFoot, this, 1, 1, 0);
@@ -130,10 +130,10 @@ RutaEspectral.AvatarConfig.prototype = {
         //hair Buttons
         game.add.button(buttonPosition.initPosBtnX + (2 * buttonPosition.distanceBtn) + buttonPosition.distanceSectionBtn, buttonPosition.initPosBtnY, 'hairBtn0', this.actionHair, this, 1, 1, 0);
         game.add.button(buttonPosition.initPosBtnX + (3 * buttonPosition.distanceBtn) + buttonPosition.distanceSectionBtn, buttonPosition.initPosBtnY, 'hairBtn1', this.actionHair, this, 1, 1, 0);
-        game.add.button(buttonPosition.initPosBtnX + (4 * buttonPosition.distanceBtn) + buttonPosition.distanceSectionBtn, buttonPosition.initPosBtnY, 'hairBtn2', this.actionHair, this, 1, 1, 0);
-        game.add.button(buttonPosition.initPosBtnX + (2 * buttonPosition.distanceBtn) + buttonPosition.distanceSectionBtn, buttonPosition.initPosBtnY + buttonPosition.distanceBtn, 'hairBtn3', this.actionHair, this, 1, 1, 0);
+        game.add.button(buttonPosition.initPosBtnX + (2 * buttonPosition.distanceBtn) + buttonPosition.distanceSectionBtn, buttonPosition.initPosBtnY + buttonPosition.distanceSectionBtn + (2 * buttonPosition.distanceBtn), 'hairBtn2', this.actionHair, this, 1, 1, 0);
+        game.add.button(buttonPosition.initPosBtnX + (3 * buttonPosition.distanceBtn) + buttonPosition.distanceSectionBtn, buttonPosition.initPosBtnY + buttonPosition.distanceSectionBtn + (2 * buttonPosition.distanceBtn), 'hairBtn3', this.actionHair, this, 1, 1, 0);
         game.add.button(buttonPosition.initPosBtnX + (3 * buttonPosition.distanceBtn) + buttonPosition.distanceSectionBtn, buttonPosition.initPosBtnY + buttonPosition.distanceBtn, 'hairBtn4', this.actionHair, this, 1, 1, 0);
-        game.add.button(buttonPosition.initPosBtnX + (4 * buttonPosition.distanceBtn) + buttonPosition.distanceSectionBtn, buttonPosition.initPosBtnY + buttonPosition.distanceBtn, 'hairBtn5', this.actionHair, this, 1, 1, 0);
+        game.add.button(buttonPosition.initPosBtnX + (2 * buttonPosition.distanceBtn) + buttonPosition.distanceSectionBtn, buttonPosition.initPosBtnY + buttonPosition.distanceBtn, 'hairBtn5', this.actionHair, this, 1, 1, 0);
     },
 
 

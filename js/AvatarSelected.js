@@ -15,7 +15,7 @@ RutaEspectral.AvatarSelected.prototype = {
         if (selectedSprite != -1) {
             game.load.spritesheet('sprite' + selectedSprite, 'assets/sprites/sayHello/sprite' + selectedSprite + '.png', sayHelloSpriteSizes[selectedSprite].width, sayHelloSpriteSizes[selectedSprite].height);
         } else {
-            game.load.spritesheet('sprite12', 'assets/sprites/sayHello/sprite12.png', sayHelloSpriteSizes[12].width, sayHelloSpriteSizes[12].height);
+            game.load.spritesheet('spriteA', 'assets/sprites/sayHello/spriteA.png', sayHelloSpriteSizes[sayHelloSpriteSizes.length - 1].width, sayHelloSpriteSizes[sayHelloSpriteSizes.length - 1].height);
             //game.load.spritesheet('sprite12', 'assets/sprites/sayHello/sprite0.png', 241, 300);
         }
     },
@@ -30,7 +30,7 @@ RutaEspectral.AvatarSelected.prototype = {
             player.animations.play('sayHello');
 
         } else {
-            var player = game.add.sprite(80, 130, 'sprite' + 12);
+            var player = game.add.sprite(80, 130, 'spriteA');
             player.animations.add('sayHello', [0, 1, 2], 5, true);
             //player.scale.set(1);
             player.animations.play('sayHello');

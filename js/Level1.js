@@ -4,8 +4,9 @@ var isSuitCollected = false;
 var isPaused = false;
 var starts;
 var stbackround;
-var randomObstructions = (Math.floor(Math.random() * (6 - 3) + 3));
-
+var randomObstructions = (Math.floor(Math.random() * (7 - 3) + 3));
+var spaceA, spaceSuitPhysics = false;
+var isFinishLevel2 = false;
 RutaEspectral.Level1 = function (game) {};
 RutaEspectral.Level1.prototype = {
     preload: function () {
@@ -28,6 +29,8 @@ RutaEspectral.Level1.prototype = {
         game.load.image('star', 'assets/star.png');
         game.load.spritesheet('playBtn', 'assets/buttons/play2Btn.png', 134, 78);
         game.load.spritesheet('continueBtn', 'assets/buttons/continueBtn.png', 136, 79);
+        game.load.spritesheet('spriteA', 'assets/sprites/spriteA.png', spriteSizes[spriteSizes.length - 1].width, spriteSizes[spriteSizes.length - 1].height);
+
     },
     create: function () {
         game.add.tileSprite(0, 0, 1340, 600, 'background');
@@ -86,10 +89,11 @@ RutaEspectral.Level1.prototype = {
             var borderV = bordersWin.create(1338, i, 'px');
             borderV.body.immovable = true;
         }
-        var winFlag = bordersWin.create(game.world.width - 36, 360, 'winFlag');
+        var winFlag = bordersWin.create(game.world.width - 36, 320, 'winFlag');
         winFlag.body.immovable = true;
         borderV.body.immovable = true;
-        stbackround = game.add.image(715, 0, 'bgLives');
+        stbackround = game.add.image(640, 0, 'bgLives');
+        stbackround.scale.set(2, 1);
         stbackround.fixedToCamera = true;
         stars = game.add.group();
         stars.enableBody = true;
@@ -119,10 +123,13 @@ RutaEspectral.Level1.prototype = {
                 isSuitCollected = true;
                 game.paused = true;
                 isPaused = true;
+                player.body.velocity.x = 0;
+                player.body.velocity.y = 0;
                 this.infoText("¡No olvides de cuidarte! de la luz visible, luz infrarroja, Rayos ultravioletas, rayos X, rayos gamma, por cuanto algunas ondas que hacen parte del espectro electromagnético", player.position.x - 150, 480);
             }
             if (lostLive) {
                 countLives -= 1;
+                this.textAdvertence("¡No te choques con los asteroides!", player.position.x - 150, 300);
                 this.resetPlayer();
                 this.showLives();
                 if (countLives == 0) {
@@ -131,19 +138,55 @@ RutaEspectral.Level1.prototype = {
                     countLives = 3;
                 }
             }
-            player.body.velocity.x = 0;
             cursors = game.input.keyboard.createCursorKeys();
+            if (spaceSuitPhysics) {
+                var lostLive = game.physics.arcade.collide(spaceA, elements);
+                var winLevel = game.physics.arcade.collide(spaceA, bordersWin);
+                if (winLevel) {
+                    game.state.start('PassLevel');
+                }
+                spaceA.body.velocity.x = 0;
+                if (cursors.left.isDown) {
+                    //  Move to the left
+                    spaceA.body.velocity.x = -150;
+                    spaceA.animations.play('left');
+                } else if (cursors.right.isDown) {
+                    //  Move to the right
+                    spaceA.body.velocity.x = 150;
+                    spaceA.animations.play('right');
+                    //clicked = false;
+                } else {
+                    //  Stand still
+                    spaceA.animations.stop();
+                    spaceA.frame = 5;
+                }
+                //  Allow the player to jump if they are touching the ground.
+                if (cursors.up.isDown) {
+                    spaceA.body.velocity.y = -150;
+                }
+            } else {
+                player.body.velocity.x = 0;
+                if (cursors.left.isDown) {
+                    player.body.velocity.x = -velocityLevel1;
+                }
+                if (cursors.right.isDown) {
+                    player.body.velocity.x = velocityLevel1;
+                }
+                if (cursors.up.isDown) {
+                    player.body.velocity.y = -velocityLevel1;
+                }
+                if (cursors.down.isDown) {
+                    player.body.velocity.y = velocityLevel1;
+                }
+            }
+
             if (cursors.left.isDown) {
-                player.body.velocity.x = -velocityLevel1;
-            }
-            if (cursors.right.isDown) {
-                player.body.velocity.x = velocityLevel1;
-            }
-            if (cursors.up.isDown) {
-                player.body.velocity.y = -velocityLevel1;
-            }
-            if (cursors.down.isDown) {
-                player.body.velocity.y = velocityLevel1;
+                if (spaceSuitPhysics) {
+                    spaceA.body.velocity.x = -velocityLevel1;
+                    spaceA.animations.play('left');
+                } else {
+                    player.body.velocity.x = -velocityLevel1;
+                }
             }
         }
     },
@@ -167,6 +210,30 @@ RutaEspectral.Level1.prototype = {
             continueBtn = game.add.button(width + 150, 355, 'continueBtn', this.initLevel, this, 1, 1, 0);
         }
     },
+    textAdvertence(txt, width, height) {
+        game.paused = true;
+        bar = game.add.graphics();
+        bar.beginFill(0x003300, 0.4);
+        bar.drawRect(width - 20, 180, height + 20, 180);
+        var style = {
+            font: "20px Myriad pro",
+            fill: "#fff",
+            wordWrap: true,
+            wordWrapWidth: 480,
+            wordWrapHeight: 200,
+            align: "center",
+        };
+        text = game.add.text(0, 0, txt, style);
+        text.setTextBounds(width, 200, height, 200);
+        continueBtn = game.add.button(width + 80, 355, 'continueBtn', this.closeAdv, this, 1, 1, 0);
+
+    },
+    closeAdv: function () {
+        bar.kill();
+        text.kill();
+        continueBtn.kill();
+        game.paused = false;
+    },
     initLevel() {
         bar.kill();
         text.kill();
@@ -179,7 +246,11 @@ RutaEspectral.Level1.prototype = {
             isPaused = false;
             continueBtn.kill();
             countLives += 1;
-            game.state.start('Level1_1');
+            this.showLives();
+            this.setSpaceSuit(player.position.x, player.position.y);
+            player.kill();
+            spaceSuitPhysics = true;
+            // game.state.start('Level1_1');
         }
     },
     resetPlayer() {
@@ -270,5 +341,15 @@ RutaEspectral.Level1.prototype = {
         var minutes = "0" + Math.floor(s / 60);
         var seconds = "0" + (s - minutes * 60);
         return minutes.substr(-2) + ":" + seconds.substr(-2);
+    },
+    setSpaceSuit(x, y) {
+        spaceA = game.add.sprite(x, y, 'spriteA');
+        spaceA.animations.add('right', [7, 8, 9, 10], 8, true);
+        spaceA.animations.add('left', [0, 1, 2, 3], 8, true);
+        game.physics.arcade.enable(spaceA);
+        spaceA.body.bounce.y = 0.4;
+        spaceA.body.gravity.y = 300;
+        spaceA.body.collideWorldBounds = true;
+        game.camera.follow(spaceA, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
     }
 };

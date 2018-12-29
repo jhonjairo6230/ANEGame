@@ -8,7 +8,7 @@ RutaEspectral.GoToShip.prototype = {
         game.load.image('background', 'assets/backgrounds/GoToShipBG.png');
         game.load.image('platform', 'assets/level1/platform.png');
         game.load.image('rockS', 'assets/rockS.png');
-        game.load.spritesheet('playBtn', 'assets/buttons/play2Btn.png', 134, 78);
+        game.load.spritesheet('closeBtn', 'assets/buttons/closeBtn.png', 40, 40);
         selectedSprite = RutaEspectral.selectSprite(hairSelected.key, headSelected.key, armSelected.key, footSelected.key);
         if (selectedSprite != -1) {
             game.load.spritesheet('sprite' + selectedSprite, 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width, spriteSizes[selectedSprite].height);
@@ -24,19 +24,19 @@ RutaEspectral.GoToShip.prototype = {
         //Add planets
         elements = game.add.group();
         elements.enableBody = true;
-        var platform = elements.create(400, 430, 'platform');
+        var platform = elements.create(500, 410, 'platform');
         platform.body.immovable = true;
-        platform = elements.create(500, 380, 'platform');
+        platform = elements.create(600, 360, 'platform');
         platform.body.immovable = true;
-        platform = elements.create(600, 330, 'platform');
+        platform = elements.create(700, 310, 'platform');
         platform.body.immovable = true;
-        platform = elements.create(710, 300, 'platform');
+        platform = elements.create(800, 260, 'platform');
         platform.body.immovable = true;
-        platform = elements.create(830, 270, 'platform');
+        platform = elements.create(900, 210, 'platform');
         platform.body.immovable = true;
         rockS = game.add.group();
         rockS.enableBody = true;
-        rocket = rockS.create(1000, 230, 'rockS');
+        rocket = rockS.create(1100, 160, 'rockS');
         rocket.body.immovable = true;
         if (selectedSprite != -1) {
             player = game.add.sprite(200, 450, 'sprite' + selectedSprite);
@@ -47,10 +47,10 @@ RutaEspectral.GoToShip.prototype = {
         player.animations.add('left', [0, 1, 2, 3], 8, true);
         game.physics.arcade.enable(player);
         player.body.bounce.y = 0.4;
-        player.body.gravity.y = 300;
+        player.body.gravity.y = 400;
         player.body.collideWorldBounds = true;
         game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
-        this.infoText("¡Viajemos juntos!, en este nivel debes embarcarte en una nave espacial para recorrer el espacio en busqueda de tu traje espacial", 200, 500);
+        this.infoText(message1, 200, 200, 300, 90);
     },
     update: function () {
         var hitPlatform = game.physics.arcade.collide(player, elements);
@@ -62,51 +62,36 @@ RutaEspectral.GoToShip.prototype = {
             }
             //  Reset the players velocity (movement)
             player.body.velocity.x = 0;
-
             if (cursors.left.isDown) {
-                //  Move to the left
                 player.body.velocity.x = -150;
-
                 player.animations.play('left');
-
             } else if (cursors.right.isDown) {
-                //  Move to the right
                 player.body.velocity.x = 150;
-
                 player.animations.play('right');
-                //clicked = false;
             } else {
-                //  Stand still
                 player.animations.stop();
-
                 player.frame = 5;
             }
-
-            //  Allow the player to jump if they are touching the ground.
-            if (cursors.up.isDown && hitPlatform) {
+            if (cursors.up.isDown) {
                 player.body.velocity.y = -150;
             }
         }
     },
-    infoText(txt, width, height) {
+    infoText(txt, x, y, width, height) {
         barG = game.add.graphics();
         barG.beginFill(0x003300, 0.4);
-        barG.drawRect(width - 20, 100, height + 20, 100);
+        barG.drawRect(x, y, width, height);
         var style = {
             font: "20px Myriad pro",
             fill: "#fff",
             wordWrap: true,
-            wordWrapWidth: 480,
-            wordWrapHeight: 200,
+            wordWrapWidth: width,
+            wordWrapHeight: height,
             align: "center",
         };
-        textG = game.add.text(0, 0, txt, style);
-        textG.setTextBounds(width, 150, height, 150);
-        // if (!isPaused) {
-        initBtnG = game.add.button(380, 255, 'playBtn', this.initLevel, this, 1, 1, 0);
-        // } else {
-        //     continueBtn = game.add.button(width + 90, 355, 'continueBtn', this.initLevel, this, 1, 1, 0);
-        // }
+        textG = game.add.text(0, 20, txt, style);
+        textG.setTextBounds(x + 10, y, width, height);
+        initBtnG = game.add.button((x - 20) + width, y - 20, 'closeBtn', this.initLevel, this, 1, 1, 0);
     },
     initLevel: function () {
         isInitG = true;

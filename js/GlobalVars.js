@@ -118,7 +118,10 @@ var RutaEspectral = {
     },
 };
 var headSelected, hairSelected, footSelected, armSelected;
-var velocityLevel1 = 80;
+var velocityLevel1 = {
+    ship: 80,
+    suit: 50
+};
 
 var spriteSizes = [{
     name: "sprite0",

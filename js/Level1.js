@@ -4,7 +4,6 @@ var isInit = false,
     isSuitCollected = false,
     isPaused = false,
     spaceA, spaceSuitPhysics = false;
-var levelState = 1;
 var starts, stbackround;
 var randomObstructions = (Math.floor(Math.random() * (9 - 4) + 4));
 RutaEspectral.Level1 = function (game) {};

@@ -38,26 +38,26 @@ RutaEspectral.PassLevel.prototype = {
         switch (levelState) {
             case 1:
                 text = 'Nivel 2';
-                game.add.image(20, 140, 'starPrize');
+                game.add.image(40, 140, 'starPrize');
                 levelState = 2;
                 break;
             case 2:
                 text = 'Nivel 3';
-                game.add.image(20, 140, 'starPrize');
-                game.add.image(80, 80, 'starPrize');
+                game.add.image(40, 140, 'starPrize');
+                game.add.image(180, 80, 'starPrize');
                 levelState = 3;
                 break;
             case 3:
                 text = 'Nivel 4';
-                game.add.image(20, 140, 'starPrize');
-                game.add.image(80, 80, 'starPrize');
+                game.add.image(40, 140, 'starPrize');
+                game.add.image(180, 80, 'starPrize');
                 game.add.image(350, 22, 'starPrize');
                 levelState = 4;
                 break;
             case 4:
                 text = 'Nivel 5';
-                game.add.image(20, 140, 'starPrize');
-                game.add.image(80, 80, 'starPrize');
+                game.add.image(40, 140, 'starPrize');
+                game.add.image(180, 80, 'starPrize');
                 game.add.image(350, 22, 'starPrize');
                 game.add.image(520, 80, 'starPrize');
                 levelState = 5;

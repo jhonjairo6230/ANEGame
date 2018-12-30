@@ -3,9 +3,12 @@ var player, platforms, elements, cursors, bordersWin, waveCollition, bordersWin;
 RutaEspectral.Level2 = function (game) {};
 RutaEspectral.Level2.prototype = {
     preload: function () {
-        game.load.image('background', 'assets/level2/bgLevel2.png');
-        game.load.spritesheet('spriteA', 'assets/sprites/spriteA.png', spriteSizes[spriteSizes.length - 1].width, spriteSizes[spriteSizes.length - 1].height);
-        game.load.image('wave', 'assets/level1/wave.png');
+        game.load.image('background', 'assets/level2/BGLevel2.png');
+        game.load.spritesheet('spriteA', 'assets/sprites/spriteA.png', this.round(spriteSizes[spriteSizes.length - 1].width / 11, 3), spriteSizes[spriteSizes.length - 1].height);
+        game.load.image('wave', 'assets/level2/wave.png');
+        game.load.image('platform', 'assets/level2/platform.png');
+        game.load.image('bgLives', 'assets/level1/bgLives.png');
+        game.load.image('star', 'assets/star.png');
     },
     create: function () {
         game.add.tileSprite(0, 0, 2700, 600, 'background');
@@ -63,15 +66,12 @@ RutaEspectral.Level2.prototype = {
         bordersWin.enableBody = true;
         var winFlag = bordersWin.create(game.world.width - 36, 220, 'winFlag');
         winFlag.body.immovable = true;
-        // bordersLost = game.add.group();
-        // bordersLost.enableBody = true;
-        // for (var i = 0; i < 500; i++) {
-        //     var borderV = bordersWin.create(1496, i, 'px');
-        //     borderV.body.immovable = true;
-        // };
         var stbackround = game.add.image(640, 0, 'bgLives');
         stbackround.fixedToCamera = true;
         stbackround.scale.set(2, 1);
+        stars = game.add.group();
+        stars.enableBody = true;
+        stars.fixedToCamera = true;
         this.showLives();
         game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
     },
@@ -83,36 +83,23 @@ RutaEspectral.Level2.prototype = {
             game.state.start('PassLevel');
         }
         cursors = game.input.keyboard.createCursorKeys();
-        //  Reset the players velocity (movement)
         player.body.velocity.x = 0;
-
         if (cursors.left.isDown) {
-            //  Move to the left
             player.body.velocity.x = -150;
-
             player.animations.play('left');
-
         } else if (cursors.right.isDown) {
-            //  Move to the right
             player.body.velocity.x = 150;
-
             player.animations.play('right');
-            //clicked = false;
         } else {
-            //  Stand still
             player.animations.stop();
-
             player.frame = 5;
         }
-
-        //  Allow the player to jump if they are touching the ground.
         if (cursors.up.isDown) {
             player.body.velocity.y = -150;
         }
         game.physics.arcade.overlap(player, waveCollition, this.collectWave, null, this);
     },
     collectWave: function (player, wave) {
-        // Removes the star from the screen
         wave.kill();
     },
     showLives() {
@@ -128,5 +115,17 @@ RutaEspectral.Level2.prototype = {
                 w += 22;
             }
         }
+    },
+    round: function (num, decimal) {
+        var sign = (num >= 0 ? 1 : -1);
+        num = num * sign;
+        if (decimal === 0)
+            return sign * Math.round(num);
+        // round(x * 10 ^ decimal)
+        num = num.toString().split('e');
+        num = Math.round(+(num[0] + 'e' + (num[1] ? (+num[1] + decimal) : decimal)));
+        // x * 10 ^ (-decimal)
+        num = num.toString().split('e');
+        return sign * (num[0] + 'e' + (num[1] ? (+num[1] - decimal) : -decimal));
     }
 }

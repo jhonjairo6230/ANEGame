@@ -4,6 +4,7 @@ var countLives = 3;
 //tiempo para pasar el primer nivel en minutos
 var timeLevel1 = 1;
 var timerL1, timeRest;
+var levelState = 1;
 var RutaEspectral = {
     selectSprite: function (hairSelected, headSelected, armSelected, footSelected) {
         if (hairSelected == "hair0" && (headSelected == "head0" || headSelected == "head1") && (armSelected == "arm0" || armSelected == "arm1") && (footSelected == "foot0" || footSelected == "foot1")) {

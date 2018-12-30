@@ -11,9 +11,9 @@ RutaEspectral.GoToShip.prototype = {
         game.load.spritesheet('closeBtn', 'assets/buttons/closeBtn.png', 40, 40);
         selectedSprite = RutaEspectral.selectSprite(hairSelected.key, headSelected.key, armSelected.key, footSelected.key);
         if (selectedSprite != -1) {
-            game.load.spritesheet('sprite' + selectedSprite, 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width, spriteSizes[selectedSprite].height);
+            game.load.spritesheet('sprite' + selectedSprite, 'assets/sprites/sprite' + selectedSprite + '.png', this.round(spriteSizes[selectedSprite].width / 11, 5), spriteSizes[selectedSprite].height);
         } else {
-            game.load.spritesheet('spriteA', 'assets/sprites/spriteA.png', spriteSizes[spriteSizes.length - 1].width, spriteSizes[spriteSizes.length - 1].height);
+            game.load.spritesheet('spriteA', 'assets/sprites/spriteA.png', this.round(spriteSizes[spriteSizes.length - 1].width / 11, 3), spriteSizes[spriteSizes.length - 1].height);
         }
     },
     create: function () {
@@ -98,5 +98,17 @@ RutaEspectral.GoToShip.prototype = {
         barG.kill();
         textG.kill();
         initBtnG.kill();
+    },
+    round: function (num, decimal) {
+        var sign = (num >= 0 ? 1 : -1);
+        num = num * sign;
+        if (decimal === 0)
+            return sign * Math.round(num);
+        // round(x * 10 ^ decimal)
+        num = num.toString().split('e');
+        num = Math.round(+(num[0] + 'e' + (num[1] ? (+num[1] + decimal) : decimal)));
+        // x * 10 ^ (-decimal)
+        num = num.toString().split('e');
+        return sign * (num[0] + 'e' + (num[1] ? (+num[1] - decimal) : -decimal));
     }
 };

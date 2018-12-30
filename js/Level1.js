@@ -31,7 +31,7 @@ RutaEspectral.Level1.prototype = {
         game.load.spritesheet('playBtn', 'assets/buttons/play2Btn.png', 134, 78);
         game.load.spritesheet('continueBtn', 'assets/buttons/continueBtn.png', 136, 79);
         game.load.spritesheet('closeBtn', 'assets/buttons/closeBtn.png', 40, 40);
-        game.load.spritesheet('spriteA', 'assets/sprites/spriteA.png', spriteSizes[spriteSizes.length - 1].width, spriteSizes[spriteSizes.length - 1].height);
+        game.load.spritesheet('spriteA', 'assets/sprites/spriteA.png', this.round((spriteSizes[spriteSizes.length - 1].width) / 11, 3), spriteSizes[spriteSizes.length - 1].height);
 
     },
     create: function () {
@@ -64,9 +64,11 @@ RutaEspectral.Level1.prototype = {
         var planet5 = monE.create(750, 0, 'satellite');
         planet5.body.immovable = true;
         for (var i = 0; i <= randomObstructions; i++) {
-            var obstruction = elements.create(this.randomPosition().w, this.randomPosition().h, 'obstruction1');
+            var pos1 = this.randomPosition();
+            var obstruction = elements.create(pos1.w, pos1.h, 'obstruction1');
             obstruction.body.immovable = true;
-            obstruction = elements.create(this.randomPosition().w, this.randomPosition().h, 'obstruction2');
+            var pos2 = this.randomPosition();
+            obstruction = elements.create(pos2.w, pos2.h, 'obstruction2');
             obstruction.body.immovable = true;
         }
         light = game.add.group();
@@ -89,9 +91,12 @@ RutaEspectral.Level1.prototype = {
         var winFlag = bordersWin.create(game.world.width - 36, 320, 'winFlag');
         winFlag.body.immovable = true;
         borderV.body.immovable = true;
-        stbackround = game.add.image(640, 0, 'bgLives');
-        stbackround.scale.set(2, 1);
-        stbackround.fixedToCamera = true;
+        stbackround = game.add.group();
+        var st1 = game.add.image(640, 0, 'bgLives');
+        var st2 = game.add.image(0, 0, 'bgLives');
+        st1.scale.set(2, 1);
+        st1.fixedToCamera = true;
+        st2.fixedToCamera = true;
         stars = game.add.group();
         stars.enableBody = true;
         stars.fixedToCamera = true;
@@ -203,7 +208,7 @@ RutaEspectral.Level1.prototype = {
         // bar.drawRect(width - 20, 180, height + 20, 180);
         bar.drawRect(x, y, width, height);
         var style = {
-            font: letterSize + " Myriad pro",
+            font: letterSize + " Myriad",
             fill: "#fff",
             wordWrap: true,
             wordWrapWidth: width - 20,
@@ -255,8 +260,10 @@ RutaEspectral.Level1.prototype = {
     },
     resetPlayer() {
         if (player) {
-            realPlayer.kill();
             player.kill();
+        }
+        if (realPlayer) {
+            realPlayer.kill();
         }
         player = game.add.sprite(219, 200, 'rocket');
         realPlayer = game.add.sprite(239, 215, 'px');
@@ -332,7 +339,7 @@ RutaEspectral.Level1.prototype = {
         // If our timer is running, show the time in a nicely formatted way, else show 'Done!'
         if (timerL1.running) {
             timeRest = this.formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000));
-            game.debug.text(this.formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000)), 2, 14, "#0f0");
+            game.debug.text(this.formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000)), 15, 18, "#2565e5");
         } else {
             //game.debug.text("Done!", 2, 14, "#0f0");
             isInit = false;
@@ -349,7 +356,7 @@ RutaEspectral.Level1.prototype = {
         var seconds = "0" + (s - minutes * 60);
         return minutes.substr(-2) + ":" + seconds.substr(-2);
     },
-    setSpaceSuit(x, y) {
+    setSpaceSuit: function (x, y) {
         spaceA = game.add.sprite(x, y, 'spriteA');
         spaceA.animations.add('right', [7, 8, 9, 10], 8, true);
         spaceA.animations.add('left', [0, 1, 2, 3], 8, true);
@@ -358,5 +365,18 @@ RutaEspectral.Level1.prototype = {
         spaceA.body.gravity.y = 300;
         spaceA.body.collideWorldBounds = true;
         game.camera.follow(spaceA, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+    },
+    round: function (num, decimal) {
+        var sign = (num >= 0 ? 1 : -1);
+        num = num * sign;
+        if (decimal === 0)
+            return sign * Math.round(num);
+        // round(x * 10 ^ decimal)
+        num = num.toString().split('e');
+        num = Math.round(+(num[0] + 'e' + (num[1] ? (+num[1] + decimal) : decimal)));
+        // x * 10 ^ (-decimal)
+        num = num.toString().split('e');
+        return sign * (num[0] + 'e' + (num[1] ? (+num[1] - decimal) : -decimal));
     }
+
 };

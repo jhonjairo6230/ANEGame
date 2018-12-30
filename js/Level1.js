@@ -1,17 +1,18 @@
-var player, light, cursors, bordersWin, bordersLost, bar, text, initBtn, continueBtn, elements, spaceS, spaceSuit;
-var isInit = false;
-var isSuitCollected = false;
-var isPaused = false;
-var starts;
-var stbackround;
-var randomObstructions = (Math.floor(Math.random() * (7 - 3) + 3));
-var spaceA, spaceSuitPhysics = false;
-var isFinishLevel2 = false;
+var realPlayer, player, playerFire, light, cursors, bordersWin, bordersLost, bar, text, elements, spaceS, spaceSuit;
+var initBtn, continueBtn, closeBtn;
+var isInit = false,
+    isSuitCollected = false,
+    isPaused = false,
+    spaceA, spaceSuitPhysics = false,
+    isFinishLevel2 = false;
+var starts, stbackround;
+var randomObstructions = (Math.floor(Math.random() * (8 - 3) + 3));
 RutaEspectral.Level1 = function (game) {};
 RutaEspectral.Level1.prototype = {
     preload: function () {
         game.load.image('background', 'assets/level1/backround.png');
         game.load.image('rocket', 'assets/level1/rocket.png');
+        game.load.image('rocketFire', 'assets/level1/rocketFire.png');
         game.load.image('platform', 'assets/level1/platform.png');
         game.load.image('moon', 'assets/level1/moon.png');
         game.load.image('planet1', 'assets/level1/planet1.png');
@@ -29,6 +30,7 @@ RutaEspectral.Level1.prototype = {
         game.load.image('star', 'assets/star.png');
         game.load.spritesheet('playBtn', 'assets/buttons/play2Btn.png', 134, 78);
         game.load.spritesheet('continueBtn', 'assets/buttons/continueBtn.png', 136, 79);
+        game.load.spritesheet('closeBtn', 'assets/buttons/closeBtn.png', 40, 40);
         game.load.spritesheet('spriteA', 'assets/sprites/spriteA.png', spriteSizes[spriteSizes.length - 1].width, spriteSizes[spriteSizes.length - 1].height);
 
     },
@@ -51,11 +53,6 @@ RutaEspectral.Level1.prototype = {
         monE.enableBody = true;
         var moon = monE.create(game.world.width - 170, 1, 'moon');
         moon.body.immovable = true;
-        spaceS = game.add.group();
-        spaceS.enableBody = true;
-        var spacePos = this.determinePlanetPosition();
-        spaceSuit = spaceS.create(spacePos.w, spacePos.h, 'spaceSuit');
-        spaceSuit.body.immovable = true;
         var planet1 = monE.create(1040, 60, 'planet1');
         planet1.body.immovable = true;
         var planet2 = monE.create(450, 20, 'planet2');
@@ -98,25 +95,24 @@ RutaEspectral.Level1.prototype = {
         stars = game.add.group();
         stars.enableBody = true;
         stars.fixedToCamera = true;
-
+        spaceS = game.add.group();
+        spaceS.enableBody = true;
+        var spacePos = this.determinePlanetPosition();
+        spaceSuit = spaceS.create(spacePos.w, spacePos.h, 'spaceSuit');
+        spaceSuit.body.immovable = true;
         this.showLives();
-        this.infoText("Sabias que el azul del cielo es una parte del espectro electromagnético,ya que el cielo es un arco iris gigantesco, y el único color que vemos es el azul, pero encima de ese azul están todos los colores del arco iris, el rojo, el amarillo, verde, violeta. (luz visible)", 200, 550);
+        this.infoText(message2, '20px', false, 150, 150, 520, 180);
     },
     update: function () {
-        // var borderCollition = game.physics.arcade.collide(player, light);
-        var suitCollition = game.physics.arcade.collide(player, spaceS);
-        var lostLive = game.physics.arcade.collide(player, elements);
-        var finishWin = game.physics.arcade.collide(player, bordersWin);
-        // var finishLost = game.physics.arcade.collide(player, bordersLost);
-        if (finishWin && isSuitCollected) {
-            //game.state.start('Level2');
-        } else if (finishWin) {
+        var suitCollition = game.physics.arcade.collide(realPlayer, spaceS);
+        var lostLive = game.physics.arcade.collide(realPlayer, elements);
+        var finishWin = game.physics.arcade.collide(realPlayer, bordersWin);
+        if (finishWin && isSuitCollected) {} else if (finishWin) {
             game.paused = true;
             isPaused = true;
             this.resetPlayer();
-            this.infoText("debes encontrar el traje espacial", 700, 300);
+            this.infoText(message3, '20px', true, 700, 200, 300, 70);
         }
-        // if (finishLost) {}
         if (isInit) {
             if (suitCollition) {
                 spaceSuit.kill();
@@ -125,20 +121,25 @@ RutaEspectral.Level1.prototype = {
                 isPaused = true;
                 player.body.velocity.x = 0;
                 player.body.velocity.y = 0;
-                this.infoText("¡No olvides de cuidarte! de la luz visible, luz infrarroja, Rayos ultravioletas, rayos X, rayos gamma, por cuanto algunas ondas que hacen parte del espectro electromagnético", player.position.x - 150, 480);
+                realPlayer.body.velocity.x = 0;
+                realPlayer.body.velocity.y = 0;
+                this.infoText(message4, '20px', false, player.position.x - 150, 200, 380, 150);
             }
             if (lostLive) {
                 countLives -= 1;
-                this.textAdvertence("¡No te choques con los asteroides!", player.position.x - 150, 300);
-                this.resetPlayer();
-                this.showLives();
                 if (countLives == 0) {
                     game.state.start('Level1');
                     isInit = false;
                     countLives = 3;
                 }
+                playerFire = game.add.sprite(player.position.x, player.position.y, 'rocketFire');
+                game.paused = true;
+                player.kill();
+                realPlayer.kill();
+                this.infoText(message5, '20px', true, player.position.x - 150, 200, 300, 80);
+                this.showLives();
             }
-            cursors = game.input.keyboard.createCursorKeys();
+            // cursors = game.input.keyboard.createCursorKeys();
             if (spaceSuitPhysics) {
                 var lostLive = game.physics.arcade.collide(spaceA, elements);
                 var winLevel = game.physics.arcade.collide(spaceA, bordersWin);
@@ -165,18 +166,23 @@ RutaEspectral.Level1.prototype = {
                     spaceA.body.velocity.y = -150;
                 }
             } else {
+                realPlayer.body.velocity.x = 0;
                 player.body.velocity.x = 0;
                 if (cursors.left.isDown) {
                     player.body.velocity.x = -velocityLevel1;
+                    realPlayer.body.velocity.x = -velocityLevel1;
                 }
                 if (cursors.right.isDown) {
                     player.body.velocity.x = velocityLevel1;
+                    realPlayer.body.velocity.x = velocityLevel1;
                 }
                 if (cursors.up.isDown) {
                     player.body.velocity.y = -velocityLevel1;
+                    realPlayer.body.velocity.y = -velocityLevel1;
                 }
                 if (cursors.down.isDown) {
                     player.body.velocity.y = velocityLevel1;
+                    realPlayer.body.velocity.y = velocityLevel1;
                 }
             }
 
@@ -186,53 +192,46 @@ RutaEspectral.Level1.prototype = {
                     spaceA.animations.play('left');
                 } else {
                     player.body.velocity.x = -velocityLevel1;
+                    realPlayer.body.velocity.x = -velocityLevel1;
                 }
             }
         }
     },
-    infoText(txt, width, height) {
+    infoText(txt, letterSize, isAdvertence, x, y, width, height) {
         bar = game.add.graphics();
         bar.beginFill(0x003300, 0.4);
-        bar.drawRect(width - 20, 180, height + 20, 180);
+        // bar.drawRect(width - 20, 180, height + 20, 180);
+        bar.drawRect(x, y, width, height);
         var style = {
-            font: "20px Myriad pro",
+            font: letterSize + " Myriad pro",
             fill: "#fff",
             wordWrap: true,
-            wordWrapWidth: 480,
-            wordWrapHeight: 200,
+            wordWrapWidth: width - 20,
+            wordWrapHeight: height,
             align: "center",
         };
-        text = game.add.text(0, 0, txt, style);
-        text.setTextBounds(width, 200, height, 200);
-        if (!isPaused) {
-            initBtn = game.add.button(380, 355, 'playBtn', this.initLevel, this, 1, 1, 0);
+        text = game.add.text(10, 20, txt, style);
+        // text.setTextBounds(width, 200, height, 200);
+        text.setTextBounds(x, y, width, height);
+        if (isAdvertence) {
+            closeBtn = game.add.button((x - 20) + width, y - 20, 'closeBtn', this.closeAdv, this, 1, 1, 0);
         } else {
-            continueBtn = game.add.button(width + 150, 355, 'continueBtn', this.initLevel, this, 1, 1, 0);
+            if (!isPaused) {
+                initBtn = game.add.button(x + (width / 2) - 67, y + height, 'playBtn', this.initLevel, this, 1, 1, 0);
+            } else {
+                continueBtn = game.add.button(x + (width / 2) - 67, y + height, 'continueBtn', this.initLevel, this, 1, 1, 0);
+            }
         }
     },
-    textAdvertence(txt, width, height) {
-        game.paused = true;
-        bar = game.add.graphics();
-        bar.beginFill(0x003300, 0.4);
-        bar.drawRect(width - 20, 180, height + 20, 180);
-        var style = {
-            font: "20px Myriad pro",
-            fill: "#fff",
-            wordWrap: true,
-            wordWrapWidth: 480,
-            wordWrapHeight: 200,
-            align: "center",
-        };
-        text = game.add.text(0, 0, txt, style);
-        text.setTextBounds(width, 200, height, 200);
-        continueBtn = game.add.button(width + 80, 355, 'continueBtn', this.closeAdv, this, 1, 1, 0);
-
-    },
     closeAdv: function () {
+        if (playerFire) {
+            playerFire.kill();
+        }
         bar.kill();
         text.kill();
-        continueBtn.kill();
+        closeBtn.kill();
         game.paused = false;
+        this.resetPlayer();
     },
     initLevel() {
         bar.kill();
@@ -249,20 +248,28 @@ RutaEspectral.Level1.prototype = {
             this.showLives();
             this.setSpaceSuit(player.position.x, player.position.y);
             player.kill();
+            realPlayer.kill();
             spaceSuitPhysics = true;
             // game.state.start('Level1_1');
         }
     },
     resetPlayer() {
         if (player) {
+            realPlayer.kill();
             player.kill();
         }
         player = game.add.sprite(219, 200, 'rocket');
+        realPlayer = game.add.sprite(239, 215, 'px');
         game.physics.arcade.enable(player);
+        game.physics.arcade.enable(realPlayer);
         player.body.bounce.y = 0.2;
         player.body.gravity.y = 200;
+        realPlayer.body.bounce.y = 0.2;
+        realPlayer.body.gravity.y = 200;
         player.body.collideWorldBounds = true;
-        game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+        realPlayer.body.collideWorldBounds = true;
+        game.camera.follow(realPlayer, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+        cursors = game.input.keyboard.createCursorKeys();
     },
     showLives() {
         if (stars) {

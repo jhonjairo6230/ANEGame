@@ -5,11 +5,11 @@ var isInit = false,
     isPaused = false,
     spaceA, spaceSuitPhysics = false;
 var starts, stbackround;
-var randomObstructions = (Math.floor(Math.random() * (9 - 4) + 4));
+var randomObstructions = (Math.floor(Math.random() * (60 - 50) + 50));
 RutaEspectral.Level1 = function (game) {};
 RutaEspectral.Level1.prototype = {
     preload: function () {
-        game.load.image('background', 'assets/level1/backround.png');
+        game.load.image('background', 'assets/level1/background.png');
         game.load.image('rocket', 'assets/level1/rocket.png');
         game.load.image('rocketFire', 'assets/level1/rocketFire.png');
         game.load.image('platform', 'assets/level1/platform.png');
@@ -34,8 +34,8 @@ RutaEspectral.Level1.prototype = {
 
     },
     create: function () {
-        game.add.tileSprite(0, 0, 1340, 600, 'background');
-        game.world.setBounds(0, 0, 1340, 600);
+        game.add.tileSprite(0, 0, 10000, 600, 'background');
+        game.world.setBounds(0, 0, 10000, 600);
         game.renderer.roundPixels = true;
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -48,16 +48,8 @@ RutaEspectral.Level1.prototype = {
         planet.enableBody = true;
         var moon = planet.create(game.world.width - 170, 1, 'moon');
         moon.body.immovable = true;
-        var planet1 = planet.create(1040, 60, 'planet1');
-        planet1.body.immovable = true;
-        var planet2 = planet.create(450, 20, 'planet2');
-        planet2.body.immovable = true;
-        var planet3 = planet.create(700, 120, 'planet3');
-        planet3.body.immovable = true;
-        var planet4 = planet.create(1100, 550, 'planet4');
-        planet4.body.immovable = true;
-        var planet5 = planet.create(750, 0, 'satellite');
-        planet5.body.immovable = true;
+        this.addPlanets(planet);
+
         spaceS = game.add.group();
         spaceS.enableBody = true;
         var spacePos = this.determinePlanetPosition();
@@ -84,8 +76,8 @@ RutaEspectral.Level1.prototype = {
         // }
         bordersWin = game.add.group();
         bordersWin.enableBody = true;
-        for (var i = 0; i < 600; i++) {
-            var borderV = bordersWin.create(1338, i, 'px');
+        for (var i = 320; i < 400; i++) {
+            var borderV = bordersWin.create(9999, i, 'px');
             borderV.body.immovable = true;
         }
         var winFlag = bordersWin.create(game.world.width - 36, 320, 'winFlag');
@@ -309,8 +301,8 @@ RutaEspectral.Level1.prototype = {
     },
     randomPosition: function () {
         return {
-            w: (400 + (Math.floor(Math.random() * (900 - 1) + 1))),
-            h: (Math.floor(Math.random() * (550 - 1) + 1))
+            w: (400 + (Math.floor(Math.random() * (9999 - 1) + 1))),
+            h: (Math.floor(Math.random() * (555 - 1) + 1))
         };
     },
     determinePlanetPosition: function () {
@@ -395,6 +387,31 @@ RutaEspectral.Level1.prototype = {
         // x * 10 ^ (-decimal)
         num = num.toString().split('e');
         return sign * (num[0] + 'e' + (num[1] ? (+num[1] - decimal) : -decimal));
-    }
+    },
+    addPlanets: function (planet) {
+        for (var i = 0; i < planet1.length; i++) {
+            // for (var j = 0; j < 4; j++) {
+            // var j = (Math.floor(Math.random() * (4 - 1) + 1));
+            // var pos = this.randomPosition();
+            //1040,60
+            var p1 = planet.create(planet1[i].x, planet1[i].y, 'planet1');
+            p1.body.immovable = true;
+            var p2 = planet.create(planet2[i].x, planet2[i].y, 'planet2');
+            p2.body.immovable = true;
+            // //450,20
+            // var planet2 = planet.create(pos.w, pos.h, 'planet' + j);
+            // planet2.body.immovable = true;
+            // //700,120
+            // var planet3 = planet.create(pos.w, pos.h, 'planet' + j);
+            // planet3.body.immovable = true;
+            // //110,550
+            // var planet4 = planet.create(pos.w, pos.h, 'planet' + j);
+            // planet4.body.immovable = true;
+            // //750,0
+            // var planet5 = planet.create(pos.w, pos.h, 'satellite');
+            // planet5.body.immovable = true;
+            // }
+        }
 
+    }
 };

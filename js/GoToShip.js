@@ -11,9 +11,10 @@ RutaEspectral.GoToShip.prototype = {
         game.load.spritesheet('closeBtn', 'assets/buttons/closeBtn.png', 40, 40);
         selectedSprite = RutaEspectral.selectSprite(hairSelected.key, headSelected.key, armSelected.key, footSelected.key);
         if (selectedSprite != -1) {
-            game.load.spritesheet('sprite' + selectedSprite, 'assets/sprites/sprite' + selectedSprite + '.png', this.round(spriteSizes[selectedSprite].width / 11, 5), spriteSizes[selectedSprite].height);
+            var width = spriteSizes[selectedSprite].width / 11;
+            game.load.spritesheet('sprite' + selectedSprite, 'assets/sprites/sprite' + selectedSprite + '.png', width, spriteSizes[selectedSprite].height, 11);
         } else {
-            game.load.spritesheet('spriteA', 'assets/sprites/spriteA.png', this.round(spriteSizes[spriteSizes.length - 1].width / 11, 3), spriteSizes[spriteSizes.length - 1].height);
+            game.load.spritesheet('spriteA', 'assets/sprites/spriteA.png', this.round(spriteSizes[spriteSizes.length - 1].width / 11, 1), spriteSizes[spriteSizes.length - 1].height, 11);
         }
     },
     create: function () {
@@ -43,8 +44,8 @@ RutaEspectral.GoToShip.prototype = {
         } else {
             player = game.add.sprite(80, 130, 'spriteA');
         }
-        player.animations.add('right', [7, 8, 9, 10], 8, true);
-        player.animations.add('left', [0, 1, 2, 3], 8, true);
+        player.animations.add('right', [7, 8], 8, true);
+        player.animations.add('left', [0, 1], 8, true);
         game.physics.arcade.enable(player);
         player.body.bounce.y = 0.4;
         player.body.gravity.y = 400;

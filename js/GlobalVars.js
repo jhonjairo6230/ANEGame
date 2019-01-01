@@ -2,7 +2,7 @@ var game;
 //Total de vidas iniciales del juego
 var countLives = 3;
 //tiempo para pasar el primer nivel en minutos
-var timeLevel1 = 1;
+var timeLevel1 = 3;
 var timerL1, timeRest;
 var levelState = 1;
 var RutaEspectral = {
@@ -134,7 +134,7 @@ var spriteSizes = [{
     name: "sprite1",
     widthHS: 236,
     heightHS: 300,
-    width: 498,
+    width: 496,
     height: 60
 }, {
     name: "sprite2",

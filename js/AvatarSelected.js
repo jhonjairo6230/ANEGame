@@ -1,4 +1,5 @@
 var selectedSprite;
+
 RutaEspectral.AvatarSelected = function (game) {
 
 };

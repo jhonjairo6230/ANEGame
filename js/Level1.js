@@ -1,12 +1,12 @@
-var realPlayer, player, playerFire, light, cursors, bordersWin, bordersLost, bar, text, elements, spaceS, spaceSuit;
+var realPlayer, player, playerFire, planet, cursors, bordersWin, bordersLost, bar, text, elements, spaceS, spaceSuit;
 var initBtn, continueBtn, closeBtn;
 var isInit = false,
     isSuitCollected = false,
     isPaused = false,
-    spaceA, spaceSuitPhysics = false;
+    spaceA, spaceSuitPhysics = false,
+    collected = false;
 var starts, stbackround;
 var elementsCollected = 0;
-var collected = false;
 var randomObstructions = (Math.floor(Math.random() * (60 - 50) + 50));
 RutaEspectral.Level1 = function (game) {};
 RutaEspectral.Level1.prototype = {
@@ -49,13 +49,12 @@ RutaEspectral.Level1.prototype = {
         game.world.setBounds(0, 0, 10000, 600);
         game.renderer.roundPixels = true;
         game.physics.startSystem(Phaser.Physics.ARCADE);
-
         // timerL1 = game.time.create(false);
         // timerEvent = timerL1.add(Phaser.Timer.MINUTE * timeLevel1 + Phaser.Timer.SECOND * 0, this.endTimer, this);
         // // Start the timer
         // timerL1.start();
         //Add planets
-        var planet = game.add.group();
+        planet = game.add.group();
         planet.enableBody = true;
         var moon = planet.create(game.world.width - 170, 1, 'moon');
         moon.body.immovable = true;
@@ -69,6 +68,7 @@ RutaEspectral.Level1.prototype = {
         // spaceSuit.body.immovable = true;
         elements = game.add.group();
         elements.enableBody = true;
+        this.addObstructions();
         // for (var i = 0; i <= randomObstructions; i++) {
         //     var pos1 = this.randomPosition();
         //     var obstruction = elements.create(pos1.w, pos1.h, 'obstruction1');
@@ -108,17 +108,17 @@ RutaEspectral.Level1.prototype = {
         this.infoText(message2, '20px', false, 150, 150, 520, 180);
     },
     update: function () {
-        //var suitCollition = game.physics.arcade.collide(realPlayer, spaceS);
-
+        var planetCollition = game.physics.arcade.collide(realPlayer, planet);
+        var c1 = game.physics.arcade.collide(elements, planet);
         //var suitCollition = this.collectSuit(realPlayer, spaceS);
-        var suitCollition = false;
+
         game.physics.arcade.overlap(realPlayer, spaceS, this.collectSuit, null, this);
         var lostLive = game.physics.arcade.collide(realPlayer, elements);
         var finishWin = game.physics.arcade.collide(realPlayer, bordersWin);
         if (finishWin && isSuitCollected) {} else if (finishWin) {
             game.paused = true;
             isPaused = true;
-            this.resetPlayer();
+            this.resetPlayer(realPlayer.position.x, realPlayer.position.y);
             this.infoText(message3, '20px', true, 700, 200, 300, 70);
         }
         if (isInit) {
@@ -132,9 +132,9 @@ RutaEspectral.Level1.prototype = {
                 realPlayer.body.velocity.x = 0;
                 realPlayer.body.velocity.y = 0;
                 collected = false;
-                this.infoText(message4, '20px', false, player.position.x - 150, 200, 380, 150);
+                this.infoText(message4, '20px', false, player.position.x - 50, 200, 380, 150);
             }
-            if (lostLive) {
+            if (lostLive || planetCollition) {
                 countLives -= 1;
                 if (countLives == 0) {
                     isInit = false;
@@ -142,6 +142,7 @@ RutaEspectral.Level1.prototype = {
                     isSuitCollected = false;
                     isPaused = false;
                     spaceSuitPhysics = false;
+                    elementsCollected = 0;
                     game.state.start('Level1');
                 }
                 playerFire = game.add.sprite(player.position.x, player.position.y, 'rocketFire');
@@ -169,7 +170,7 @@ RutaEspectral.Level1.prototype = {
                     }
                     game.paused = true;
                     spaceA.kill();
-                    this.infoText(message5, '20px', true, spaceA.position.x - 150, 200, 300, 80);
+                    this.infoText(message5, '20px', true, spaceA.position.x - 50, 200, 300, 80);
                     this.showLives();
                 }
                 spaceA.body.velocity.x = 0;
@@ -251,7 +252,7 @@ RutaEspectral.Level1.prototype = {
             text.kill();
             closeBtn.kill();
             game.paused = false;
-            this.resetPlayer();
+            this.resetPlayer(player.position.x - 150, player.position.y);
         } else {
             bar.kill();
             text.kill();
@@ -266,7 +267,7 @@ RutaEspectral.Level1.prototype = {
         if (!isPaused) {
             initBtn.kill();
             isInit = true;
-            this.resetPlayer();
+            this.resetPlayer(200, 200);
             timerL1 = game.time.create(false);
             timerEvent = timerL1.add(Phaser.Timer.MINUTE * timeLevel1 + Phaser.Timer.SECOND * 0, this.endTimer, this);
             // Start the timer
@@ -283,15 +284,17 @@ RutaEspectral.Level1.prototype = {
             spaceSuitPhysics = true;
         }
     },
-    resetPlayer() {
+    resetPlayer: function (x, y) {
         if (player) {
             player.kill();
         }
         if (realPlayer) {
             realPlayer.kill();
         }
-        player = game.add.sprite(219, 200, 'rocket');
-        realPlayer = game.add.sprite(239, 215, 'px');
+        // player = game.add.sprite(219, 200, 'rocket');
+        // realPlayer = game.add.sprite(239, 215, 'px');
+        player = game.add.sprite(x, y, 'rocket');
+        realPlayer = game.add.sprite(x + 20, y - 5, 'px');
         game.physics.arcade.enable(player);
         game.physics.arcade.enable(realPlayer);
         player.body.bounce.y = 0.2;
@@ -364,7 +367,7 @@ RutaEspectral.Level1.prototype = {
             // If our timer is running, show the time in a nicely formatted way, else show 'Done!'
             if (timerL1.running) {
                 timeRest = this.formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000));
-                game.debug.text(this.formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000)), 15, 18, "#2565e5");
+                game.debug.text(elementsCollected + "-" + this.formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000)), 15, 18, "#2565e5");
             } else {
                 //game.debug.text("Done!", 2, 14, "#0f0");
                 isInit = false;
@@ -399,6 +402,10 @@ RutaEspectral.Level1.prototype = {
             p1.body.immovable = true;
             var p2 = planet.create(planet2[i].x, planet2[i].y, 'planet2');
             p2.body.immovable = true;
+            var p3 = planet.create(planet3[i].x, planet3[i].y, 'planet3');
+            p3.body.immovable = true;
+            var p4 = planet.create(planet4[i].x, planet4[i].y, 'planet4');
+            p4.body.immovable = true;
         }
     },
     addSpaceSuit: function (spaceS) {
@@ -423,5 +430,71 @@ RutaEspectral.Level1.prototype = {
             collected = false;
         }
         //return collected;
+    },
+    addObstructions: function () {
+        for (var i = 0; i < 5; i++) {
+            var obstruction1 = elements.create(400 + (i * 400), 20, 'obstructionGroup');
+            obstruction1.body.immovable = true;
+            game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
+            obstruction1.body.velocity.setTo(-10, 100);
+            obstruction1.body.collideWorldBounds = true;
+            obstruction1.body.bounce.set(0.4);
+
+            var obstruction1 = elements.create(700 + (i * 600), 20, 'obstruction1');
+            obstruction1.body.immovable = true;
+            game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
+            obstruction1.body.velocity.setTo(-10, 100);
+            obstruction1.body.collideWorldBounds = true;
+            obstruction1.body.bounce.set(0.4);
+            var obstruction1 = elements.create(800 + (i * 580), 20, 'obstruction2');
+            obstruction1.body.immovable = true;
+            game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
+            obstruction1.body.velocity.setTo(-10, 100);
+            obstruction1.body.collideWorldBounds = true;
+            obstruction1.body.bounce.set(0.4);
+        }
+        for (var i = 5; i < 10; i++) {
+            var obstruction1 = elements.create(400 + (i * 400), 20, 'obstructionGroup');
+            obstruction1.body.immovable = true;
+            game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
+            obstruction1.body.velocity.setTo(10, 100);
+            obstruction1.body.collideWorldBounds = true;
+            obstruction1.body.bounce.set(0.3);
+
+            var obstruction1 = elements.create(700 + (i * 600), 20, 'obstruction1');
+            obstruction1.body.immovable = true;
+            game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
+            obstruction1.body.velocity.setTo(-10, 100);
+            obstruction1.body.collideWorldBounds = true;
+            obstruction1.body.bounce.set(0.5);
+
+            var obstruction1 = elements.create(800 + (i * 580), 20, 'obstruction2');
+            obstruction1.body.immovable = true;
+            game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
+            obstruction1.body.velocity.setTo(-10, 100);
+            obstruction1.body.collideWorldBounds = true;
+            obstruction1.body.bounce.set(0.5);
+        }
+        for (var i = 15; i < 20; i++) {
+            var obstruction1 = elements.create(400 + (i * 400), 20, 'obstructionGroup');
+            obstruction1.body.immovable = true;
+            game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
+            obstruction1.body.velocity.setTo(-10, 100);
+            obstruction1.body.collideWorldBounds = true;
+            obstruction1.body.bounce.set(0.4);
+
+            var obstruction1 = elements.create(700 + (i * 600), 20, 'obstruction1');
+            obstruction1.body.immovable = true;
+            game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
+            obstruction1.body.velocity.setTo(10, 100);
+            obstruction1.body.collideWorldBounds = true;
+            obstruction1.body.bounce.set(0.4);
+            var obstruction1 = elements.create(800 + (i * 580), 20, 'obstruction2');
+            obstruction1.body.immovable = true;
+            game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
+            obstruction1.body.velocity.setTo(10, 100);
+            obstruction1.body.collideWorldBounds = true;
+            obstruction1.body.bounce.set(0.4);
+        }
     }
 };

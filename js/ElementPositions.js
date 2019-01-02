@@ -72,3 +72,33 @@ var planet2 = [{
         y: 550
     }
 ];
+
+var spaceSuit = [{
+    name: "helmet",
+    x: 500,
+    y: 500
+}, {
+    name: "arm1",
+    x: 1300,
+    y: 200
+}, {
+    name: "arm2",
+    x: 2600,
+    y: 450
+}, {
+    name: "foot1",
+    x: 3300,
+    y: 250
+}, {
+    name: "foot2",
+    x: 4500,
+    y: 550
+}, {
+    name: "pant",
+    x: 6200,
+    y: 100
+}, {
+    name: "body",
+    x: 7800,
+    y: 350
+}];

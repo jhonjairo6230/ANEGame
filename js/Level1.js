@@ -4,8 +4,9 @@ var isInit = false,
     isSuitCollected = false,
     isPaused = false,
     spaceA, spaceSuitPhysics = false,
-    collected = false;
-var starts, stbackround, timerL2, video, sprite;
+    collected = false,
+    lLive = false;
+var starts, stbackround, timerL2;
 var helmet, body, arm1, arm2, pant, foot1, foot2;
 var elementsCollected = 0;
 var randomObstructions = (Math.floor(Math.random() * (60 - 50) + 50));
@@ -96,16 +97,18 @@ RutaEspectral.Level1.prototype = {
         this.addSuitElements();
     },
     update: function () {
-        this.buildSpaceSuit();
+        //this.buildSpaceSuit();
         var planetCollition = game.physics.arcade.collide(realPlayer, planet);
         game.physics.arcade.overlap(realPlayer, spaceS, this.collectSuit, null, this);
         var lostLive = game.physics.arcade.collide(realPlayer, elements);
         var finishWin = game.physics.arcade.collide(realPlayer, bordersWin);
-        if (finishWin && isSuitCollected) {} else if (finishWin) {
+        if (finishWin && isSuitCollected) {
+
+        } else if (finishWin) {
             game.paused = true;
             isPaused = true;
             this.resetPlayer(realPlayer.position.x, realPlayer.position.y);
-            this.infoText(message3, '20px', true, 700, 200, 300, 70);
+            this.infoText(message3, '20px', true, player.position.x - 250, 200, 300, 70);
         }
         if (isInit) {
             if (collected) {
@@ -135,16 +138,18 @@ RutaEspectral.Level1.prototype = {
                 game.paused = true;
                 player.kill();
                 realPlayer.kill();
-                this.infoText(message5, '20px', true, player.position.x - 150, 200, 300, 80);
                 this.showLives();
+                this.infoText(message5, '20px', true, player.position.x - 150, 200, 300, 80);
+
             }
             if (spaceSuitPhysics) {
                 var lostLive = game.physics.arcade.collide(spaceA, elements);
+                var planetC = game.physics.arcade.collide(spaceA, planet);
                 var winLevel = game.physics.arcade.collide(spaceA, bordersWin);
                 if (winLevel) {
                     game.state.start('PassLevel');
                 }
-                if (lostLive) {
+                if (lostLive || planetC) {
                     countLives -= 1;
                     if (countLives == 0) {
                         isInit = false;
@@ -154,10 +159,11 @@ RutaEspectral.Level1.prototype = {
                         spaceSuitPhysics = false;
                         game.state.start('Level1');
                     }
+                    lLive = true;
                     game.paused = true;
                     spaceA.kill();
-                    this.infoText(message5, '20px', true, spaceA.position.x - 50, 200, 300, 80);
                     this.showLives();
+                    this.infoText(message5, '20px', true, spaceA.position.x - 50, 200, 300, 80);
                 }
                 spaceA.body.velocity.x = 0;
                 if (cursors.left.isDown) {
@@ -184,6 +190,9 @@ RutaEspectral.Level1.prototype = {
                 }
                 if (player.position.x > 4800 && player.position.x < 4810) {
                     this.shootingStart(2);
+                }
+                if (player.position.x > 6800 && player.position.x < 6810) {
+                    this.shootingStart(3);
                 }
                 if (cursors.left.isDown) {
                     player.body.velocity.x = -velocityLevel1.ship;
@@ -247,7 +256,15 @@ RutaEspectral.Level1.prototype = {
             text.kill();
             closeBtn.kill();
             game.paused = false;
-            this.resetPlayer(player.position.x - 50, player.position.y);
+            isInit = false;
+            // countLives = 3;
+            isSuitCollected = false;
+            isPaused = false;
+            spaceSuitPhysics = false;
+            elementsCollected = 0;
+            lLive = false;
+            game.state.start('Level1');
+            // this.resetPlayer(player.position.x - 50, player.position.y);
         } else {
             bar.kill();
             text.kill();
@@ -271,10 +288,6 @@ RutaEspectral.Level1.prototype = {
             // timerL2 = game.time.create(false);
             // timerEvent = timerL2.add(Phaser.Timer.MINUTE * 0 + Phaser.Timer.SECOND * 10, this.deleteVideo, this);
             // timerL2.start();
-            video = game.add.video('astronauta');
-            sprite = video.addToWorld(800, 600, 1, 1, .7, .85);
-            video.play();
-
             game.paused = false;
             isPaused = false;
             continueBtn.kill();
@@ -381,6 +394,7 @@ RutaEspectral.Level1.prototype = {
             if (suitS.key == "part" + i) {
                 suitS.kill();
                 elementsCollected += 1;
+                this.buildSpaceSuit(i);
             }
         }
         if (elementsCollected == 7) {
@@ -464,7 +478,7 @@ RutaEspectral.Level1.prototype = {
                 var star = elements.create(3000, 10, 'starM');
                 break;
             case 3:
-                var star = elements.create(5000, 10, 'starM');
+                var star = elements.create(6300, 10, 'starM');
                 break;
             default:
                 break;
@@ -500,28 +514,28 @@ RutaEspectral.Level1.prototype = {
         foot2.fixedToCamera = true;
         foot2.visible = false;
     },
-    buildSpaceSuit: function () {
-        switch (elementsCollected) {
-            case 1:
+    buildSpaceSuit: function (element) {
+        switch (element) {
+            case 0:
                 helmet.visible = true;
                 break;
-            case 2:
+            case 1:
                 arm2.visible = true;
 
                 break;
-            case 3:
+            case 2:
                 arm1.visible = true;
                 break;
-            case 4:
+            case 3:
                 body.visible = true;
                 break;
-            case 5:
+            case 4:
                 pant.visible = true;
                 break;
-            case 6:
+            case 5:
                 foot1.visible = true;
                 break;
-            case 7:
+            case 6:
                 foot2.visible = true;
                 break;
             default:

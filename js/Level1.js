@@ -54,7 +54,6 @@ RutaEspectral.Level1.prototype = {
         game.load.spritesheet('continueBtn', 'assets/buttons/continueBtn.png', 136, 79);
         game.load.spritesheet('closeBtn', 'assets/buttons/closeBtn.png', 40, 40);
         game.load.spritesheet('spriteA', 'assets/sprites/spriteA.png', spriteSizes[spriteSizes.length - 1].width / 11, spriteSizes[spriteSizes.length - 1].height);
-        game.load.video('astronauta', 'assets/videos/astronauta.mp4');
     },
     create: function () {
         game.add.tileSprite(0, 0, 10000, 600, 'background');
@@ -164,7 +163,7 @@ RutaEspectral.Level1.prototype = {
                     game.paused = true;
                     spaceA.kill();
                     this.showLives();
-                    this.infoText(message5, '20px', true, spaceA.position.x - 50, 200, 300, 80);
+                    this.infoText(message5, '20px', true, spaceA.position.x - 150, 200, 300, 80);
                 }
                 spaceA.body.velocity.x = 0;
                 if (cursors.left.isDown) {

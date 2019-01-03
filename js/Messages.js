@@ -4,3 +4,9 @@ var message2 = 'Sabias que el azul del cielo es una parte del espectro electroma
 var message3 = '¡Debes encontrar el traje espacial!';
 var message4 = '¡No olvides de cuidarte! de la luz visible, luz infrarroja, Rayos ultravioletas, rayos X, rayos gamma, por cuanto algunas ondas que hacen parte del espectro electromagnético';
 var message5 = '¡No te choques con planetas o asteroides!';
+//Level 2
+var message6 = 'La capa de ozono. Creo que ya has escuchado de la capa de ozono y que ella es la que rodea la tierra y nos protege del espectro electromagnético que se encuentra en el espacio';
+var message7 = '¡Felicidades! encontraste las gafas, ahora puedes mirar el espectro eléctrico';
+var message8 = 'Ahora te enseñare que es frecuencia de onda; es un movimiento repetitivo por un periodo de tiempo.';
+var message9 = 'Clases de radiaciones: El espectro electromagnético, se encuentra dividido en radiación ionizante radiación no ionizante';
+var message10 = 'si deseas elegir el camino correcto debes encontrar las gafas';

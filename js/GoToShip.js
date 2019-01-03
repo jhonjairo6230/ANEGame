@@ -24,7 +24,7 @@ RutaEspectral.GoToShip.prototype = {
         timerEvent = timerL1.add(Phaser.Timer.MINUTE * 0 + Phaser.Timer.SECOND * 10, this.endTimer, this);
         timerL1.start();
         video = game.add.video('video');
-        sprite = video.addToWorld(800, 600, 1, 1, .7, .85);
+        sprite = video.addToWorld(800, 600, 1, 1, 1, 1);
         video.play();
     },
     render: function () {

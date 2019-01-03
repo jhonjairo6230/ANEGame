@@ -1,5 +1,4 @@
 (function () {
-
     game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game');
     game.state.add('Splash', RutaEspectral.Splash);
     game.state.add('AvatarConfig', RutaEspectral.AvatarConfig);
@@ -8,7 +7,5 @@
     game.state.add('Level1', RutaEspectral.Level1);
     game.state.add('PassLevel', RutaEspectral.PassLevel);
     game.state.add('Level2', RutaEspectral.Level2);
-    game.state.start('Splash');
-
-
+    game.state.start('Level1');
 })();

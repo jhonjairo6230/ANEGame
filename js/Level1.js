@@ -6,6 +6,7 @@ var isInit = false,
     spaceA, spaceSuitPhysics = false,
     collected = false;
 var starts, stbackround;
+var helmet, body, arm1, arm2, pant, foot1, foot2;
 var elementsCollected = 0;
 var randomObstructions = (Math.floor(Math.random() * (60 - 50) + 50));
 RutaEspectral.Level1 = function (game) {};
@@ -14,7 +15,6 @@ RutaEspectral.Level1.prototype = {
         game.load.image('background', 'assets/level1/background.png');
         game.load.image('rocket', 'assets/level1/rocket.png');
         game.load.image('rocketFire', 'assets/level1/rocketFire.png');
-        game.load.image('platform', 'assets/level1/platform.png');
         game.load.image('moon', 'assets/level1/moon.png');
         game.load.image('planet1', 'assets/level1/planet1.png');
         game.load.image('planet2', 'assets/level1/planet2.png');
@@ -25,6 +25,7 @@ RutaEspectral.Level1.prototype = {
         game.load.image('obstruction1', 'assets/level1/obstruction1.png');
         game.load.image('obstruction2', 'assets/level1/obstruction2.png');
         game.load.image('winFlag', 'assets/level1/winFlag.png');
+        game.load.image('starM', 'assets/level1/starMoving.png');
         // game.load.image('spaceSuit', 'assets/level1/spaceSuit.png');
         game.load.image('px', 'assets/pix.png');
         game.load.image('bgLives', 'assets/level1/bgLives.png');
@@ -38,6 +39,15 @@ RutaEspectral.Level1.prototype = {
         game.load.image('part5', 'assets/level1/foot1.png');
         game.load.image('part6', 'assets/level1/foot2.png');
 
+        game.load.image('helmet', 'assets/level1/elementsSuit/helmet.png');
+        game.load.image('arm1', 'assets/level1/elementsSuit/arm1.png');
+        game.load.image('arm2', 'assets/level1/elementsSuit/arm2.png');
+        game.load.image('body', 'assets/level1/elementsSuit/body.png');
+        game.load.image('pant', 'assets/level1/elementsSuit/pant.png');
+        game.load.image('foot1', 'assets/level1/elementsSuit/foot1.png');
+        game.load.image('foot2', 'assets/level1/elementsSuit/foot2.png');
+        game.load.image('bgSpaceSuit', 'assets/level1/elementsSuit/bgSpaceSuit.png');
+
         game.load.spritesheet('playBtn', 'assets/buttons/play2Btn.png', 134, 78);
         game.load.spritesheet('continueBtn', 'assets/buttons/continueBtn.png', 136, 79);
         game.load.spritesheet('closeBtn', 'assets/buttons/closeBtn.png', 40, 40);
@@ -49,43 +59,17 @@ RutaEspectral.Level1.prototype = {
         game.world.setBounds(0, 0, 10000, 600);
         game.renderer.roundPixels = true;
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        // timerL1 = game.time.create(false);
-        // timerEvent = timerL1.add(Phaser.Timer.MINUTE * timeLevel1 + Phaser.Timer.SECOND * 0, this.endTimer, this);
-        // // Start the timer
-        // timerL1.start();
-        //Add planets
         planet = game.add.group();
         planet.enableBody = true;
         var moon = planet.create(game.world.width - 170, 1, 'moon');
         moon.body.immovable = true;
         this.addPlanets(planet);
-
         spaceS = game.add.group();
         spaceS.enableBody = true;
         this.addSpaceSuit(spaceS);
-        // var spacePos = this.determinePlanetPosition();
-        // spaceSuit = spaceS.create(spacePos.w, spacePos.h, 'spaceSuit');
-        // spaceSuit.body.immovable = true;
         elements = game.add.group();
         elements.enableBody = true;
         this.addObstructions();
-        // for (var i = 0; i <= randomObstructions; i++) {
-        //     var pos1 = this.randomPosition();
-        //     var obstruction = elements.create(pos1.w, pos1.h, 'obstruction1');
-        //     obstruction.body.immovable = true;
-        //     var pos2 = this.randomPosition();
-        //     obstruction = elements.create(pos2.w, pos2.h, 'obstruction2');
-        //     obstruction.body.immovable = true;
-        // }
-        // light = game.add.group();
-        // light.enableBody = true;
-        // var l = light.create(219, 500, 'px');
-        // for (var i = 220; i < 1050; i++) {
-        //     l = light.create(i, 531, 'px');
-        //     l.body.immovable = true;
-        //     l = light.create(i, 100, 'px');
-        //     l.body.immovable = true;
-        // }
         bordersWin = game.add.group();
         bordersWin.enableBody = true;
         for (var i = 320; i < 400; i++) {
@@ -98,20 +82,22 @@ RutaEspectral.Level1.prototype = {
         stbackround = game.add.group();
         var st1 = game.add.image(640, 0, 'bgLives');
         var st2 = game.add.image(0, 0, 'bgLives');
+        var st3 = game.add.image(0, 30, 'bgSpaceSuit');
         st1.scale.set(2, 1);
         st1.fixedToCamera = true;
         st2.fixedToCamera = true;
+        st3.fixedToCamera = true;
+        //st3.scale.set(1, 3);
         stars = game.add.group();
         stars.enableBody = true;
         stars.fixedToCamera = true;
         this.showLives();
         this.infoText(message2, '20px', false, 150, 150, 520, 180);
+        this.addSuitElements();
     },
     update: function () {
+        this.buildSpaceSuit();
         var planetCollition = game.physics.arcade.collide(realPlayer, planet);
-        var c1 = game.physics.arcade.collide(elements, planet);
-        //var suitCollition = this.collectSuit(realPlayer, spaceS);
-
         game.physics.arcade.overlap(realPlayer, spaceS, this.collectSuit, null, this);
         var lostLive = game.physics.arcade.collide(realPlayer, elements);
         var finishWin = game.physics.arcade.collide(realPlayer, bordersWin);
@@ -190,6 +176,15 @@ RutaEspectral.Level1.prototype = {
             } else {
                 realPlayer.body.velocity.x = 0;
                 player.body.velocity.x = 0;
+                if (player.position.x > 590 && player.position.x < 600) {
+                    this.shootingStart(1);
+                }
+                if (player.position.x > 2800 && player.position.x < 2810) {
+                    this.shootingStart(2);
+                }
+                if (player.position.x > 4800 && player.position.x < 4810) {
+                    this.shootingStart(2);
+                }
                 if (cursors.left.isDown) {
                     player.body.velocity.x = -velocityLevel1.ship;
                     realPlayer.body.velocity.x = -velocityLevel1.ship;
@@ -291,8 +286,6 @@ RutaEspectral.Level1.prototype = {
         if (realPlayer) {
             realPlayer.kill();
         }
-        // player = game.add.sprite(219, 200, 'rocket');
-        // realPlayer = game.add.sprite(239, 215, 'px');
         player = game.add.sprite(x, y, 'rocket');
         realPlayer = game.add.sprite(x + 20, y - 5, 'px');
         game.physics.arcade.enable(player);
@@ -319,55 +312,12 @@ RutaEspectral.Level1.prototype = {
             }
         }
     },
-    randomPosition: function () {
-        return {
-            w: (400 + (Math.floor(Math.random() * (9999 - 1) + 1))),
-            h: (Math.floor(Math.random() * (555 - 1) + 1))
-        };
-    },
-    determinePlanetPosition: function () {
-        var randomPlanet = Math.floor(Math.random() * 3);
-        var element;
-        switch (randomPlanet) {
-            case 0:
-                element = {
-                    w: 1040,
-                    h: 60
-                }
-                break;
-            case 1:
-                element = {
-                    w: 450,
-                    h: 20
-                }
-                break;
-            case 2:
-                element = {
-                    w: 700,
-                    h: 120
-                }
-                break;
-            case 3:
-                element = {
-                    w: 1100,
-                    h: 550
-                }
-                break;
-            default:
-                element = {
-                    w: 1100,
-                    h: 550
-                }
-                break;
-        }
-        return element;
-    },
     render: function () {
         if (isInit) {
             // If our timer is running, show the time in a nicely formatted way, else show 'Done!'
             if (timerL1.running) {
                 timeRest = this.formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000));
-                game.debug.text(elementsCollected + "-" + this.formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000)), 15, 18, "#2565e5");
+                game.debug.text(player.position.x + "-" + this.formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000)), 15, 18, "#2565e5");
             } else {
                 //game.debug.text("Done!", 2, 14, "#0f0");
                 isInit = false;
@@ -409,15 +359,12 @@ RutaEspectral.Level1.prototype = {
         }
     },
     addSpaceSuit: function (spaceS) {
-            for (var i = 0; i < spaceSuit.length; i++) {
-                var ss = spaceS.create(spaceSuit[i].x, spaceSuit[i].y, 'part' + i);
-                ss.body.inmovable = true;
-            }
+        for (var i = 0; i < spaceSuit.length; i++) {
+            var ss = spaceS.create(spaceSuit[i].x, spaceSuit[i].y, 'part' + i);
+            ss.body.inmovable = true;
         }
-        //Manage collitions
-        ,
+    },
     collectSuit: function (player, suitS) {
-        //
         for (var i = 0; i < spaceSuit.length; i++) {
             if (suitS.key == "part" + i) {
                 suitS.kill();
@@ -429,7 +376,6 @@ RutaEspectral.Level1.prototype = {
         } else {
             collected = false;
         }
-        //return collected;
     },
     addObstructions: function () {
         for (var i = 0; i < 5; i++) {
@@ -495,6 +441,79 @@ RutaEspectral.Level1.prototype = {
             obstruction1.body.velocity.setTo(10, 100);
             obstruction1.body.collideWorldBounds = true;
             obstruction1.body.bounce.set(0.4);
+        }
+    },
+    shootingStart: function (pos) {
+        switch (pos) {
+            case 1:
+                var star = elements.create(1000, 10, 'starM');
+                break;
+            case 2:
+                var star = elements.create(3000, 10, 'starM');
+                break;
+            case 3:
+                var star = elements.create(5000, 10, 'starM');
+                break;
+            default:
+                break;
+        }
+        star.body.checkCollision.up = false;
+        star.body.checkCollision.down = true;
+        star.body.checkCollision.left = false;
+        star.body.checkCollision.right = false;
+        star.body.immovable = true;
+        game.physics.enable(star, Phaser.Physics.ARCADE);
+        star.body.velocity.setTo(-100, 100);
+    },
+    addSuitElements: function () {
+        helmet = game.add.image(35, 30, 'helmet');
+        body = game.add.image(26, 69, 'body');
+        arm1 = game.add.image(13, 80, 'arm1');
+        arm2 = game.add.image(68, 80, 'arm2');
+        pant = game.add.image(35, 110, 'pant');
+        foot1 = game.add.image(25, 145, 'foot1');
+        foot2 = game.add.image(55, 145, 'foot2');
+        helmet.fixedToCamera = true;
+        helmet.visible = false;
+        body.fixedToCamera = true;
+        body.visible = false;
+        arm1.fixedToCamera = true;
+        arm1.visible = false;
+        arm2.fixedToCamera = true;
+        arm2.visible = false;
+        pant.fixedToCamera = true;
+        pant.visible = false;
+        foot1.fixedToCamera = true;
+        foot1.visible = false;
+        foot2.fixedToCamera = true;
+        foot2.visible = false;
+    },
+    buildSpaceSuit: function () {
+        switch (elementsCollected) {
+            case 1:
+                helmet.visible = true;
+                break;
+            case 2:
+                arm2.visible = true;
+
+                break;
+            case 3:
+                arm1.visible = true;
+                break;
+            case 4:
+                body.visible = true;
+                break;
+            case 5:
+                pant.visible = true;
+                break;
+            case 6:
+                foot1.visible = true;
+                break;
+            case 7:
+                foot2.visible = true;
+                break;
+            default:
+                break;
         }
     }
 };

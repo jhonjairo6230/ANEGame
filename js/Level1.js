@@ -5,7 +5,7 @@ var isInit = false,
     isPaused = false,
     spaceA, spaceSuitPhysics = false,
     collected = false;
-var starts, stbackround;
+var starts, stbackround, timerL2, video, sprite;
 var helmet, body, arm1, arm2, pant, foot1, foot2;
 var elementsCollected = 0;
 var randomObstructions = (Math.floor(Math.random() * (60 - 50) + 50));
@@ -52,7 +52,7 @@ RutaEspectral.Level1.prototype = {
         game.load.spritesheet('continueBtn', 'assets/buttons/continueBtn.png', 136, 79);
         game.load.spritesheet('closeBtn', 'assets/buttons/closeBtn.png', 40, 40);
         game.load.spritesheet('spriteA', 'assets/sprites/spriteA.png', spriteSizes[spriteSizes.length - 1].width / 11, spriteSizes[spriteSizes.length - 1].height);
-
+        game.load.video('astronauta', 'assets/videos/astronauta.mp4');
     },
     create: function () {
         game.add.tileSprite(0, 0, 10000, 600, 'background');
@@ -247,7 +247,7 @@ RutaEspectral.Level1.prototype = {
             text.kill();
             closeBtn.kill();
             game.paused = false;
-            this.resetPlayer(player.position.x - 150, player.position.y);
+            this.resetPlayer(player.position.x - 50, player.position.y);
         } else {
             bar.kill();
             text.kill();
@@ -268,6 +268,13 @@ RutaEspectral.Level1.prototype = {
             // Start the timer
             timerL1.start();
         } else {
+            // timerL2 = game.time.create(false);
+            // timerEvent = timerL2.add(Phaser.Timer.MINUTE * 0 + Phaser.Timer.SECOND * 10, this.deleteVideo, this);
+            // timerL2.start();
+            video = game.add.video('astronauta');
+            sprite = video.addToWorld(800, 600, 1, 1, .7, .85);
+            video.play();
+
             game.paused = false;
             isPaused = false;
             continueBtn.kill();
@@ -278,6 +285,11 @@ RutaEspectral.Level1.prototype = {
             realPlayer.kill();
             spaceSuitPhysics = true;
         }
+    },
+    deleteVideo: function () {
+        timerL2.stop();
+        video.kill();
+        sprite.kill();
     },
     resetPlayer: function (x, y) {
         if (player) {
@@ -317,7 +329,7 @@ RutaEspectral.Level1.prototype = {
             // If our timer is running, show the time in a nicely formatted way, else show 'Done!'
             if (timerL1.running) {
                 timeRest = this.formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000));
-                game.debug.text(player.position.x + "-" + this.formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000)), 15, 18, "#2565e5");
+                game.debug.text(this.formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000)), 15, 18, "#2565e5");
             } else {
                 //game.debug.text("Done!", 2, 14, "#0f0");
                 isInit = false;

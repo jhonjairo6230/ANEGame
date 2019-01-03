@@ -252,4 +252,8 @@ var platformPositions = [{
     name: "p16",
     x: 1100,
     y: 230
+}, {
+    name: "p17",
+    x: 317,
+    y: 200
 }];

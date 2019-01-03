@@ -1,6 +1,6 @@
 var player, platforms, elements, cursors, bSun, waveCollition, bordersWin;
 var collectGls = false;
-var glasses, closeBtn;
+var glasses, closeBtn, obstructions, st;
 RutaEspectral.Level2 = function (game) {};
 RutaEspectral.Level2.prototype = {
     preload: function () {
@@ -12,17 +12,27 @@ RutaEspectral.Level2.prototype = {
         game.load.image('star', 'assets/star.png');
         game.load.image('px', 'assets/Level2/1px.png');
         game.load.image('glasses', 'assets/Level2/glasses.png');
+
         game.load.spritesheet('closeBtn', 'assets/buttons/closeBtn.png', 40, 40);
+
+        game.load.image('obstructionGroup', 'assets/level1/obstructionGroup.png');
+        game.load.image('obstruction1', 'assets/level1/obstruction1.png');
+        game.load.image('obstruction2', 'assets/level1/obstruction2.png');
+        game.load.image('starM', 'assets/level1/starMoving.png');
     },
     create: function () {
         game.add.tileSprite(0, 0, 7900, 600, 'background');
         game.world.setBounds(0, 0, 7900, 600);
         game.renderer.roundPixels = true;
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        waveCollition = game.add.group();
-        waveCollition.enableBody = true;
+        st = game.add.group();
+        st.enableBody = true;
+
         elements = game.add.group();
         elements.enableBody = true;
+
+        obstructions = game.add.group();
+        obstructions.enableBody = true;
 
         bSun = game.add.group();
         bSun.enableBody = true;
@@ -38,42 +48,8 @@ RutaEspectral.Level2.prototype = {
 
         this.setPlatforms(elements);
 
-        // var platform = elements.create(200, 550, 'platform');
-        // platform.body.immovable = true;
-        // var wave = waveCollition.create(220, 300, 'wave');
-        // wave.body.immovable = true;
-        // platform = elements.create(400, 400, 'platform');
-        // platform.body.immovable = true;
-        // platform = elements.create(600, 550, 'platform');
-        // platform.body.immovable = true;
-        // platform = elements.create(800, 350, 'platform');
-        // platform.body.immovable = true;
-        // var wave = waveCollition.create(820, 300, 'wave');
-        // wave.body.immovable = true;
-        // platform = elements.create(1000, 100, 'platform');
-        // platform.body.immovable = true;
-        // platform = elements.create(1200, 350, 'platform');
-        // platform.body.immovable = true;
-        // platform = elements.create(1300, 250, 'platform');
-        // platform.body.immovable = true;
-        // platform = elements.create(1350, 350, 'platform');
-        // platform.body.immovable = true;
-        // var wave = waveCollition.create(1500, 300, 'wave');
-        // wave.body.immovable = true;
-        // platform = elements.create(1500, 200, 'platform');
-        // platform.body.immovable = true;
-        // platform = elements.create(1700, 400, 'platform');
-        // platform.body.immovable = true;
-        // platform = elements.create(1930, 450, 'platform');
-        // platform.body.immovable = true;
-        // platform = elements.create(2050, 300, 'platform');
-        // platform.body.immovable = true;
-        // platform = elements.create(2200, 200, 'platform');
-        // platform.body.immovable = true;
-        // platform = elements.create(2450, 340, 'platform');
-        // platform.body.immovable = true;
-        // platform = elements.create(2800, 400, 'platform');
-        // platform.body.immovable = true;
+        this.addObstructions();
+
         player = game.add.sprite(80, 500, 'spriteA');
         player.animations.add('right', [7, 8, 9, 10], 8, true);
         player.animations.add('left', [0, 1, 2, 3], 8, true);
@@ -93,14 +69,27 @@ RutaEspectral.Level2.prototype = {
         stars.fixedToCamera = true;
         this.showLives();
         game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+        //this.shootingExplotion();
         this.infoText(message6, '20px', 200, 200, 380, 190);
     },
     update: function () {
         var hitPlatform = game.physics.arcade.collide(player, elements);
         var hitSun = game.physics.arcade.collide(player, bSun);
         var finish = game.physics.arcade.collide(player, bordersWin);
-        game.physics.arcade.overlap(player, waveCollition, this.collectWave, null, this);
+        var lostLive = game.physics.arcade.collide(player, obstructions);
+        //game.physics.arcade.overlap(player, waveCollition, this.collectWave, null, this);
         game.physics.arcade.overlap(player, glasses, this.collectGlasses, null, this);
+        if (player.position.x > 800 && player.position.x < 810) {
+            this.shootingExplotion();
+        }
+        if (lostLive) {
+            countLives -= 1;
+            if (countLives == 0) {
+                countLives = 3;
+            }
+            this.showLives();
+            game.state.start('Level2');
+        }
         //Verify SunGlasses
         if (hitSun && !collectGls) {
             player.position.x = player.position.x - 10;
@@ -183,36 +172,46 @@ RutaEspectral.Level2.prototype = {
         closeBtn = game.add.button((x - 20) + width, y - 20, 'closeBtn', this.closeAdv, this, 1, 1, 0);
     },
     closeAdv: function () {
-        // if (!isSuitCollected) {
-        //     if (playerFire) {
-        //         playerFire.kill();
-        //     }
-        //     bar.kill();
-        //     text.kill();
-        //     closeBtn.kill();
-        //     game.paused = false;
-        //     isInit = false;
-        //     // countLives = 3;
-        //     isSuitCollected = false;
-        //     isPaused = false;
-        //     spaceSuitPhysics = false;
-        //     elementsCollected = 0;
-        //     lLive = false;
-        //     game.state.start('Level1');
-        //     // this.resetPlayer(player.position.x - 50, player.position.y);
-        // } else {
         bar.kill();
         text.kill();
         closeBtn.kill();
         game.paused = false;
-        //     this.setSpaceSuit(219, 200);
-        // }
     },
     setPlatforms: function (elements) {
         for (var i = 0; i < platformPositions.length; i++) {
             var platform = elements.create(platformPositions[i].x, platformPositions[i].y, 'platform');
             platform.body.immovable = true;
         }
+    },
+    addObstructions: function () {
+        for (var i = 0; i < 3; i++) {
+            var obstruction1 = obstructions.create(80 + (i * 500), 20, 'obstructionGroup');
+            obstruction1.body.immovable = true;
+            game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
+            obstruction1.body.velocity.setTo(-10, 100);
+            obstruction1.body.collideWorldBounds = true;
+            obstruction1.body.bounce.set(0.4);
+
+            var obstruction1 = obstructions.create(150 + (i * 700), 200, 'obstruction1');
+            obstruction1.body.immovable = true;
+            game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
+            obstruction1.body.velocity.setTo(10, 100);
+            obstruction1.body.collideWorldBounds = true;
+            obstruction1.body.bounce.set(0.4);
+
+            var obstruction1 = obstructions.create(170 + (i * 680), 400, 'obstruction2');
+            obstruction1.body.immovable = true;
+            game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
+            obstruction1.body.velocity.setTo(10, 100);
+            obstruction1.body.collideWorldBounds = true;
+            obstruction1.body.bounce.set(0.7);
+        }
+    },
+    shootingExplotion: function () {
+        var star = st.create(1000, 10, 'starM');
+        star.body.immovable = true;
+        game.physics.enable(star, Phaser.Physics.ARCADE);
+        star.body.velocity.setTo(-100, 100);
     },
     render: function () {
         game.debug.text(player.position.x, 15, 18, "#2565e5");

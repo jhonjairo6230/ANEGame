@@ -1,6 +1,6 @@
 var player, platforms, elements, cursors, bSun, waveCollition, bordersWin;
 var collectGls = false;
-var glasses, closeBtn, obstructions, st;
+var glasses, closeBtn, obstructions, st, planet, bEarth;
 RutaEspectral.Level2 = function (game) {};
 RutaEspectral.Level2.prototype = {
     preload: function () {
@@ -19,6 +19,11 @@ RutaEspectral.Level2.prototype = {
         game.load.image('obstruction1', 'assets/level1/obstruction1.png');
         game.load.image('obstruction2', 'assets/level1/obstruction2.png');
         game.load.image('starM', 'assets/level1/starMoving.png');
+
+        game.load.image('planet1', 'assets/level1/planet1.png');
+        game.load.image('planet2', 'assets/level1/planet2.png');
+        game.load.image('planet3', 'assets/level1/planet3.png');
+        game.load.image('planet4', 'assets/level1/planet4.png');
     },
     create: function () {
         game.add.tileSprite(0, 0, 7900, 600, 'background');
@@ -28,14 +33,19 @@ RutaEspectral.Level2.prototype = {
         st = game.add.group();
         st.enableBody = true;
 
+        planet = game.add.group();
+        planet.enableBody = true;
+        this.addPlanets(planet);
         elements = game.add.group();
         elements.enableBody = true;
-
         obstructions = game.add.group();
         obstructions.enableBody = true;
-
         bSun = game.add.group();
         bSun.enableBody = true;
+
+        bEarth = game.add.group();
+        bEarth.enableBody = true;
+
         for (var i = 0; i < 599; i++) {
             var borderS = bSun.create(1650, i, 'px');
             borderS.body.immovable = true;
@@ -77,8 +87,12 @@ RutaEspectral.Level2.prototype = {
         var hitSun = game.physics.arcade.collide(player, bSun);
         var finish = game.physics.arcade.collide(player, bordersWin);
         var lostLive = game.physics.arcade.collide(player, obstructions);
+        var hitEarth = game.physics.arcade.collide(player, bEarth);
         //game.physics.arcade.overlap(player, waveCollition, this.collectWave, null, this);
         game.physics.arcade.overlap(player, glasses, this.collectGlasses, null, this);
+        if (player.position.x > 6000 && player.position.x < 6010) {
+            this.addBorderEarth();
+        }
         if (player.position.x > 800 && player.position.x < 810) {
             this.shootingExplotion();
         }
@@ -99,6 +113,9 @@ RutaEspectral.Level2.prototype = {
             bSun.kill();
         }
 
+        if (hitEarth) {
+            player.position.x = player.position.x - 50;
+        }
         if (finish) {
             isFinishLevel2 = true;
             game.state.start('PassLevel');
@@ -212,6 +229,24 @@ RutaEspectral.Level2.prototype = {
         star.body.immovable = true;
         game.physics.enable(star, Phaser.Physics.ARCADE);
         star.body.velocity.setTo(-100, 100);
+    },
+    addPlanets: function (planet) {
+        for (var i = 0; i < planet1.length - 6; i++) {
+            var p1 = planet.create(2200 + planet1[i].x, planet1[i].y, 'planet1');
+            p1.body.immovable = true;
+            var p2 = planet.create(2200 + planet2[i].x, planet2[i].y, 'planet2');
+            p2.body.immovable = true;
+            var p3 = planet.create(2200 + planet3[i].x, planet3[i].y, 'planet3');
+            p3.body.immovable = true;
+            var p4 = planet.create(2200 + planet4[i].x, planet4[i].y, 'planet4');
+            p4.body.immovable = true;
+        }
+    },
+    addBorderEarth: function () {
+        for (var i = 450; i < 599; i++) {
+            var borderE = bEarth.create(6430, i, 'px');
+            borderE.body.immovable = true;
+        }
     },
     render: function () {
         game.debug.text(player.position.x, 15, 18, "#2565e5");

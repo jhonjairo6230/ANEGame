@@ -21,7 +21,7 @@ RutaEspectral.PassLevel.prototype = {
     nextLevel: function () {
         switch (levelState) {
             case 2:
-                game.state.start('Level2');
+                game.state.start('GoToShip');
                 break;
             case 3:
                 game.state.start('Level3');

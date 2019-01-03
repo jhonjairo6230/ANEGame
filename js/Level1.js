@@ -29,6 +29,7 @@ RutaEspectral.Level1.prototype = {
         game.load.image('starM', 'assets/level1/starMoving.png');
         // game.load.image('spaceSuit', 'assets/level1/spaceSuit.png');
         game.load.image('px', 'assets/pix.png');
+        game.load.image('roundPx', 'assets/level1/roundPX.png');
         game.load.image('bgLives', 'assets/level1/bgLives.png');
         game.load.image('star', 'assets/star.png');
         //SpaceSuit
@@ -189,11 +190,11 @@ RutaEspectral.Level1.prototype = {
                     this.shootingStart(2);
                 }
                 if (player.position.x > 4800 && player.position.x < 4810) {
-                    this.shootingStart(2);
-                }
-                if (player.position.x > 6800 && player.position.x < 6810) {
                     this.shootingStart(3);
                 }
+                // if (player.position.x > 6800 && player.position.x < 6810) {
+                //     this.shootingStart(3);
+                // }
                 if (cursors.left.isDown) {
                     player.body.velocity.x = -velocityLevel1.ship;
                     realPlayer.body.velocity.x = -velocityLevel1.ship;
@@ -473,23 +474,27 @@ RutaEspectral.Level1.prototype = {
         switch (pos) {
             case 1:
                 var star = elements.create(1000, 10, 'starM');
+                var rPx = elements.create(1050, 210, 'roundPx');
                 break;
             case 2:
                 var star = elements.create(3000, 10, 'starM');
+                var rPx = elements.create(3050, 210, 'roundPx');
                 break;
             case 3:
-                var star = elements.create(6300, 10, 'starM');
+                var star = elements.create(5000, 10, 'starM');
+                var rPx = elements.create(5050, 210, 'roundPx');
                 break;
             default:
                 break;
         }
         star.body.checkCollision.up = false;
-        star.body.checkCollision.down = true;
+        star.body.checkCollision.down = false;
         star.body.checkCollision.left = false;
         star.body.checkCollision.right = false;
         star.body.immovable = true;
-        game.physics.enable(star, Phaser.Physics.ARCADE);
+        game.physics.enable(rPx, Phaser.Physics.ARCADE);
         star.body.velocity.setTo(-100, 100);
+        rPx.body.velocity.setTo(-100, 100);
     },
     addSuitElements: function () {
         helmet = game.add.image(35, 30, 'helmet');

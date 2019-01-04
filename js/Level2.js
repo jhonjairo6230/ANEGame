@@ -114,7 +114,7 @@ RutaEspectral.Level2.prototype = {
             this.addSatellites(3367, 100);
         }
         if (player.position.x > 4367 && player.position.x < 4372) {
-            this.addSatellites(4667, 300);
+            this.addSatellites(4667, 150);
         }
         if (player.position.x > 6000 && player.position.x < 6010) {
             this.addBorderEarth();
@@ -178,8 +178,9 @@ RutaEspectral.Level2.prototype = {
         this.infoText(message7, '20px', player.position.x - 150, 200, 380, 100);
     },
     collectLiveUp: function (player, liveUp) {
-        liveUp.kill();
         countLives += 1;
+        liveUp.kill();
+        this.showLives();
     },
     collectWave: function (player, wave) {
         wave.kill();
@@ -358,7 +359,7 @@ RutaEspectral.Level2.prototype = {
         if (initLVl2) {
             if (timerL2.running) {
                 timeRest = this.formatTime(Math.round((timerEvent.delay - timerL2.ms) / 1000));
-                game.debug.text(player.position.x + "--" + player.position.y + this.formatTime(Math.round((timerEvent.delay - timerL2.ms) / 1000)), 15, 18, "#2565e5");
+                game.debug.text(this.formatTime(Math.round((timerEvent.delay - timerL2.ms) / 1000)), 15, 18, "#2565e5");
             }
         }
         //game.debug.text(player.position.x + "--" + player.position.y, 15, 18, "#2565e5");

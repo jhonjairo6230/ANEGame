@@ -6,7 +6,7 @@ var isInit = false,
     spaceA, spaceSuitPhysics = false,
     collected = false,
     lLive = false;
-var starts, stbackround, timerL2;
+var starts, stbackround;
 var helmet, body, arm1, arm2, pant, foot1, foot2;
 var elementsCollected = 0;
 var randomObstructions = (Math.floor(Math.random() * (60 - 50) + 50));

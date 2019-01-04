@@ -1,6 +1,6 @@
 var player, platforms, elements, cursors, bSun, waveCollition, bordersWin;
-
-var glasses, closeBtn, obstructions, st, planet, bEarth, bEarthH;
+var initLVl2 = false;
+var glasses, closeBtn, obstructions, st, planet, bEarth, bEarthH, liveUpGroup;
 RutaEspectral.Level2 = function (game) {};
 RutaEspectral.Level2.prototype = {
     preload: function () {
@@ -10,6 +10,8 @@ RutaEspectral.Level2.prototype = {
         game.load.image('platform', 'assets/level2/platform.png');
         game.load.image('bgLives', 'assets/level1/bgLives.png');
         game.load.image('star', 'assets/star.png');
+        game.load.image('liveUp', 'assets/liveUp.png');
+
         game.load.image('px', 'assets/Level2/1px.png');
         game.load.image('glasses', 'assets/Level2/glasses.png');
         game.load.image('BH1', 'assets/Level2/borderH1.png');
@@ -26,7 +28,7 @@ RutaEspectral.Level2.prototype = {
         game.load.image('planet2', 'assets/level1/planet2.png');
         game.load.image('planet3', 'assets/level1/planet3.png');
         game.load.image('planet4', 'assets/level1/planet4.png');
-
+        game.load.image('satellite', 'assets/level1/satelite.png');
         game.load.image('winFlag', 'assets/level1/winFlag.png');
     },
     create: function () {
@@ -63,13 +65,17 @@ RutaEspectral.Level2.prototype = {
         var glass = glasses.create(1000, 100, 'glasses');
         glass.body.immovable = true;
 
+        liveUpGroup = game.add.group();
+        liveUpGroup.enableBody = true;
+        var liveUp = liveUpGroup.create(7800, 310, 'liveUp');
+        liveUp.body.immovable = true;
         this.setPlatforms(elements);
 
-        //this.addObstructions();
+        this.addObstructions();
         if (collectGls) {
             player = game.add.sprite(2295, 500, 'spriteA');
         } else {
-            player = game.add.sprite(80, 50, 'spriteA');
+            player = game.add.sprite(80, 500, 'spriteA');
         }
         player.animations.add('right', [7, 8, 9, 10], 8, true);
         player.animations.add('left', [0, 1, 2, 3], 8, true);
@@ -87,6 +93,8 @@ RutaEspectral.Level2.prototype = {
         stars = game.add.group();
         stars.enableBody = true;
         stars.fixedToCamera = true;
+        var st2 = game.add.image(0, 0, 'bgLives');
+        st2.fixedToCamera = true;
         this.showLives();
         game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
         //this.shootingExplotion();
@@ -101,6 +109,13 @@ RutaEspectral.Level2.prototype = {
         var hitEarthH = game.physics.arcade.collide(player, bEarthH);
         var lostLPlanet = game.physics.arcade.collide(player, planet);
         game.physics.arcade.overlap(player, glasses, this.collectGlasses, null, this);
+        game.physics.arcade.overlap(player, liveUpGroup, this.collectLiveUp, null, this);
+        if (player.position.x > 2982 && player.position.x < 2990) {
+            this.addSatellites(3367, 100);
+        }
+        if (player.position.x > 4367 && player.position.x < 4372) {
+            this.addSatellites(4667, 300);
+        }
         if (player.position.x > 6000 && player.position.x < 6010) {
             this.addBorderEarth();
         }
@@ -111,6 +126,7 @@ RutaEspectral.Level2.prototype = {
             countLives -= 1;
             if (countLives == 0) {
                 countLives = 3;
+                collectGls = false;
             }
             this.showLives();
             game.state.start('Level2');
@@ -131,7 +147,9 @@ RutaEspectral.Level2.prototype = {
             player.position.y = player.position.y - 50;
         }
         if (finish) {
-            levelState = 3;
+            levelState = 2;
+            countLives += 1;
+            this.showLives();
             game.state.start('PassLevel');
         }
         cursors = game.input.keyboard.createCursorKeys();
@@ -158,6 +176,10 @@ RutaEspectral.Level2.prototype = {
         glasses.kill();
         collectGls = true;
         this.infoText(message7, '20px', player.position.x - 150, 200, 380, 100);
+    },
+    collectLiveUp: function (player, liveUp) {
+        liveUp.kill();
+        countLives += 1;
     },
     collectWave: function (player, wave) {
         wave.kill();
@@ -210,6 +232,18 @@ RutaEspectral.Level2.prototype = {
         text.kill();
         closeBtn.kill();
         game.paused = false;
+        initLVl2 = true;
+        if (collectGls) {
+            timerL2 = game.time.create(false);
+            timerEvent = timerL2.add(Phaser.Timer.MINUTE * 2 + Phaser.Timer.SECOND * 0, this.endTimer, this);
+            // Start the timer
+            timerL2.start();
+        } else {
+            timerL2 = game.time.create(false);
+            timerEvent = timerL2.add(Phaser.Timer.MINUTE * 3 + Phaser.Timer.SECOND * 0, this.endTimer, this);
+            // Start the timer
+            timerL2.start();
+        }
     },
     setPlatforms: function (elements) {
         for (var i = 0; i < platformPositions.length; i++) {
@@ -293,8 +327,8 @@ RutaEspectral.Level2.prototype = {
                 var p1 = planet.create(4300 + planet1[i].x, 80 + planet1[i].y, 'planet1');
                 p1.body.immovable = true;
             }
-            var p2 = planet.create(2400 + planet2[i].x, 80 + planet2[i].y, 'planet2');
-            p2.body.immovable = true;
+            var p4 = planet.create(2400 + planet2[i].x, 10 + planet2[i].y, 'planet4');
+            p4.body.immovable = true;
             var p3 = planet.create(2400 + planet3[i].x, 80 + planet3[i].y, 'planet3');
             p3.body.immovable = true;
         }
@@ -313,7 +347,30 @@ RutaEspectral.Level2.prototype = {
         borderH.body.immovable = true;
         // }
     },
+    addSatellites: function (x, y) {
+        var satellite = planet.create(x, y, 'satellite');
+        satellite.body.immovable = true;
+        game.physics.enable(satellite, Phaser.Physics.ARCADE);
+        satellite.body.velocity.setTo(-200, 80);
+        satellite.body.collideWorldBounds = true;
+    },
     render: function () {
-        game.debug.text(player.position.x + "--" + player.position.y, 15, 18, "#2565e5");
-    }
+        if (initLVl2) {
+            if (timerL2.running) {
+                timeRest = this.formatTime(Math.round((timerEvent.delay - timerL2.ms) / 1000));
+                game.debug.text(player.position.x + "--" + player.position.y + this.formatTime(Math.round((timerEvent.delay - timerL2.ms) / 1000)), 15, 18, "#2565e5");
+            }
+        }
+        //game.debug.text(player.position.x + "--" + player.position.y, 15, 18, "#2565e5");
+    },
+    endTimer: function () {
+        // Stop the timer when the delayed event triggers
+        timerL2.stop();
+    },
+    formatTime: function (s) {
+        // Convert seconds (s) to a nicely formatted and padded time string
+        var minutes = "0" + Math.floor(s / 60);
+        var seconds = "0" + (s - minutes * 60);
+        return minutes.substr(-2) + ":" + seconds.substr(-2);
+    },
 }

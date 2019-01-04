@@ -3,7 +3,7 @@ var game;
 var countLives = 3;
 //tiempo para pasar el primer nivel en minutos
 var timeLevel1 = 3;
-var timerL1, timeRest;
+var timerL1, timerL2, timeRest;
 var levelState = 1;
 //Level 2
 var collectGls = false;

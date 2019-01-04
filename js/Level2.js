@@ -1,6 +1,6 @@
 var player, platforms, elements, cursors, bSun, waveCollition, bordersWin;
-var collectGls = false;
-var glasses, closeBtn, obstructions, st, planet, bEarth;
+
+var glasses, closeBtn, obstructions, st, planet, bEarth, bEarthH;
 RutaEspectral.Level2 = function (game) {};
 RutaEspectral.Level2.prototype = {
     preload: function () {
@@ -12,6 +12,8 @@ RutaEspectral.Level2.prototype = {
         game.load.image('star', 'assets/star.png');
         game.load.image('px', 'assets/Level2/1px.png');
         game.load.image('glasses', 'assets/Level2/glasses.png');
+        game.load.image('BH1', 'assets/Level2/borderH1.png');
+        game.load.image('BH2', 'assets/Level2/borderH2.png');
 
         game.load.spritesheet('closeBtn', 'assets/buttons/closeBtn.png', 40, 40);
 
@@ -48,6 +50,9 @@ RutaEspectral.Level2.prototype = {
         bEarth = game.add.group();
         bEarth.enableBody = true;
 
+        bEarthH = game.add.group();
+        bEarthH.enableBody = true;
+
         for (var i = 0; i < 599; i++) {
             var borderS = bSun.create(1650, i, 'px');
             borderS.body.immovable = true;
@@ -60,10 +65,12 @@ RutaEspectral.Level2.prototype = {
 
         this.setPlatforms(elements);
 
-        // this.addObstructions();
-
-        //player = game.add.sprite(80, 500, 'spriteA');
-        player = game.add.sprite(800, 50, 'spriteA');
+        //this.addObstructions();
+        if (collectGls) {
+            player = game.add.sprite(2295, 500, 'spriteA');
+        } else {
+            player = game.add.sprite(80, 50, 'spriteA');
+        }
         player.animations.add('right', [7, 8, 9, 10], 8, true);
         player.animations.add('left', [0, 1, 2, 3], 8, true);
         game.physics.arcade.enable(player);
@@ -91,8 +98,8 @@ RutaEspectral.Level2.prototype = {
         var finish = game.physics.arcade.collide(player, bordersWin);
         var lostLive = game.physics.arcade.collide(player, obstructions);
         var hitEarth = game.physics.arcade.collide(player, bEarth);
+        var hitEarthH = game.physics.arcade.collide(player, bEarthH);
         var lostLPlanet = game.physics.arcade.collide(player, planet);
-        //game.physics.arcade.overlap(player, waveCollition, this.collectWave, null, this);
         game.physics.arcade.overlap(player, glasses, this.collectGlasses, null, this);
         if (player.position.x > 6000 && player.position.x < 6010) {
             this.addBorderEarth();
@@ -120,16 +127,15 @@ RutaEspectral.Level2.prototype = {
         if (hitEarth) {
             player.position.x = player.position.x - 50;
         }
+        if (hitEarthH) {
+            player.position.y = player.position.y - 50;
+        }
         if (finish) {
-            isFinishLevel2 = true;
+            levelState = 3;
             game.state.start('PassLevel');
         }
         cursors = game.input.keyboard.createCursorKeys();
         player.body.velocity.x = 0;
-        // if (player.position.x > 2100) {
-        //     player.body.velocity.x = velocityLevel2.firstPart;
-        //     player.animations.play('right');
-        // }
         if (cursors.left.isDown) {
             player.body.velocity.x = -velocityLevel2.firstPart;
             player.animations.play('left');
@@ -291,8 +297,6 @@ RutaEspectral.Level2.prototype = {
             p2.body.immovable = true;
             var p3 = planet.create(2400 + planet3[i].x, 80 + planet3[i].y, 'planet3');
             p3.body.immovable = true;
-            // var p4 = planet.create(2400 + planet4[i].x, 80 + planet4[i].y, 'planet4');
-            // p4.body.immovable = true;
         }
     },
     addBorderEarth: function () {
@@ -300,8 +304,16 @@ RutaEspectral.Level2.prototype = {
             var borderE = bEarth.create(6430, i, 'px');
             borderE.body.immovable = true;
         }
+        // for (var i = 6430; i < 6920; i++) {
+        var borderH = bEarthH.create(6445, 470, 'BH1');
+        borderH.body.immovable = true;
+        // }
+        // for (var i = 7010; i < 7900; i++) {
+        var borderH = bEarthH.create(7146, 430, 'BH2');
+        borderH.body.immovable = true;
+        // }
     },
     render: function () {
-        game.debug.text(player.position.x, 15, 18, "#2565e5");
+        game.debug.text(player.position.x + "--" + player.position.y, 15, 18, "#2565e5");
     }
 }

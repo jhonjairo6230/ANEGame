@@ -24,6 +24,8 @@ RutaEspectral.Level2.prototype = {
         game.load.image('planet2', 'assets/level1/planet2.png');
         game.load.image('planet3', 'assets/level1/planet3.png');
         game.load.image('planet4', 'assets/level1/planet4.png');
+
+        game.load.image('winFlag', 'assets/level1/winFlag.png');
     },
     create: function () {
         game.add.tileSprite(0, 0, 7900, 600, 'background');
@@ -58,9 +60,10 @@ RutaEspectral.Level2.prototype = {
 
         this.setPlatforms(elements);
 
-        this.addObstructions();
+        // this.addObstructions();
 
-        player = game.add.sprite(80, 500, 'spriteA');
+        //player = game.add.sprite(80, 500, 'spriteA');
+        player = game.add.sprite(800, 50, 'spriteA');
         player.animations.add('right', [7, 8, 9, 10], 8, true);
         player.animations.add('left', [0, 1, 2, 3], 8, true);
         game.physics.arcade.enable(player);
@@ -69,7 +72,7 @@ RutaEspectral.Level2.prototype = {
         player.body.collideWorldBounds = true;
         bordersWin = game.add.group();
         bordersWin.enableBody = true;
-        var winFlag = bordersWin.create(game.world.width - 36, 220, 'winFlag');
+        var winFlag = bordersWin.create(7137, 500, 'winFlag');
         winFlag.body.immovable = true;
         var stbackround = game.add.image(640, 0, 'bgLives');
         stbackround.fixedToCamera = true;
@@ -88,6 +91,7 @@ RutaEspectral.Level2.prototype = {
         var finish = game.physics.arcade.collide(player, bordersWin);
         var lostLive = game.physics.arcade.collide(player, obstructions);
         var hitEarth = game.physics.arcade.collide(player, bEarth);
+        var lostLPlanet = game.physics.arcade.collide(player, planet);
         //game.physics.arcade.overlap(player, waveCollition, this.collectWave, null, this);
         game.physics.arcade.overlap(player, glasses, this.collectGlasses, null, this);
         if (player.position.x > 6000 && player.position.x < 6010) {
@@ -96,7 +100,7 @@ RutaEspectral.Level2.prototype = {
         if (player.position.x > 800 && player.position.x < 810) {
             this.shootingExplotion();
         }
-        if (lostLive) {
+        if (lostLive || lostLPlanet) {
             countLives -= 1;
             if (countLives == 0) {
                 countLives = 3;
@@ -122,20 +126,27 @@ RutaEspectral.Level2.prototype = {
         }
         cursors = game.input.keyboard.createCursorKeys();
         player.body.velocity.x = 0;
+        // if (player.position.x > 2100) {
+        //     player.body.velocity.x = velocityLevel2.firstPart;
+        //     player.animations.play('right');
+        // }
         if (cursors.left.isDown) {
-            player.body.velocity.x = -150;
+            player.body.velocity.x = -velocityLevel2.firstPart;
             player.animations.play('left');
         } else if (cursors.right.isDown) {
-            player.body.velocity.x = 150;
+            player.body.velocity.x = velocityLevel2.firstPart;
             player.animations.play('right');
         } else {
             player.animations.stop();
             player.frame = 5;
         }
         if (cursors.up.isDown && hitPlatform) {
-            player.body.velocity.y = -150;
+            if (player.position.x > 2100) {
+                player.body.velocity.y = -velocityLevel2.secondPart;
+            } else {
+                player.body.velocity.y = -velocityLevel2.firstPart;
+            }
         }
-
     },
     collectGlasses: function (player, glasses) {
         glasses.kill();
@@ -198,7 +209,47 @@ RutaEspectral.Level2.prototype = {
         for (var i = 0; i < platformPositions.length; i++) {
             var platform = elements.create(platformPositions[i].x, platformPositions[i].y, 'platform');
             platform.body.immovable = true;
+            platform.body.checkCollision.down = false;
         }
+        for (var i = 0; i < 10; i++) {
+            var platform = elements.create(2400 + (i * 400), 566, 'platform');
+            platform.body.immovable = true;
+            platform.body.checkCollision.down = false;
+            var platform = elements.create(2475 + (i * 400), 566, 'platform');
+            platform.body.immovable = true;
+            platform.body.checkCollision.down = false;
+        }
+        var platform = elements.create(6365, 566, 'platform');
+        platform.body.immovable = true;
+        for (var i = 0; i < 8; i++) {
+            var platform = elements.create(2400 + (i * 600), 256, 'platform');
+            platform.body.immovable = true;
+            platform.body.checkCollision.down = false;
+            var platform = elements.create(2475 + (i * 600), 256, 'platform');
+            platform.body.immovable = true;
+            platform.body.checkCollision.down = false;
+        }
+        var platform = elements.create(6945, 256, 'platform');
+        platform.body.immovable = true;
+        for (var i = 0; i < 7; i++) {
+            var platform = elements.create(2600 + (i * 400), 420, 'platform');
+            platform.body.checkCollision.down = false;
+            platform.body.immovable = true;
+        }
+        var platform = elements.create(5300, 420, 'platform');
+        platform.body.immovable = true;
+        var platform = elements.create(5837, 420, 'platform');
+        platform.body.immovable = true;
+        platform.body.checkCollision.down = false;
+        var platform = elements.create(6273, 420, 'platform');
+        platform.body.immovable = true;
+        platform.body.checkCollision.down = false;
+        var platform = elements.create(6560, 420, 'platform');
+        platform.body.immovable = true;
+        platform.body.checkCollision.down = false;
+        var platform = elements.create(6800, 420, 'platform');
+        platform.body.immovable = true;
+        platform.body.checkCollision.down = false;
     },
     addObstructions: function () {
         for (var i = 0; i < 3; i++) {
@@ -232,18 +283,20 @@ RutaEspectral.Level2.prototype = {
     },
     addPlanets: function (planet) {
         for (var i = 0; i < planet1.length - 6; i++) {
-            var p1 = planet.create(2200 + planet1[i].x, planet1[i].y, 'planet1');
-            p1.body.immovable = true;
-            var p2 = planet.create(2200 + planet2[i].x, planet2[i].y, 'planet2');
+            if (i > 3) {
+                var p1 = planet.create(4300 + planet1[i].x, 80 + planet1[i].y, 'planet1');
+                p1.body.immovable = true;
+            }
+            var p2 = planet.create(2400 + planet2[i].x, 80 + planet2[i].y, 'planet2');
             p2.body.immovable = true;
-            var p3 = planet.create(2200 + planet3[i].x, planet3[i].y, 'planet3');
+            var p3 = planet.create(2400 + planet3[i].x, 80 + planet3[i].y, 'planet3');
             p3.body.immovable = true;
-            var p4 = planet.create(2200 + planet4[i].x, planet4[i].y, 'planet4');
-            p4.body.immovable = true;
+            // var p4 = planet.create(2400 + planet4[i].x, 80 + planet4[i].y, 'planet4');
+            // p4.body.immovable = true;
         }
     },
     addBorderEarth: function () {
-        for (var i = 450; i < 599; i++) {
+        for (var i = 490; i < 599; i++) {
             var borderE = bEarth.create(6430, i, 'px');
             borderE.body.immovable = true;
         }

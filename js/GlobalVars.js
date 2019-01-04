@@ -124,6 +124,11 @@ var velocityLevel1 = {
     suit: 70
 };
 
+var velocityLevel2 = {
+    firstPart: 150,
+    secondPart: 280
+};
+
 var spriteSizes = [{
     name: "sprite0",
     widthHS: 234,

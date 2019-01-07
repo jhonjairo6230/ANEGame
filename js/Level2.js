@@ -86,11 +86,14 @@ RutaEspectral.Level2.prototype = {
         var st2 = game.add.image(0, 0, 'bgLives');
         st2.fixedToCamera = true;
         showLives();
-        //this.shootingExplotion();
-        //this.infoText(message6, '20px', 200, 200, 380, 190);
+        game.paused = true;
         if (!collectGls) {
-            game.paused = true;
             infoText(message6, '20px', 200, 200, 380, 190, function () {
+                closeAdvLvl2();
+            });
+        } else {
+            game.camera.view.x = 1900;
+            infoText(message6, '20px', 2100, 200, 380, 190, function () {
                 closeAdvLvl2();
             });
         }
@@ -130,9 +133,11 @@ RutaEspectral.Level2.prototype = {
             infoText(message5, '20px', game.camera.view.x + 200, 200, 380, 100, function () {
                 //player.kill();
                 //setPlayerLvl2();
-                //game.paused = false;
+                game.paused = false;
+                //endTimer();
+                // game.paused = true;
                 game.state.start('Level2');
-                closeAdvLvl2();
+                // closeAdvLvl2();
                 //game.state.start('Level2');
             });
         }
@@ -157,7 +162,7 @@ RutaEspectral.Level2.prototype = {
         if (finish) {
             levelState = 2;
             countLives += 1;
-            this.showLives();
+            showLives();
             game.state.start('PassLevel');
         }
         cursors = game.input.keyboard.createCursorKeys();

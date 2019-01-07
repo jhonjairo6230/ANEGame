@@ -5,7 +5,7 @@ RutaEspectral.Level2 = function (game) {};
 RutaEspectral.Level2.prototype = {
     preload: function () {
         game.load.image('background', 'assets/level2/backgroundLevel2.png');
-        game.load.spritesheet('spriteA', 'assets/sprites/spriteA.png', this.round(spriteSizes[spriteSizes.length - 1].width / 11, 3), spriteSizes[spriteSizes.length - 1].height);
+        game.load.spritesheet('spriteA', 'assets/sprites/spriteA.png', spriteSizes[spriteSizes.length - 1].width / 11, spriteSizes[spriteSizes.length - 1].height);
         game.load.image('wave', 'assets/level2/wave.png');
         game.load.image('platform', 'assets/level2/platform.png');
         game.load.image('bgLives', 'assets/level1/bgLives.png');
@@ -41,7 +41,7 @@ RutaEspectral.Level2.prototype = {
 
         planet = game.add.group();
         planet.enableBody = true;
-        this.addPlanets(planet);
+        addPlanets(planet);
         elements = game.add.group();
         elements.enableBody = true;
         obstructions = game.add.group();
@@ -71,7 +71,7 @@ RutaEspectral.Level2.prototype = {
         liveUp.body.immovable = true;
         setPlatforms(elements);
 
-        this.addObstructions();
+        addObstructions();
         setPlayerLvl2();
         bordersWin = game.add.group();
         bordersWin.enableBody = true;
@@ -106,8 +106,8 @@ RutaEspectral.Level2.prototype = {
         var hitEarth = game.physics.arcade.collide(player, bEarth);
         var hitEarthH = game.physics.arcade.collide(player, bEarthH);
         var lostLPlanet = game.physics.arcade.collide(player, planet);
-        game.physics.arcade.overlap(player, glasses, this.collectGlasses, null, this);
-        game.physics.arcade.overlap(player, liveUpGroup, this.collectLiveUp, null, this);
+        game.physics.arcade.overlap(player, glasses, collectGlasses, null, this);
+        game.physics.arcade.overlap(player, liveUpGroup, collectLiveUp, null, this);
         if (player.position.x > 2982 && player.position.x < 2990) {
             addSatellites(4367, 100);
         }
@@ -115,10 +115,10 @@ RutaEspectral.Level2.prototype = {
             addSatellites(5667, 150);
         }
         if (player.position.x > 6500 && player.position.x < 6510) {
-            this.addBorderEarth();
+            addBorderEarth();
         }
         if (player.position.x > 800 && player.position.x < 810) {
-            this.shootingExplotion();
+            shootingExplotion();
         }
         if (lostLive || lostLPlanet) {
             countLives -= 1;
@@ -128,17 +128,10 @@ RutaEspectral.Level2.prototype = {
                 game.state.start('Level2');
             }
             showLives();
-            // game.state.start('Level2');
             game.paused = true;
             infoText(message5, '20px', game.camera.view.x + 200, 200, 380, 100, function () {
-                //player.kill();
-                //setPlayerLvl2();
                 game.paused = false;
-                //endTimer();
-                // game.paused = true;
                 game.state.start('Level2');
-                // closeAdvLvl2();
-                //game.state.start('Level2');
             });
         }
         //Verify SunGlasses
@@ -184,91 +177,6 @@ RutaEspectral.Level2.prototype = {
                 player.body.velocity.y = -velocityLevel2.firstPart;
             }
         }
-    },
-    collectGlasses: function (player, glasses) {
-        glasses.kill();
-        collectGls = true;
-        game.paused = true;
-        infoText(message7, '20px', player.position.x - 150, 200, 380, 100, function () {
-            game.paused = false;
-        });
-    },
-    collectLiveUp: function (player, liveUp) {
-        countLives += 1;
-        liveUp.kill();
-        this.showLives();
-    },
-    collectWave: function (player, wave) {
-        wave.kill();
-    },
-    round: function (num, decimal) {
-        var sign = (num >= 0 ? 1 : -1);
-        num = num * sign;
-        if (decimal === 0)
-            return sign * Math.round(num);
-        // round(x * 10 ^ decimal)
-        num = num.toString().split('e');
-        num = Math.round(+(num[0] + 'e' + (num[1] ? (+num[1] + decimal) : decimal)));
-        // x * 10 ^ (-decimal)
-        num = num.toString().split('e');
-        return sign * (num[0] + 'e' + (num[1] ? (+num[1] - decimal) : -decimal));
-    },
-
-    addObstructions: function () {
-        for (var i = 0; i < 3; i++) {
-            var obstruction1 = obstructions.create(80 + (i * 500), 20, 'obstructionGroup');
-            obstruction1.body.immovable = true;
-            game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
-            obstruction1.body.velocity.setTo(-10, 100);
-            obstruction1.body.collideWorldBounds = true;
-            obstruction1.body.bounce.set(0.4);
-
-            var obstruction1 = obstructions.create(150 + (i * 700), 200, 'obstruction1');
-            obstruction1.body.immovable = true;
-            game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
-            obstruction1.body.velocity.setTo(10, 100);
-            obstruction1.body.collideWorldBounds = true;
-            obstruction1.body.bounce.set(0.4);
-
-            var obstruction1 = obstructions.create(170 + (i * 680), 400, 'obstruction2');
-            obstruction1.body.immovable = true;
-            game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
-            obstruction1.body.velocity.setTo(10, 100);
-            obstruction1.body.collideWorldBounds = true;
-            obstruction1.body.bounce.set(0.7);
-        }
-    },
-    shootingExplotion: function () {
-        var star = st.create(1000, 10, 'starM');
-        star.body.immovable = true;
-        game.physics.enable(star, Phaser.Physics.ARCADE);
-        star.body.velocity.setTo(-100, 100);
-    },
-    addPlanets: function (planet) {
-        for (var i = 0; i < planet1.length - 6; i++) {
-            if (i > 3) {
-                var p1 = planet.create(4300 + planet1[i].x, 80 + planet1[i].y, 'planet1');
-                p1.body.immovable = true;
-            }
-            var p4 = planet.create(2400 + planet2[i].x, 10 + planet2[i].y, 'planet4');
-            p4.body.immovable = true;
-            var p3 = planet.create(2400 + planet3[i].x, 80 + planet3[i].y, 'planet3');
-            p3.body.immovable = true;
-        }
-    },
-    addBorderEarth: function () {
-        for (var i = 490; i < 599; i++) {
-            var borderE = bEarth.create(6430, i, 'px');
-            borderE.body.immovable = true;
-        }
-        // for (var i = 6430; i < 6920; i++) {
-        var borderH = bEarthH.create(6445, 470, 'BH1');
-        borderH.body.immovable = true;
-        // }
-        // for (var i = 7010; i < 7900; i++) {
-        var borderH = bEarthH.create(7146, 430, 'BH2');
-        borderH.body.immovable = true;
-        // }
     },
     render: function () {
         if (initLVl2) {

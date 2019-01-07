@@ -1,14 +1,4 @@
 var realPlayer, player, playerFire, planet, cursors, bordersWin, bordersLost, text, elements, spaceS, spaceSuit;
-var initBtn, continueBtn, closeBtn;
-var isSuitCollected = false,
-    isPaused = false,
-    spaceA, spaceSuitPhysics = false,
-    collected = false,
-    lLive = false;
-var starts, stbackround, bar;
-var helmet, body, arm1, arm2, pant, foot1, foot2;
-var elementsCollected = 0;
-var randomObstructions = (Math.floor(Math.random() * (60 - 50) + 50));
 RutaEspectral.Level1 = function (game) {};
 RutaEspectral.Level1.prototype = {
     preload: function () {
@@ -92,7 +82,9 @@ RutaEspectral.Level1.prototype = {
         stars.enableBody = true;
         stars.fixedToCamera = true;
         showLives();
-        infoText(game, message2, '20px', false, 150, 150, 520, 180);
+        infoText(message2, '20px', 150, 150, 520, 180, function () {
+            initLevel1();
+        });
         // this.infoText(message2, '20px', false, 150, 150, 520, 180);
         addSuitElements();
     },
@@ -109,7 +101,9 @@ RutaEspectral.Level1.prototype = {
             isPaused = true;
             resetPlayer(realPlayer.position.x, realPlayer.position.y);
             //this.resetPlayer(realPlayer.position.x, realPlayer.position.y);
-            infoText(game, message3, '20px', true, player.position.x - 250, 200, 300, 70);
+            infoText(message3, '20px', game.camera.view.x + 200, 200, 300, 70, function () {
+                closeAdvLvl1();
+            });
         }
         if (isInitLVL1) {
             if (collected) {
@@ -122,7 +116,9 @@ RutaEspectral.Level1.prototype = {
                 realPlayer.body.velocity.x = 0;
                 realPlayer.body.velocity.y = 0;
                 collected = false;
-                infoText(game, message4, '20px', false, player.position.x - 50, 200, 380, 150);
+                infoText(message4, '20px', player.position.x - 50, 200, 380, 150, function () {
+                    initLevel1();
+                });
             }
             if (lostLive || planetCollition) {
                 countLives -= 1;
@@ -140,7 +136,9 @@ RutaEspectral.Level1.prototype = {
                 player.kill();
                 realPlayer.kill();
                 showLives();
-                infoText(game, message5, '20px', true, game.camera.view.x + 300, 200, 300, 80);
+                infoText(message5, '20px', game.camera.view.x + 300, 200, 300, 80, function () {
+                    closeAdvLvl1();
+                });
 
             }
             if (spaceSuitPhysics) {
@@ -164,7 +162,9 @@ RutaEspectral.Level1.prototype = {
                     game.paused = true;
                     spaceA.kill();
                     showLives();
-                    infoText(game, message5, '20px', true, game.camera.view.x + 300, 200, 300, 80);
+                    infoText(message5, '20px', game.camera.view.x + 300, 200, 300, 80, function () {
+                        closeAdvLvl1();
+                    });
                 }
                 spaceA.body.velocity.x = 0;
                 if (cursors.left.isDown) {
@@ -222,6 +222,30 @@ RutaEspectral.Level1.prototype = {
                     realPlayer.body.velocity.x = -velocityLevel1.ship;
                 }
             }
+        }
+    },
+    reloadPlayer: function () {
+        if (!isSuitCollected) {
+            if (playerFire) {
+                playerFire.kill();
+            }
+            // bar.kill();
+            // text.kill();
+            // closeBtn.kill();
+            game.paused = false;
+            isInitLVL1 = false;
+            isSuitCollected = false;
+            isPaused = false;
+            spaceSuitPhysics = false;
+            elementsCollected = 0;
+            lLive = false;
+            game.state.start('Level1');
+        } else {
+            // bar.kill();
+            // text.kill();
+            // closeBtn.kill();
+            game.paused = false;
+            setSpaceSuit(219, 200);
         }
     },
     render: function () {

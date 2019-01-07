@@ -1,6 +1,16 @@
 var bar, initBtn, continueBtn, closeBtn;
 var isInitLVL1 = false;
-var infoText = function (game, txt, letterSize, isAdvertence, x, y, width, height) {
+var isSuitCollected = false,
+    isPaused = false,
+    spaceA, spaceSuitPhysics = false,
+    collected = false,
+    lLive = false;
+var starts, stbackround, bar;
+var helmet, body, arm1, arm2, pant, foot1, foot2;
+var elementsCollected = 0;
+var randomObstructions = (Math.floor(Math.random() * (60 - 50) + 50));
+
+var infoText = function (txt, letterSize, x, y, width, height, action) {
     bar = game.add.graphics();
     bar.beginFill(0x003300, 0.4);
     bar.drawRect(x, y, width, height);
@@ -14,68 +24,51 @@ var infoText = function (game, txt, letterSize, isAdvertence, x, y, width, heigh
     };
     text = game.add.text(10, 20, txt, style);
     text.setTextBounds(x, y, width, height);
-    if (isAdvertence) {
-        closeBtn = game.add.button((x - 20) + width, y - 20, 'closeBtn', this.closeAdv, this, 1, 1, 0);
-    } else {
-        if (!isPaused) {
-            initBtn = game.add.button(x + (width / 2) - 67, y + height, 'playBtn', this.initLevel, this, 1, 1, 0);
-        } else {
-            continueBtn = game.add.button(x + (width / 2) - 67, y + height, 'continueBtn', this.initLevel, this, 1, 1, 0);
-        }
-    }
+    var btn = game.add.button((x - 20) + width, y - 20, 'closeBtn', this.closeTextInfo, this, 1, 1, 0);
+    btn.onInputUp.add(action, this);
 };
-var closeAdv = function (e) {
+var closeTextInfo = function (e) {
+    bar.kill();
+    text.kill();
+    e.kill();
+};
+var startTimer = function (minute, seconds) {
+    timerL1 = game.time.create(false);
+    timerEvent = timerL1.add(Phaser.Timer.MINUTE * minute + Phaser.Timer.SECOND * seconds, this.endTimer, this);
+    timerL1.start();
+};
+
+//************************************** */
+//************************************** */
+//***************LEVEL 1**************** */
+//************************************** */
+//************************************** */
+var closeAdvLvl1 = function (e) {
     if (!isSuitCollected) {
         if (playerFire) {
             playerFire.kill();
         }
-        bar.kill();
-        text.kill();
-        // if (e.key = "closeBtn") {
-        closeBtn.kill();
-        // }
         game.paused = false;
         isInitLVL1 = false;
-        // countLives = 3;
         isSuitCollected = false;
         isPaused = false;
         spaceSuitPhysics = false;
         elementsCollected = 0;
         lLive = false;
         game.state.start('Level1');
-        // this.resetPlayer(player.position.x - 50, player.position.y);
     } else {
-        bar.kill();
-        text.kill();
-        // if (e.key = "closeBtn") {
-        closeBtn.kill();
-        // }
         game.paused = false;
-        this.setSpaceSuit(219, 200);
+        this.setSpaceSuit(7800, 350);
     }
 };
-var initLevel = function (e) {
-    bar.kill();
-    text.kill();
+var initLevel1 = function (e) {
     if (!isPaused) {
-        // if (e.key = "playBtn") {
-        initBtn.kill();
-        // }
         isInitLVL1 = true;
         this.resetPlayer(200, 200);
-        timerL1 = game.time.create(false);
-        timerEvent = timerL1.add(Phaser.Timer.MINUTE * timeLevel1 + Phaser.Timer.SECOND * 0, this.endTimer, this);
-        // Start the timer
-        timerL1.start();
+        this.startTimer(minuteConfig, secondsConfig);
     } else {
-        // timerL2 = game.time.create(false);
-        // timerEvent = timerL2.add(Phaser.Timer.MINUTE * 0 + Phaser.Timer.SECOND * 10, this.deleteVideo, this);
-        // timerL2.start();
         game.paused = false;
         isPaused = false;
-        // if (e.key = "continueBtn") {
-        continueBtn.kill();
-        // }
         countLives += 1;
         this.showLives();
         this.setSpaceSuit(player.position.x, player.position.y);
@@ -84,11 +77,7 @@ var initLevel = function (e) {
         spaceSuitPhysics = true;
     }
 };
-var deleteVideo = function () {
-    timerL2.stop();
-    video.kill();
-    sprite.kill();
-};
+
 var resetPlayer = function (x, y) {
     if (player) {
         player.kill();
@@ -124,12 +113,10 @@ var showLives = function () {
 };
 var render = function () {
     if (isInitLVL1) {
-        // If our timer is running, show the time in a nicely formatted way, else show 'Done!'
         if (timerL1.running) {
             timeRest = this.formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000));
             game.debug.text(this.formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000)), 15, 18, "#2565e5");
         } else {
-            //game.debug.text("Done!", 2, 14, "#0f0");
             isInitLVL1 = false;
             spaceSuitPhysics = false;
             game.state.start('Level1');
@@ -137,11 +124,9 @@ var render = function () {
     }
 };
 var endTimer = function () {
-    // Stop the timer when the delayed event triggers
     timerL1.stop();
 };
 var formatTime = function (s) {
-    // Convert seconds (s) to a nicely formatted and padded time string
     var minutes = "0" + Math.floor(s / 60);
     var seconds = "0" + (s - minutes * 60);
     return minutes.substr(-2) + ":" + seconds.substr(-2);
@@ -329,5 +314,98 @@ var buildSpaceSuit = function (element) {
             break;
         default:
             break;
+    };
+}
+//************************************** */
+//************************************** */
+//***************LEVEL 2**************** */
+//************************************** */
+//************************************** */
+var closeAdvLvl2 = function () {
+    game.paused = false;
+    initLVl2 = true;
+    if (collectGls) {
+        startTimer(2, 0);
+        // timerL2 = game.time.create(false);
+        // timerEvent = timerL2.add(Phaser.Timer.MINUTE * 2 + Phaser.Timer.SECOND * 0, this.endTimer, this);
+        // // Start the timer
+        // timerL2.start();
+    } else {
+        startTimer(3, 0);
+        // timerL2 = game.time.create(false);
+        // timerEvent = timerL2.add(Phaser.Timer.MINUTE * 3 + Phaser.Timer.SECOND * 0, this.endTimer, this);
+        // // Start the timer
+        // timerL2.start();
     }
+}
+
+function setPlayerLvl2() {
+    if (collectGls) {
+        player = game.add.sprite(2295, 500, 'spriteA');
+    } else {
+        //player = game.add.sprite(80, 500, 'spriteA');
+        player = game.add.sprite(880, 100, 'spriteA');
+    }
+    player.animations.add('right', [7, 8, 9, 10], 8, true);
+    player.animations.add('left', [0, 1, 2, 3], 8, true);
+    game.physics.arcade.enable(player);
+    player.body.bounce.y = 0.4;
+    player.body.gravity.y = 300;
+    player.body.collideWorldBounds = true;
+    game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+}
+
+var addSatellites = function (x, y) {
+    var satellite = planet.create(x, y, 'satellite');
+    satellite.body.immovable = true;
+    game.physics.enable(satellite, Phaser.Physics.ARCADE);
+    satellite.body.velocity.setTo(-10, 80);
+    satellite.body.collideWorldBounds = true;
+}
+
+var setPlatforms = function (elements) {
+    for (var i = 0; i < platformPositions.length; i++) {
+        var platform = elements.create(platformPositions[i].x, platformPositions[i].y, 'platform');
+        platform.body.immovable = true;
+        platform.body.checkCollision.down = false;
+    }
+    for (var i = 0; i < 10; i++) {
+        var platform = elements.create(2400 + (i * 400), 566, 'platform');
+        platform.body.immovable = true;
+        platform.body.checkCollision.down = false;
+        var platform = elements.create(2475 + (i * 400), 566, 'platform');
+        platform.body.immovable = true;
+        platform.body.checkCollision.down = false;
+    }
+    var platform = elements.create(6365, 566, 'platform');
+    platform.body.immovable = true;
+    for (var i = 0; i < 8; i++) {
+        var platform = elements.create(2400 + (i * 600), 256, 'platform');
+        platform.body.immovable = true;
+        platform.body.checkCollision.down = false;
+        var platform = elements.create(2475 + (i * 600), 256, 'platform');
+        platform.body.immovable = true;
+        platform.body.checkCollision.down = false;
+    }
+    var platform = elements.create(6945, 256, 'platform');
+    platform.body.immovable = true;
+    for (var i = 0; i < 7; i++) {
+        var platform = elements.create(2600 + (i * 400), 420, 'platform');
+        platform.body.checkCollision.down = false;
+        platform.body.immovable = true;
+    }
+    var platform = elements.create(5300, 420, 'platform');
+    platform.body.immovable = true;
+    var platform = elements.create(5837, 420, 'platform');
+    platform.body.immovable = true;
+    platform.body.checkCollision.down = false;
+    var platform = elements.create(6273, 420, 'platform');
+    platform.body.immovable = true;
+    platform.body.checkCollision.down = false;
+    var platform = elements.create(6560, 420, 'platform');
+    platform.body.immovable = true;
+    platform.body.checkCollision.down = false;
+    var platform = elements.create(6800, 420, 'platform');
+    platform.body.immovable = true;
+    platform.body.checkCollision.down = false;
 }

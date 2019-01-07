@@ -1,8 +1,9 @@
 var game;
 //Total de vidas iniciales del juego
 var countLives = 3;
-//tiempo para pasar el primer nivel en minutos
-var timeLevel1 = 3;
+//tiempo para pasar el  nivel 
+var minuteConfig = 3,
+    secondsConfig = 0;
 var timerL1, timerL2, timeRest;
 var levelState = 1;
 //Level 2

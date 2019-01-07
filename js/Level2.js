@@ -69,20 +69,10 @@ RutaEspectral.Level2.prototype = {
         liveUpGroup.enableBody = true;
         var liveUp = liveUpGroup.create(7800, 310, 'liveUp');
         liveUp.body.immovable = true;
-        this.setPlatforms(elements);
+        setPlatforms(elements);
 
         this.addObstructions();
-        if (collectGls) {
-            player = game.add.sprite(2295, 500, 'spriteA');
-        } else {
-            player = game.add.sprite(80, 500, 'spriteA');
-        }
-        player.animations.add('right', [7, 8, 9, 10], 8, true);
-        player.animations.add('left', [0, 1, 2, 3], 8, true);
-        game.physics.arcade.enable(player);
-        player.body.bounce.y = 0.4;
-        player.body.gravity.y = 300;
-        player.body.collideWorldBounds = true;
+        setPlayerLvl2();
         bordersWin = game.add.group();
         bordersWin.enableBody = true;
         var winFlag = bordersWin.create(7137, 500, 'winFlag');
@@ -95,10 +85,15 @@ RutaEspectral.Level2.prototype = {
         stars.fixedToCamera = true;
         var st2 = game.add.image(0, 0, 'bgLives');
         st2.fixedToCamera = true;
-        this.showLives();
-        game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+        showLives();
         //this.shootingExplotion();
-        this.infoText(message6, '20px', 200, 200, 380, 190);
+        //this.infoText(message6, '20px', 200, 200, 380, 190);
+        if (!collectGls) {
+            game.paused = true;
+            infoText(message6, '20px', 200, 200, 380, 190, function () {
+                closeAdvLvl2();
+            });
+        }
     },
     update: function () {
         var hitPlatform = game.physics.arcade.collide(player, elements);
@@ -111,12 +106,12 @@ RutaEspectral.Level2.prototype = {
         game.physics.arcade.overlap(player, glasses, this.collectGlasses, null, this);
         game.physics.arcade.overlap(player, liveUpGroup, this.collectLiveUp, null, this);
         if (player.position.x > 2982 && player.position.x < 2990) {
-            this.addSatellites(3367, 100);
+            addSatellites(4367, 100);
         }
         if (player.position.x > 4367 && player.position.x < 4372) {
-            this.addSatellites(4667, 150);
+            addSatellites(5667, 150);
         }
-        if (player.position.x > 6000 && player.position.x < 6010) {
+        if (player.position.x > 6500 && player.position.x < 6510) {
             this.addBorderEarth();
         }
         if (player.position.x > 800 && player.position.x < 810) {
@@ -127,14 +122,27 @@ RutaEspectral.Level2.prototype = {
             if (countLives == 0) {
                 countLives = 3;
                 collectGls = false;
+                game.state.start('Level2');
             }
-            this.showLives();
-            game.state.start('Level2');
+            showLives();
+            // game.state.start('Level2');
+            game.paused = true;
+            infoText(message5, '20px', game.camera.view.x + 200, 200, 380, 100, function () {
+                //player.kill();
+                //setPlayerLvl2();
+                //game.paused = false;
+                game.state.start('Level2');
+                closeAdvLvl2();
+                //game.state.start('Level2');
+            });
         }
         //Verify SunGlasses
         if (hitSun && !collectGls) {
             player.position.x = player.position.x - 10;
-            this.infoText(message10, '20px', player.position.x - 150, 200, 380, 100);
+            game.paused = true;
+            infoText(message10, '20px', player.position.x - 150, 200, 380, 100, function () {
+                game.paused = false;
+            });
         }
         if (hitSun && collectGls) {
             bSun.kill();
@@ -175,7 +183,10 @@ RutaEspectral.Level2.prototype = {
     collectGlasses: function (player, glasses) {
         glasses.kill();
         collectGls = true;
-        this.infoText(message7, '20px', player.position.x - 150, 200, 380, 100);
+        game.paused = true;
+        infoText(message7, '20px', player.position.x - 150, 200, 380, 100, function () {
+            game.paused = false;
+        });
     },
     collectLiveUp: function (player, liveUp) {
         countLives += 1;
@@ -184,20 +195,6 @@ RutaEspectral.Level2.prototype = {
     },
     collectWave: function (player, wave) {
         wave.kill();
-    },
-    showLives() {
-        if (stars) {
-            stars.kill();
-            stars = game.add.group();
-            stars.enableBody = true;
-            stars.fixedToCamera = true;
-            var w = 0;
-            for (var i = 0; i < countLives; i++) {
-                //  Create a star inside of the 'stars' group
-                var star = stars.create(766 - w, 5, 'star');
-                w += 22;
-            }
-        }
     },
     round: function (num, decimal) {
         var sign = (num >= 0 ? 1 : -1);
@@ -211,87 +208,7 @@ RutaEspectral.Level2.prototype = {
         num = num.toString().split('e');
         return sign * (num[0] + 'e' + (num[1] ? (+num[1] - decimal) : -decimal));
     },
-    infoText(txt, letterSize, x, y, width, height) {
-        bar = game.add.graphics();
-        bar.beginFill(0x003300, 0.4);
-        bar.drawRect(x, y, width, height);
-        var style = {
-            font: letterSize + " Myriad",
-            fill: "#fff",
-            wordWrap: true,
-            wordWrapWidth: width - 20,
-            wordWrapHeight: height,
-            align: "center",
-        };
-        text = game.add.text(10, 20, txt, style);
-        text.setTextBounds(x, y, width, height);
-        game.paused = true;
-        closeBtn = game.add.button((x - 20) + width, y - 20, 'closeBtn', this.closeAdv, this, 1, 1, 0);
-    },
-    closeAdv: function () {
-        bar.kill();
-        text.kill();
-        closeBtn.kill();
-        game.paused = false;
-        initLVl2 = true;
-        if (collectGls) {
-            timerL2 = game.time.create(false);
-            timerEvent = timerL2.add(Phaser.Timer.MINUTE * 2 + Phaser.Timer.SECOND * 0, this.endTimer, this);
-            // Start the timer
-            timerL2.start();
-        } else {
-            timerL2 = game.time.create(false);
-            timerEvent = timerL2.add(Phaser.Timer.MINUTE * 3 + Phaser.Timer.SECOND * 0, this.endTimer, this);
-            // Start the timer
-            timerL2.start();
-        }
-    },
-    setPlatforms: function (elements) {
-        for (var i = 0; i < platformPositions.length; i++) {
-            var platform = elements.create(platformPositions[i].x, platformPositions[i].y, 'platform');
-            platform.body.immovable = true;
-            platform.body.checkCollision.down = false;
-        }
-        for (var i = 0; i < 10; i++) {
-            var platform = elements.create(2400 + (i * 400), 566, 'platform');
-            platform.body.immovable = true;
-            platform.body.checkCollision.down = false;
-            var platform = elements.create(2475 + (i * 400), 566, 'platform');
-            platform.body.immovable = true;
-            platform.body.checkCollision.down = false;
-        }
-        var platform = elements.create(6365, 566, 'platform');
-        platform.body.immovable = true;
-        for (var i = 0; i < 8; i++) {
-            var platform = elements.create(2400 + (i * 600), 256, 'platform');
-            platform.body.immovable = true;
-            platform.body.checkCollision.down = false;
-            var platform = elements.create(2475 + (i * 600), 256, 'platform');
-            platform.body.immovable = true;
-            platform.body.checkCollision.down = false;
-        }
-        var platform = elements.create(6945, 256, 'platform');
-        platform.body.immovable = true;
-        for (var i = 0; i < 7; i++) {
-            var platform = elements.create(2600 + (i * 400), 420, 'platform');
-            platform.body.checkCollision.down = false;
-            platform.body.immovable = true;
-        }
-        var platform = elements.create(5300, 420, 'platform');
-        platform.body.immovable = true;
-        var platform = elements.create(5837, 420, 'platform');
-        platform.body.immovable = true;
-        platform.body.checkCollision.down = false;
-        var platform = elements.create(6273, 420, 'platform');
-        platform.body.immovable = true;
-        platform.body.checkCollision.down = false;
-        var platform = elements.create(6560, 420, 'platform');
-        platform.body.immovable = true;
-        platform.body.checkCollision.down = false;
-        var platform = elements.create(6800, 420, 'platform');
-        platform.body.immovable = true;
-        platform.body.checkCollision.down = false;
-    },
+
     addObstructions: function () {
         for (var i = 0; i < 3; i++) {
             var obstruction1 = obstructions.create(80 + (i * 500), 20, 'obstructionGroup');
@@ -348,30 +265,13 @@ RutaEspectral.Level2.prototype = {
         borderH.body.immovable = true;
         // }
     },
-    addSatellites: function (x, y) {
-        var satellite = planet.create(x, y, 'satellite');
-        satellite.body.immovable = true;
-        game.physics.enable(satellite, Phaser.Physics.ARCADE);
-        satellite.body.velocity.setTo(-200, 80);
-        satellite.body.collideWorldBounds = true;
-    },
     render: function () {
         if (initLVl2) {
-            if (timerL2.running) {
-                timeRest = this.formatTime(Math.round((timerEvent.delay - timerL2.ms) / 1000));
-                game.debug.text(this.formatTime(Math.round((timerEvent.delay - timerL2.ms) / 1000)), 15, 18, "#2565e5");
+            if (timerL1.running) {
+                timeRest = formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000));
+                game.debug.text(formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000)), 15, 18, "#2565e5");
             }
         }
         //game.debug.text(player.position.x + "--" + player.position.y, 15, 18, "#2565e5");
-    },
-    endTimer: function () {
-        // Stop the timer when the delayed event triggers
-        timerL2.stop();
-    },
-    formatTime: function (s) {
-        // Convert seconds (s) to a nicely formatted and padded time string
-        var minutes = "0" + Math.floor(s / 60);
-        var seconds = "0" + (s - minutes * 60);
-        return minutes.substr(-2) + ":" + seconds.substr(-2);
-    },
+    }
 }

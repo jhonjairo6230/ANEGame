@@ -335,12 +335,16 @@ function setPlayerLvl2() {
     if (collectGls) {
         player = game.add.sprite(2295, 500, 'spriteA');
     } else {
-        player = game.add.sprite(80, 500, 'spriteA');
-        //player = game.add.sprite(880, 100, 'spriteA');
+        // player = game.add.sprite(320, 500, 'spriteA');
+        player = game.add.sprite(7000, 100, 'spriteA');
     }
+
     player.animations.add('right', [7, 8, 9, 10], 8, true);
     player.animations.add('left', [0, 1, 2, 3], 8, true);
     game.physics.arcade.enable(player);
+    // player.body.checkCollision.up = false;
+    // player.body.checkCollision.left = false;
+    // player.body.checkCollision.right = false;
     player.body.bounce.y = 0.4;
     player.body.gravity.y = 300;
     player.body.collideWorldBounds = true;
@@ -356,50 +360,57 @@ var addSatellites = function (x, y) {
 }
 
 var setPlatforms = function (elements) {
-    for (var i = 0; i < platformPositions.length; i++) {
-        var platform = elements.create(platformPositions[i].x, platformPositions[i].y, 'platform');
-        platform.body.immovable = true;
-        platform.body.checkCollision.down = false;
-    }
-    for (var i = 0; i < 10; i++) {
-        var platform = elements.create(2400 + (i * 400), 566, 'platform');
-        platform.body.immovable = true;
-        platform.body.checkCollision.down = false;
-        var platform = elements.create(2475 + (i * 400), 566, 'platform');
-        platform.body.immovable = true;
-        platform.body.checkCollision.down = false;
-    }
-    var platform = elements.create(6365, 566, 'platform');
+    //Platform in the floor
+    PlatformsStage1(elements, platform);
+
+    var platform = elements.create(2500, 567, 'platform');
     platform.body.immovable = true;
-    for (var i = 0; i < 8; i++) {
-        var platform = elements.create(2400 + (i * 600), 256, 'platform');
-        platform.body.immovable = true;
-        platform.body.checkCollision.down = false;
-        var platform = elements.create(2475 + (i * 600), 256, 'platform');
-        platform.body.immovable = true;
-        platform.body.checkCollision.down = false;
-    }
-    var platform = elements.create(6945, 256, 'platform');
+    var platform = elements.create(2900, 567, 'platform');
     platform.body.immovable = true;
-    for (var i = 0; i < 7; i++) {
-        var platform = elements.create(2600 + (i * 400), 420, 'platform');
-        platform.body.checkCollision.down = false;
-        platform.body.immovable = true;
-    }
-    var platform = elements.create(5300, 420, 'platform');
+    var platform = elements.create(3350, 567, 'platformF0');
     platform.body.immovable = true;
-    var platform = elements.create(5837, 420, 'platform');
+    var platform = elements.create(4047, 567, 'platformF2');
     platform.body.immovable = true;
-    platform.body.checkCollision.down = false;
-    var platform = elements.create(6273, 420, 'platform');
+    var platform = elements.create(4444, 567, 'platform');
     platform.body.immovable = true;
-    platform.body.checkCollision.down = false;
-    var platform = elements.create(6560, 420, 'platform');
+    var platform = elements.create(4500, 567, 'platform');
     platform.body.immovable = true;
-    platform.body.checkCollision.down = false;
-    var platform = elements.create(6800, 420, 'platform');
+    var platform = elements.create(4709, 567, 'platform');
     platform.body.immovable = true;
-    platform.body.checkCollision.down = false;
+    var platform = elements.create(5300, 567, 'platformF1');
+    platform.body.immovable = true;
+    var platform = elements.create(5910, 567, 'platformF0');
+    platform.body.immovable = true;
+    var platform = elements.create(6800, 567, 'platform');
+    platform.body.immovable = true;
+
+    //platforms in color line
+    var platform = elements.create(2680, 400, 'platform');
+    platform.body.immovable = true;
+    var platform = elements.create(3100, 400, 'platformF0');
+    platform.body.immovable = true;
+    var platform = elements.create(4250, 400, 'platform');
+    platform.body.immovable = true;
+    var platform = elements.create(5100, 400, 'platformF1');
+    platform.body.immovable = true;
+    var platform = elements.create(6148, 400, 'platform');
+    platform.body.immovable = true;
+    var platform = elements.create(6500, 400, 'platform');
+    platform.body.immovable = true;
+
+    //platforms in thirds
+    var platform = elements.create(2980, 240, 'platform');
+    platform.body.immovable = true;
+    var platform = elements.create(3800, 240, 'platformF1');
+    platform.body.immovable = true;
+    var platform = elements.create(4500, 240, 'platform');
+    platform.body.immovable = true;
+    var platform = elements.create(4700, 240, 'platformF1');
+    platform.body.immovable = true;
+    var platform = elements.create(6348, 240, 'platform');
+    platform.body.immovable = true;
+    var platform = elements.create(6700, 240, 'platformF1');
+    platform.body.immovable = true;
 }
 
 var addObstructions = function () {
@@ -439,14 +450,18 @@ var addBorderEarth = function () {
 
 var addPlanets = function (planet) {
     for (var i = 0; i < planet1.length - 6; i++) {
-        if (i > 3) {
-            var p1 = planet.create(4300 + planet1[i].x, 80 + planet1[i].y, 'planet1');
+        if (i > 2) {
+            var p1 = planet.create(planet1[i].x, planet1[i].y, 'planet1');
+            p1.body.setCircle(16)
             p1.body.immovable = true;
+            var p2 = planet.create(2400 + planet2[i].x, 10 + planet2[i].y - 100, 'planet2');
+            p2.body.setCircle(55)
+            p2.body.immovable = true;
         }
-        var p4 = planet.create(2400 + planet2[i].x, 10 + planet2[i].y, 'planet4');
-        p4.body.immovable = true;
-        var p3 = planet.create(2400 + planet3[i].x, 80 + planet3[i].y, 'planet3');
+        var p3 = planet.create(2400 + planet3[i].x, 80 + planet3[i].y - 100, 'planet3');
+        p3.body.setCircle(27)
         p3.body.immovable = true;
+
     }
 }
 
@@ -463,13 +478,50 @@ var collectLiveUp = function (player, liveUp) {
     liveUp.kill();
     showLives();
 }
-var collectWave = function (player, wave) {
-    wave.kill();
-}
+// var collectWave = function (player, wave) {
+//     wave.kill();
+// }
 
 var shootingExplotion = function () {
     var star = st.create(1000, 10, 'starM');
     star.body.immovable = true;
     game.physics.enable(star, Phaser.Physics.ARCADE);
     star.body.velocity.setTo(-100, 100);
+}
+
+var PlatformsStage1 = function (elements) {
+    var platform = elements.create(0, 567, 'platformF0');
+    platform.body.immovable = true;
+    var platform = elements.create(650, 567, 'platform');
+    platform.body.immovable = true;
+    var platform = elements.create(800, 567, 'platformF1');
+    platform.body.immovable = true;
+    var platform = elements.create(900, 567, 'platform');
+    platform.body.immovable = true;
+    var platform = elements.create(1000, 567, 'platform');
+    platform.body.immovable = true;
+    var platform = elements.create(1150, 567, 'platform');
+    platform.body.immovable = true;
+    var platform = elements.create(1400, 567, 'platformF2');
+    platform.body.immovable = true;
+    var platform = elements.create(1900, 567, 'platformF0');
+    platform.body.immovable = true;
+    var platformS1 = elements.create(800, 437, 'platform');
+    platformS1.body.immovable = true;
+    var platformS11 = elements.create(1000, 340, 'platform');
+    platformS11.body.immovable = true;
+    var platformS12 = elements.create(200, 340, 'platform');
+    platformS12.body.immovable = true;
+    var platformS13 = elements.create(600, 340, 'platform');
+    platformS13.body.immovable = true;
+    var platformS14 = elements.create(550, 100, 'platform');
+    platformS14.body.immovable = true;
+    var platformS15 = elements.create(400, 250, 'platform');
+    platformS15.body.immovable = true;
+    var platformS16 = elements.create(200, 170, 'platform');
+    platformS16.body.immovable = true;
+    var platformS17 = elements.create(1200, 250, 'platform');
+    platformS17.body.immovable = true;
+    var platformS18 = elements.create(1500, 160, 'platform');
+    platformS18.body.immovable = true;
 }

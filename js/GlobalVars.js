@@ -129,8 +129,8 @@ var velocityLevel1 = {
 };
 
 var velocityLevel2 = {
-    firstPart: 150,
-    secondPart: 280
+    firstPart: 280,
+    secondPart: 320
 };
 
 var spriteSizes = [{

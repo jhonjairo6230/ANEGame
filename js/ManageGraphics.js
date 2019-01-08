@@ -113,18 +113,18 @@ var showLives = function () {
         }
     }
 };
-var render = function () {
-    if (isInitLVL1) {
-        if (timerL1.running) {
-            timeRest = this.formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000));
-            game.debug.text(this.formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000)), 15, 18, "#2565e5");
-        } else {
-            isInitLVL1 = false;
-            spaceSuitPhysics = false;
-            game.state.start('Level1');
-        }
-    }
-};
+// var render = function () {
+//     if (isInitLVL1) {
+//         if (timerL1.running) {
+//             timeRest = this.formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000));
+//             game.debug.text(this.formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000)), 15, 18, "#2565e5");
+//         } else {
+//             isInitLVL1 = false;
+//             spaceSuitPhysics = false;
+//             game.state.start('Level1');
+//         }
+//     }
+// };
 var endTimer = function () {
     timerL1.stop();
 };
@@ -233,19 +233,20 @@ var addObstructions = function () {
                 var obstruction1 = obstructions.create(80 + (i * 500), 20, 'obstructionGroup');
                 obstruction1.body.immovable = true;
                 game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
-                obstruction1.body.velocity.setTo(-10, 100);
+                obstruction1.body.velocity.setTo(-20, -20);
                 obstruction1.body.collideWorldBounds = true;
                 obstruction1.body.bounce.set(0.4);
+                game.physics.arcade.collide(obstruction1, elements);
                 var obstruction1 = obstructions.create(150 + (i * 900), 200, 'obstruction1');
                 obstruction1.body.immovable = true;
                 game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
-                obstruction1.body.velocity.setTo(10, 100);
+                obstruction1.body.velocity.setTo(20, -20);
                 obstruction1.body.collideWorldBounds = true;
                 obstruction1.body.bounce.set(0.4);
                 var obstruction1 = obstructions.create(170 + (i * 1000), 400, 'obstruction2');
                 obstruction1.body.immovable = true;
                 game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
-                obstruction1.body.velocity.setTo(10, 100);
+                obstruction1.body.velocity.setTo(-20, -20);
                 obstruction1.body.collideWorldBounds = true;
                 obstruction1.body.bounce.set(0.7);
             }
@@ -353,8 +354,8 @@ function setPlayerLvl2() {
     if (collectGls) {
         player = game.add.sprite(2295, 500, 'spriteA');
     } else {
-        //player = game.add.sprite(320, 500, 'spriteA');
-        player = game.add.sprite(2295, 50, 'spriteA');
+        player = game.add.sprite(320, 500, 'spriteA');
+        // player = game.add.sprite(2295, 50, 'spriteA');
     }
 
     player.animations.add('right', [7, 8, 9, 10], 8, true);

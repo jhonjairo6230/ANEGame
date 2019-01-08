@@ -236,10 +236,25 @@ RutaEspectral.Level2.prototype = {
         if (initLVl2) {
             if (timerL1.running) {
                 timeRest = formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000));
-                //game.debug.text(formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000)), 15, 18, "#2565e5");
+                game.debug.text(formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000)), 15, 18, "#2565e5");
+            } else {
+                initLVl2 = false;
+                document.getElementById("lostLive").play();
+                countLives -= 1;
+                if (countLives == 0) {
+                    countLives = 3;
+                    collectGls = false;
+                    game.state.start('Level2');
+                }
+                showLives();
+                game.paused = true;
+                infoText(message13, '20px', game.camera.view.x + 200, 200, 300, 80, function () {
+                    game.paused = false;
+                    game.state.start('Level2');
+                });
             }
         }
-        game.debug.text(player.position.x, 15, 18, "#2565e5");
+        //game.debug.text(player.position.x, 15, 18, "#2565e5");
 
     }
 }

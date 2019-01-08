@@ -1,6 +1,6 @@
 var player, platforms, elements, cursors, bSun, waveCollition, bordersWin;
 var initLVl2 = false;
-var glasses, closeBtn, obstructions, st, planet, bEarth, bEarthH, liveUpGroup, circle, circleT;
+var glasses, closeBtn, obstructions, st, planet, bEarth, bEarthH, liveUpGroup, circle, circleT, music;
 RutaEspectral.Level2 = function (game) {};
 RutaEspectral.Level2.prototype = {
     preload: function () {
@@ -172,16 +172,12 @@ RutaEspectral.Level2.prototype = {
         if (hitSun && collectGls) {
             bSun.kill();
         }
-        // if (hitEarth) {
-        //     player.position.x = player.position.x - 50;
-        // }
-        // if (hitEarthH) {
-        //     player.position.y = player.position.y - 50;
-        // }
         if (finish) {
             levelState = 2;
             countLives += 1;
             showLives();
+            var x = document.getElementById("changeLevel");
+            x.play();
             game.state.start('PassLevel');
         }
         cursors = game.input.keyboard.createCursorKeys();
@@ -197,6 +193,11 @@ RutaEspectral.Level2.prototype = {
             player.frame = 5;
         }
         if (cursors.up.isDown && player.body.touching.down) {
+            // music = game.add.audio('jump');
+            // music.play();
+            // music.volume -= 0.3;
+            var x = document.getElementById("jump");
+            x.play();
             if (player.position.x > 2100) {
                 player.body.velocity.y = -velocityLevel2.secondPart;
             } else {

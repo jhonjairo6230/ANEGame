@@ -1,7 +1,9 @@
-var realPlayer, player, playerFire, planet, cursors, bordersWin, bordersLost, text, elements, spaceS, spaceSuit;
+var realPlayer, player, playerFire, planet, cursors, bordersWin, bordersLost, text, music, elements, spaceS, spaceSuit;
 RutaEspectral.Level1 = function (game) {};
 RutaEspectral.Level1.prototype = {
     preload: function () {
+        //game.load.audio('passLevel', 'assets/audios/cambioDeNivel.mp3');
+
         game.load.image('background', 'assets/level1/background.png');
         game.load.image('rocket', 'assets/level1/rocket.png');
         game.load.image('rocketFire', 'assets/level1/rocketFire.png');
@@ -53,7 +55,7 @@ RutaEspectral.Level1.prototype = {
         planet.enableBody = true;
         var moon = planet.create(game.world.width - 170, 1, 'moon');
         moon.body.immovable = true;
-        addPlanets(planet);
+        addPlanetsLVL1(planet);
         spaceS = game.add.group();
         spaceS.enableBody = true;
         addSpaceSuit(spaceS);
@@ -121,6 +123,7 @@ RutaEspectral.Level1.prototype = {
                 });
             }
             if (lostLive || planetCollition) {
+                document.getElementById("shipCrash").play();
                 countLives -= 1;
                 if (countLives == 0) {
                     isInit = false;
@@ -146,9 +149,14 @@ RutaEspectral.Level1.prototype = {
                 var planetC = game.physics.arcade.collide(spaceA, planet);
                 var winLevel = game.physics.arcade.collide(spaceA, bordersWin);
                 if (winLevel) {
+                    // music = game.add.audio('passLevel');
+                    // music.play();
+                    // music.volume -= 0.3;
+                    document.getElementById("changeLevel").play();
                     game.state.start('PassLevel');
                 }
                 if (lostLive || planetC) {
+                    document.getElementById("shipCrash").play();
                     countLives -= 1;
                     if (countLives == 0) {
                         isInit = false;

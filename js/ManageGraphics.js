@@ -44,6 +44,7 @@ var startTimer = function (minute, seconds) {
 //************************************** */
 //************************************** */
 var closeAdvLvl1 = function (e) {
+    document.getElementById("click").play();
     if (!isSuitCollected) {
         if (playerFire) {
             playerFire.kill();
@@ -62,6 +63,7 @@ var closeAdvLvl1 = function (e) {
     }
 };
 var initLevel1 = function (e) {
+    document.getElementById("click").play();
     if (!isPaused) {
         isInitLVL1 = true;
         this.resetPlayer(200, 200);
@@ -141,7 +143,7 @@ var setSpaceSuit = function (x, y) {
     spaceA.body.collideWorldBounds = true;
     game.camera.follow(spaceA, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 };
-var addPlanets = function (planet) {
+var addPlanetsLVL1 = function (planet) {
     for (var i = 0; i < planet1.length; i++) {
         var p1 = planet.create(planet1[i].x, planet1[i].y, 'planet1');
         p1.body.immovable = true;
@@ -322,6 +324,8 @@ var buildSpaceSuit = function (element) {
 //************************************** */
 //************************************** */
 var closeAdvLvl2 = function () {
+    document.getElementById("click").play();
+
     game.paused = false;
     initLVl2 = true;
     if (collectGls) {
@@ -335,8 +339,8 @@ function setPlayerLvl2() {
     if (collectGls) {
         player = game.add.sprite(2295, 500, 'spriteA');
     } else {
-        // player = game.add.sprite(320, 500, 'spriteA');
-        player = game.add.sprite(7000, 100, 'spriteA');
+        player = game.add.sprite(320, 500, 'spriteA');
+        // player = game.add.sprite(7000, 100, 'spriteA');
     }
 
     player.animations.add('right', [7, 8, 9, 10], 8, true);
@@ -413,7 +417,7 @@ var setPlatforms = function (elements) {
     platform.body.immovable = true;
 }
 
-var addObstructions = function () {
+var addObstructionsLVL2 = function () {
     for (var i = 0; i < 3; i++) {
         var obstruction1 = obstructions.create(80 + (i * 500), 20, 'obstructionGroup');
         obstruction1.body.immovable = true;

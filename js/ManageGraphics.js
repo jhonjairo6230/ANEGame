@@ -220,7 +220,7 @@ var addObstructions = function () {
                 obstruction1.body.velocity.setTo(10, 100);
                 obstruction1.body.collideWorldBounds = true;
                 obstruction1.body.bounce.set(0.4);
-                var obstruction1 = elements.create(800 + (i * 580), 20, 'obstruction2');
+                var obstruction1 = elements.create(800 + (i * 570), 20, 'obstruction2');
                 obstruction1.body.immovable = true;
                 game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
                 obstruction1.body.velocity.setTo(10, 100);
@@ -229,20 +229,20 @@ var addObstructions = function () {
             }
             break;
         case 2:
-            for (var i = 0; i < 3; i++) {
+            for (var i = 1; i < 4; i++) {
                 var obstruction1 = obstructions.create(80 + (i * 500), 20, 'obstructionGroup');
                 obstruction1.body.immovable = true;
                 game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
                 obstruction1.body.velocity.setTo(-10, 100);
                 obstruction1.body.collideWorldBounds = true;
                 obstruction1.body.bounce.set(0.4);
-                var obstruction1 = obstructions.create(150 + (i * 700), 200, 'obstruction1');
+                var obstruction1 = obstructions.create(150 + (i * 900), 200, 'obstruction1');
                 obstruction1.body.immovable = true;
                 game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
                 obstruction1.body.velocity.setTo(10, 100);
                 obstruction1.body.collideWorldBounds = true;
                 obstruction1.body.bounce.set(0.4);
-                var obstruction1 = obstructions.create(170 + (i * 680), 400, 'obstruction2');
+                var obstruction1 = obstructions.create(170 + (i * 1000), 400, 'obstruction2');
                 obstruction1.body.immovable = true;
                 game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
                 obstruction1.body.velocity.setTo(10, 100);
@@ -354,27 +354,27 @@ function setPlayerLvl2() {
         player = game.add.sprite(2295, 500, 'spriteA');
     } else {
         //player = game.add.sprite(320, 500, 'spriteA');
-        player = game.add.sprite(6900, 50, 'spriteA');
+        player = game.add.sprite(2295, 50, 'spriteA');
     }
 
     player.animations.add('right', [7, 8, 9, 10], 8, true);
     player.animations.add('left', [0, 1, 2, 3], 8, true);
     game.physics.arcade.enable(player);
-    player.body.bounce.y = 0.4;
+    player.body.bounce.y = 0.1;
     player.body.gravity.y = 300;
     player.body.collideWorldBounds = true;
     game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 }
 
-var addSatellites = function (x, y) {
+var addSatellites = function (x, y, platform) {
     var satellite = planet.create(x, y, 'satellite');
     satellite.body.immovable = true;
     game.physics.enable(satellite, Phaser.Physics.ARCADE);
-    satellite.body.velocity.setTo(-10, 80);
+    satellite.body.velocity.x = -200;
     satellite.body.collideWorldBounds = true;
 }
 
-var setPlatforms = function (elements) {
+var setPlatforms = function (elements, pMoveGroup) {
     //Platform in the floor
     PlatformsStage1(elements, platform);
 
@@ -390,8 +390,8 @@ var setPlatforms = function (elements) {
     platform.body.immovable = true;
     var platform = elements.create(4500, 567, 'platform');
     platform.body.immovable = true;
-    var platform = elements.create(4709, 567, 'platform');
-    platform.body.immovable = true;
+    platformMV = pMoveGroup.create(4709, 567, 'platform');
+    platformMV.body.immovable = true;
     var platform = elements.create(5300, 567, 'platformF1');
     platform.body.immovable = true;
     var platform = elements.create(5910, 567, 'platformF0');
@@ -410,16 +410,17 @@ var setPlatforms = function (elements) {
     platform.body.immovable = true;
     var platform = elements.create(6148, 400, 'platform');
     platform.body.immovable = true;
-    var platform = elements.create(6500, 400, 'platform');
-    platform.body.immovable = true;
+    platformMH = pMoveGroup.create(6500, 400, 'platform');
+    platformMH.body.immovable = true;
 
     //platforms in thirds
     var platform = elements.create(2980, 240, 'platform');
     platform.body.immovable = true;
     var platform = elements.create(3800, 240, 'platformF1');
     platform.body.immovable = true;
-    var platform = elements.create(4500, 240, 'platform');
-    platform.body.immovable = true;
+    pltMovement = elements.create(4500, 240, 'platform');
+    pltMovement.body.immovable = true;
+    pltMovement.body.velocity.x = -200;
     var platform = elements.create(4700, 240, 'platformF1');
     platform.body.immovable = true;
     var platform = elements.create(6348, 240, 'platform');
@@ -481,7 +482,7 @@ var collectLiveUp = function (player, liveUp) {
 
 
 var shootingExplotion = function () {
-    var star = st.create(1000, 10, 'starM');
+    var star = st.create(1300, 10, 'starM');
     star.body.immovable = true;
     game.physics.enable(star, Phaser.Physics.ARCADE);
     star.body.velocity.setTo(-100, 100);

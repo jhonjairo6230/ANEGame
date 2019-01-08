@@ -129,6 +129,7 @@ var velocityLevel1 = {
 };
 
 var velocityLevel2 = {
+    moveX: 170,
     firstPart: 280,
     secondPart: 320
 };

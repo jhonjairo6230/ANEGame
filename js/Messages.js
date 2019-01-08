@@ -9,4 +9,6 @@ var message6 = 'La capa de ozono. Creo que ya has escuchado de la capa de ozono 
 var message7 = '¡Felicidades! encontraste las gafas, ahora puedes mirar el espectro eléctrico';
 var message8 = 'Ahora te enseñare que es frecuencia de onda; es un movimiento repetitivo por un periodo de tiempo.';
 var message9 = 'Clases de radiaciones: El espectro electromagnético, se encuentra dividido en radiación ionizante radiación no ionizante';
-var message10 = 'si deseas elegir el camino correcto debes encontrar las gafas';
+var message10 = 'Si deseas elegir el camino correcto debes encontrar las gafas';
+var message11 = 'No te choques Asteroides, satellites o planetas';
+var message12 = 'Mantente sobre las plataformas';

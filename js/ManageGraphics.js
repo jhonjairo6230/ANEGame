@@ -370,8 +370,9 @@ var addSatellites = function (x, y, platform) {
     var satellite = planet.create(x, y, 'satellite');
     satellite.body.immovable = true;
     game.physics.enable(satellite, Phaser.Physics.ARCADE);
-    satellite.body.velocity.x = -200;
+    satellite.body.velocity.setTo(-30, 30);
     satellite.body.collideWorldBounds = true;
+    satellite.body.bounce.set(0.1);
 }
 
 var setPlatforms = function (elements, pMoveGroup) {
@@ -406,7 +407,7 @@ var setPlatforms = function (elements, pMoveGroup) {
     platform.body.immovable = true;
     var platform = elements.create(4250, 400, 'platform');
     platform.body.immovable = true;
-    var platform = elements.create(5100, 400, 'platformF1');
+    var platform = elements.create(5000, 400, 'platformF1');
     platform.body.immovable = true;
     var platform = elements.create(6148, 400, 'platform');
     platform.body.immovable = true;
@@ -421,7 +422,7 @@ var setPlatforms = function (elements, pMoveGroup) {
     pltMovement = elements.create(4500, 240, 'platform');
     pltMovement.body.immovable = true;
     pltMovement.body.velocity.x = -200;
-    var platform = elements.create(4700, 240, 'platformF1');
+    var platform = elements.create(5400, 240, 'platformF1');
     platform.body.immovable = true;
     var platform = elements.create(6348, 240, 'platform');
     platform.body.immovable = true;

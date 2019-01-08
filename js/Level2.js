@@ -111,6 +111,7 @@ RutaEspectral.Level2.prototype = {
         var movementH = game.physics.arcade.collide(player, pMoveGroup.children[1]);
         player.checkWorldBounds = true;
         player.events.onOutOfBounds.add(this.test, this);
+
         // this.physics.world.on('worldbounds', this.test, this)
         if (circle) {
             if (player.position.y > 300 && player.position.y < 400) {
@@ -149,11 +150,15 @@ RutaEspectral.Level2.prototype = {
         var lostLPlanet = game.physics.arcade.collide(player, planet);
         game.physics.arcade.overlap(player, glasses, collectGlasses, null, this);
         game.physics.arcade.overlap(player, liveUpGroup, collectLiveUp, null, this);
+        if (player.position.x > 2530 && player.position.x < 540) {
+            addSatellites(3000, 100, elements);
+        }
         if (player.position.x > 2982 && player.position.x < 2990) {
             addSatellites(4367, 100, elements);
         }
         if (player.position.x > 4367 && player.position.x < 4372) {
             addSatellites(5667, 150, elements);
+            addSatellites(6707, 10, elements);
         }
         if (player.position.x > 1210 && player.position.x < 1220) {
             shootingExplotion();

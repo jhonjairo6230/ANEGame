@@ -143,18 +143,7 @@ var setSpaceSuit = function (x, y) {
     spaceA.body.collideWorldBounds = true;
     game.camera.follow(spaceA, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 };
-var addPlanetsLVL1 = function (planet) {
-    for (var i = 0; i < planet1.length; i++) {
-        var p1 = planet.create(planet1[i].x, planet1[i].y, 'planet1');
-        p1.body.immovable = true;
-        var p2 = planet.create(planet2[i].x, planet2[i].y, 'planet2');
-        p2.body.immovable = true;
-        var p3 = planet.create(planet3[i].x, planet3[i].y, 'planet3');
-        p3.body.immovable = true;
-        var p4 = planet.create(planet4[i].x, planet4[i].y, 'planet4');
-        p4.body.immovable = true;
-    }
-};
+
 var addSpaceSuit = function (spaceS) {
     for (var i = 0; i < spaceSuit.length; i++) {
         var ss = spaceS.create(spaceSuit[i].x, spaceSuit[i].y, 'part' + i);
@@ -176,69 +165,93 @@ var collectSuit = function (player, suitS) {
     }
 };
 var addObstructions = function () {
-    for (var i = 0; i < 5; i++) {
-        var obstruction1 = elements.create(400 + (i * 400), 20, 'obstructionGroup');
-        obstruction1.body.immovable = true;
-        game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
-        obstruction1.body.velocity.setTo(-10, 100);
-        obstruction1.body.collideWorldBounds = true;
-        obstruction1.body.bounce.set(0.4);
-
-        var obstruction1 = elements.create(700 + (i * 600), 20, 'obstruction1');
-        obstruction1.body.immovable = true;
-        game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
-        obstruction1.body.velocity.setTo(-10, 100);
-        obstruction1.body.collideWorldBounds = true;
-        obstruction1.body.bounce.set(0.4);
-        var obstruction1 = elements.create(800 + (i * 580), 20, 'obstruction2');
-        obstruction1.body.immovable = true;
-        game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
-        obstruction1.body.velocity.setTo(-10, 100);
-        obstruction1.body.collideWorldBounds = true;
-        obstruction1.body.bounce.set(0.4);
-    }
-    for (var i = 5; i < 10; i++) {
-        var obstruction1 = elements.create(400 + (i * 400), 20, 'obstructionGroup');
-        obstruction1.body.immovable = true;
-        game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
-        obstruction1.body.velocity.setTo(10, 100);
-        obstruction1.body.collideWorldBounds = true;
-        obstruction1.body.bounce.set(0.3);
-
-        var obstruction1 = elements.create(700 + (i * 600), 20, 'obstruction1');
-        obstruction1.body.immovable = true;
-        game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
-        obstruction1.body.velocity.setTo(-10, 100);
-        obstruction1.body.collideWorldBounds = true;
-        obstruction1.body.bounce.set(0.5);
-
-        var obstruction1 = elements.create(800 + (i * 580), 20, 'obstruction2');
-        obstruction1.body.immovable = true;
-        game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
-        obstruction1.body.velocity.setTo(-10, 100);
-        obstruction1.body.collideWorldBounds = true;
-        obstruction1.body.bounce.set(0.5);
-    }
-    for (var i = 15; i < 20; i++) {
-        var obstruction1 = elements.create(400 + (i * 400), 20, 'obstructionGroup');
-        obstruction1.body.immovable = true;
-        game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
-        obstruction1.body.velocity.setTo(-10, 100);
-        obstruction1.body.collideWorldBounds = true;
-        obstruction1.body.bounce.set(0.4);
-
-        var obstruction1 = elements.create(700 + (i * 600), 20, 'obstruction1');
-        obstruction1.body.immovable = true;
-        game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
-        obstruction1.body.velocity.setTo(10, 100);
-        obstruction1.body.collideWorldBounds = true;
-        obstruction1.body.bounce.set(0.4);
-        var obstruction1 = elements.create(800 + (i * 580), 20, 'obstruction2');
-        obstruction1.body.immovable = true;
-        game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
-        obstruction1.body.velocity.setTo(10, 100);
-        obstruction1.body.collideWorldBounds = true;
-        obstruction1.body.bounce.set(0.4);
+    switch (levelState) {
+        case 1:
+            for (var i = 0; i < 5; i++) {
+                var obstruction1 = elements.create(400 + (i * 400), 20, 'obstructionGroup');
+                obstruction1.body.immovable = true;
+                game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
+                obstruction1.body.velocity.setTo(-10, 100);
+                obstruction1.body.collideWorldBounds = true;
+                obstruction1.body.bounce.set(0.4);
+                var obstruction1 = elements.create(700 + (i * 600), 20, 'obstruction1');
+                obstruction1.body.immovable = true;
+                game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
+                obstruction1.body.velocity.setTo(-10, 100);
+                obstruction1.body.collideWorldBounds = true;
+                obstruction1.body.bounce.set(0.4);
+                var obstruction1 = elements.create(800 + (i * 580), 20, 'obstruction2');
+                obstruction1.body.immovable = true;
+                game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
+                obstruction1.body.velocity.setTo(-10, 100);
+                obstruction1.body.collideWorldBounds = true;
+                obstruction1.body.bounce.set(0.4);
+            }
+            for (var i = 5; i < 10; i++) {
+                var obstruction1 = elements.create(400 + (i * 400), 20, 'obstructionGroup');
+                obstruction1.body.immovable = true;
+                game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
+                obstruction1.body.velocity.setTo(10, 100);
+                obstruction1.body.collideWorldBounds = true;
+                obstruction1.body.bounce.set(0.3);
+                var obstruction1 = elements.create(700 + (i * 600), 20, 'obstruction1');
+                obstruction1.body.immovable = true;
+                game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
+                obstruction1.body.velocity.setTo(-10, 100);
+                obstruction1.body.collideWorldBounds = true;
+                obstruction1.body.bounce.set(0.5);
+                var obstruction1 = elements.create(800 + (i * 580), 20, 'obstruction2');
+                obstruction1.body.immovable = true;
+                game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
+                obstruction1.body.velocity.setTo(-10, 100);
+                obstruction1.body.collideWorldBounds = true;
+                obstruction1.body.bounce.set(0.5);
+            }
+            for (var i = 15; i < 20; i++) {
+                var obstruction1 = elements.create(400 + (i * 400), 20, 'obstructionGroup');
+                obstruction1.body.immovable = true;
+                game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
+                obstruction1.body.velocity.setTo(-10, 100);
+                obstruction1.body.collideWorldBounds = true;
+                obstruction1.body.bounce.set(0.4);
+                var obstruction1 = elements.create(700 + (i * 600), 20, 'obstruction1');
+                obstruction1.body.immovable = true;
+                game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
+                obstruction1.body.velocity.setTo(10, 100);
+                obstruction1.body.collideWorldBounds = true;
+                obstruction1.body.bounce.set(0.4);
+                var obstruction1 = elements.create(800 + (i * 580), 20, 'obstruction2');
+                obstruction1.body.immovable = true;
+                game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
+                obstruction1.body.velocity.setTo(10, 100);
+                obstruction1.body.collideWorldBounds = true;
+                obstruction1.body.bounce.set(0.4);
+            }
+            break;
+        case 2:
+            for (var i = 0; i < 3; i++) {
+                var obstruction1 = obstructions.create(80 + (i * 500), 20, 'obstructionGroup');
+                obstruction1.body.immovable = true;
+                game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
+                obstruction1.body.velocity.setTo(-10, 100);
+                obstruction1.body.collideWorldBounds = true;
+                obstruction1.body.bounce.set(0.4);
+                var obstruction1 = obstructions.create(150 + (i * 700), 200, 'obstruction1');
+                obstruction1.body.immovable = true;
+                game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
+                obstruction1.body.velocity.setTo(10, 100);
+                obstruction1.body.collideWorldBounds = true;
+                obstruction1.body.bounce.set(0.4);
+                var obstruction1 = obstructions.create(170 + (i * 680), 400, 'obstruction2');
+                obstruction1.body.immovable = true;
+                game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
+                obstruction1.body.velocity.setTo(10, 100);
+                obstruction1.body.collideWorldBounds = true;
+                obstruction1.body.bounce.set(0.7);
+            }
+            break;
+        default:
+            break;
     }
 };
 var shootingStart = function (pos) {
@@ -340,16 +353,13 @@ function setPlayerLvl2() {
     if (collectGls) {
         player = game.add.sprite(2295, 500, 'spriteA');
     } else {
-        player = game.add.sprite(320, 500, 'spriteA');
-        // player = game.add.sprite(7000, 100, 'spriteA');
+        //player = game.add.sprite(320, 500, 'spriteA');
+        player = game.add.sprite(6900, 50, 'spriteA');
     }
 
     player.animations.add('right', [7, 8, 9, 10], 8, true);
     player.animations.add('left', [0, 1, 2, 3], 8, true);
     game.physics.arcade.enable(player);
-    // player.body.checkCollision.up = false;
-    // player.body.checkCollision.left = false;
-    // player.body.checkCollision.right = false;
     player.body.bounce.y = 0.4;
     player.body.gravity.y = 300;
     player.body.collideWorldBounds = true;
@@ -418,56 +428,40 @@ var setPlatforms = function (elements) {
     platform.body.immovable = true;
 }
 
-var addObstructionsLVL2 = function () {
-    for (var i = 0; i < 3; i++) {
-        var obstruction1 = obstructions.create(80 + (i * 500), 20, 'obstructionGroup');
-        obstruction1.body.immovable = true;
-        game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
-        obstruction1.body.velocity.setTo(-10, 100);
-        obstruction1.body.collideWorldBounds = true;
-        obstruction1.body.bounce.set(0.4);
-
-        var obstruction1 = obstructions.create(150 + (i * 700), 200, 'obstruction1');
-        obstruction1.body.immovable = true;
-        game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
-        obstruction1.body.velocity.setTo(10, 100);
-        obstruction1.body.collideWorldBounds = true;
-        obstruction1.body.bounce.set(0.4);
-
-        var obstruction1 = obstructions.create(170 + (i * 680), 400, 'obstruction2');
-        obstruction1.body.immovable = true;
-        game.physics.enable(obstruction1, Phaser.Physics.ARCADE);
-        obstruction1.body.velocity.setTo(10, 100);
-        obstruction1.body.collideWorldBounds = true;
-        obstruction1.body.bounce.set(0.7);
-    }
-}
-var addBorderEarth = function () {
-    for (var i = 490; i < 599; i++) {
-        var borderE = bEarth.create(6430, i, 'px');
-        borderE.body.immovable = true;
-    }
-    var borderH = bEarthH.create(6445, 470, 'BH1');
-    borderH.body.immovable = true;
-    var borderH = bEarthH.create(7146, 430, 'BH2');
-    borderH.body.immovable = true;
-}
-
 var addPlanets = function (planet) {
-    for (var i = 0; i < planet1.length - 6; i++) {
-        if (i > 2) {
-            var p1 = planet.create(planet1[i].x, planet1[i].y, 'planet1');
-            p1.body.setCircle(16)
-            p1.body.immovable = true;
-            var p2 = planet.create(2400 + planet2[i].x, 10 + planet2[i].y - 100, 'planet2');
-            p2.body.setCircle(55)
-            p2.body.immovable = true;
-        }
-        var p3 = planet.create(2400 + planet3[i].x, 80 + planet3[i].y - 100, 'planet3');
-        p3.body.setCircle(27)
-        p3.body.immovable = true;
+    switch (levelState) {
+        case 1:
+            for (var i = 0; i < planet1.length; i++) {
+                var p1 = planet.create(planet1[i].x, planet1[i].y, 'planet1');
+                p1.body.immovable = true;
+                var p2 = planet.create(planet2[i].x, planet2[i].y, 'planet2');
+                p2.body.immovable = true;
+                var p3 = planet.create(planet3[i].x, planet3[i].y, 'planet3');
+                p3.body.immovable = true;
+                var p4 = planet.create(planet4[i].x, planet4[i].y, 'planet4');
+                p4.body.immovable = true;
+            }
+            break;
+        case 2:
+            for (var i = 0; i < planet1.length - 6; i++) {
+                if (i > 2) {
+                    var p1 = planet.create(planet1[i].x, planet1[i].y, 'planet1');
+                    p1.body.setCircle(16)
+                    p1.body.immovable = true;
+                    var p2 = planet.create(2400 + planet2[i].x, 10 + planet2[i].y - 100, 'planet2');
+                    p2.body.setCircle(55)
+                    p2.body.immovable = true;
+                }
+                var p3 = planet.create(2400 + planet3[i].x, 80 + planet3[i].y - 100, 'planet3');
+                p3.body.setCircle(27)
+                p3.body.immovable = true;
 
+            }
+            break;
+        default:
+            break;
     }
+
 }
 
 var collectGlasses = function (player, glasses) {
@@ -484,9 +478,7 @@ var collectLiveUp = function (player, liveUp) {
     liveUp.kill();
     showLives();
 }
-// var collectWave = function (player, wave) {
-//     wave.kill();
-// }
+
 
 var shootingExplotion = function () {
     var star = st.create(1000, 10, 'starM');

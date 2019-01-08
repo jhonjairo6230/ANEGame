@@ -33,6 +33,7 @@ RutaEspectral.Level2.prototype = {
         game.load.image('circleT', 'assets/level2/circleT.png');
     },
     create: function () {
+        levelState = 2;
         game.add.tileSprite(0, 0, 7900, 600, 'background');
         game.world.setBounds(0, 0, 7900, 600);
         game.renderer.roundPixels = true;
@@ -70,7 +71,7 @@ RutaEspectral.Level2.prototype = {
         var liveUp = liveUpGroup.create(1700, 50, 'liveUp');
         liveUp.body.immovable = true;
         setPlatforms(elements);
-        // addObstructions();
+        addObstructions();
         setPlayerLvl2();
         bordersWin = game.add.group();
         bordersWin.enableBody = true;
@@ -96,18 +97,6 @@ RutaEspectral.Level2.prototype = {
                 closeAdvLvl2();
             });
         }
-        // circle = new Phaser.Circle(7200, 330, 5);
-        // //  And display our circle on the top
-        // var graphics = game.add.graphics(0, 0);
-        // graphics.lineStyle(1, 0x00ff00, 1);
-        // graphics.drawCircle(circle.x, circle.y, circle.diameter);
-        // circle = new Phaser.Circle(7100, 400, 5);
-        // //  And display our circle on the top
-        // var graphics = game.add.graphics(0, 0);
-        // graphics.lineStyle(1, 0x0000ff, 1);
-        // graphics.drawCircle(circle.x, circle.y, circle.diameter);
-        //circle.enableBody = true;
-        // graphics.body.setCircle(circle.diameter)
     },
     update: function () {
         var hitPlatform = game.physics.arcade.collide(player, elements);
@@ -116,7 +105,7 @@ RutaEspectral.Level2.prototype = {
         var lostLive = game.physics.arcade.collide(player, obstructions);
         var circle = game.physics.arcade.collide(player, circleT);
         if (circle) {
-            if (player.position.y > 340 && player.position.y < 420) {
+            if (player.position.y > 300 && player.position.y < 400) {
                 circleT.kill();
             }
             if (player.position.y < 339) {
@@ -127,11 +116,7 @@ RutaEspectral.Level2.prototype = {
                 player.position.x = player.position.x - 50;
                 player.position.y = player.position.y - 200;
             }
-            //player.position.x = player.position.x - 150;
-            //player.position.y = player.position.y - 50;
         }
-        //var hitEarth = game.physics.arcade.collide(player, bEarth);
-        //var hitEarthH = game.physics.arcade.collide(player, bEarthH);
         var lostLPlanet = game.physics.arcade.collide(player, planet);
         game.physics.arcade.overlap(player, glasses, collectGlasses, null, this);
         game.physics.arcade.overlap(player, liveUpGroup, collectLiveUp, null, this);
@@ -140,9 +125,6 @@ RutaEspectral.Level2.prototype = {
         }
         if (player.position.x > 4367 && player.position.x < 4372) {
             addSatellites(5667, 150);
-        }
-        if (player.position.x > 6500 && player.position.x < 6510) {
-            // addBorderEarth();
         }
         if (player.position.x > 800 && player.position.x < 810) {
             shootingExplotion();
@@ -193,9 +175,6 @@ RutaEspectral.Level2.prototype = {
             player.frame = 5;
         }
         if (cursors.up.isDown && player.body.touching.down) {
-            // music = game.add.audio('jump');
-            // music.play();
-            // music.volume -= 0.3;
             document.getElementById("jump").play();
             if (player.position.x > 2100) {
                 player.body.velocity.y = -velocityLevel2.secondPart;

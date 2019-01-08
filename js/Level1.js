@@ -55,7 +55,7 @@ RutaEspectral.Level1.prototype = {
         planet.enableBody = true;
         var moon = planet.create(game.world.width - 170, 1, 'moon');
         moon.body.immovable = true;
-        addPlanetsLVL1(planet);
+        addPlanets(planet);
         spaceS = game.add.group();
         spaceS.enableBody = true;
         addSpaceSuit(spaceS);

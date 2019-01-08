@@ -165,6 +165,7 @@ RutaEspectral.Level2.prototype = {
         }
         if (lostLive || lostLPlanet) {
             document.getElementById("lostLive").play();
+            initLVl2 = false;
             countLives -= 1;
             if (countLives == 0) {
                 countLives = 3;
@@ -219,6 +220,7 @@ RutaEspectral.Level2.prototype = {
     },
     test: function () {
         document.getElementById("lostLive").play();
+        initLVl2 = false;
         countLives -= 1;
         if (countLives == 0) {
             countLives = 3;

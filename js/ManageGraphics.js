@@ -291,6 +291,7 @@ var addSuitElements = function () {
     foot2.visible = false;
 };
 var buildSpaceSuit = function (element) {
+    document.getElementById("collect").play();
     switch (element) {
         case 0:
             helmet.visible = true;
@@ -470,6 +471,7 @@ var addPlanets = function (planet) {
 }
 
 var collectGlasses = function (player, glasses) {
+    document.getElementById("collect").play();
     glasses.kill();
     collectGls = true;
     game.paused = true;

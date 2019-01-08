@@ -96,16 +96,16 @@ RutaEspectral.Level2.prototype = {
                 closeAdvLvl2();
             });
         }
-        circle = new Phaser.Circle(7200, 330, 5);
-        //  And display our circle on the top
-        var graphics = game.add.graphics(0, 0);
-        graphics.lineStyle(1, 0x00ff00, 1);
-        graphics.drawCircle(circle.x, circle.y, circle.diameter);
-        circle = new Phaser.Circle(7100, 400, 5);
-        //  And display our circle on the top
-        var graphics = game.add.graphics(0, 0);
-        graphics.lineStyle(1, 0x0000ff, 1);
-        graphics.drawCircle(circle.x, circle.y, circle.diameter);
+        // circle = new Phaser.Circle(7200, 330, 5);
+        // //  And display our circle on the top
+        // var graphics = game.add.graphics(0, 0);
+        // graphics.lineStyle(1, 0x00ff00, 1);
+        // graphics.drawCircle(circle.x, circle.y, circle.diameter);
+        // circle = new Phaser.Circle(7100, 400, 5);
+        // //  And display our circle on the top
+        // var graphics = game.add.graphics(0, 0);
+        // graphics.lineStyle(1, 0x0000ff, 1);
+        // graphics.drawCircle(circle.x, circle.y, circle.diameter);
         //circle.enableBody = true;
         // graphics.body.setCircle(circle.diameter)
     },
@@ -116,7 +116,7 @@ RutaEspectral.Level2.prototype = {
         var lostLive = game.physics.arcade.collide(player, obstructions);
         var circle = game.physics.arcade.collide(player, circleT);
         if (circle) {
-            if (player.position.y > 340 && player.position.y < 400) {
+            if (player.position.y > 340 && player.position.y < 420) {
                 circleT.kill();
             }
             if (player.position.y < 339) {
@@ -148,6 +148,7 @@ RutaEspectral.Level2.prototype = {
             shootingExplotion();
         }
         if (lostLive || lostLPlanet) {
+            document.getElementById("lostLive").play();
             countLives -= 1;
             if (countLives == 0) {
                 countLives = 3;
@@ -176,8 +177,7 @@ RutaEspectral.Level2.prototype = {
             levelState = 2;
             countLives += 1;
             showLives();
-            var x = document.getElementById("changeLevel");
-            x.play();
+            document.getElementById("changeLevel").play();
             game.state.start('PassLevel');
         }
         cursors = game.input.keyboard.createCursorKeys();
@@ -196,8 +196,7 @@ RutaEspectral.Level2.prototype = {
             // music = game.add.audio('jump');
             // music.play();
             // music.volume -= 0.3;
-            var x = document.getElementById("jump");
-            x.play();
+            document.getElementById("jump").play();
             if (player.position.x > 2100) {
                 player.body.velocity.y = -velocityLevel2.secondPart;
             } else {

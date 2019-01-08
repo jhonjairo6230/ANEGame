@@ -43,9 +43,11 @@ RutaEspectral.AvatarSelected.prototype = {
         });
     },
     playGame: function (e) {
+        document.getElementById("click").play();
         this.state.start('GoToShip');
     },
     backPress: function (e) {
+        document.getElementById("click").play();
         this.state.start('AvatarConfig');
     }
 };

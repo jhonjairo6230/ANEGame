@@ -140,10 +140,12 @@ RutaEspectral.AvatarConfig.prototype = {
     update: function () {},
 
     playAction: function () {
+        document.getElementById("spaceSuit").play();
         this.state.start('AvatarSelected');
     },
 
     actionHair: function (e) {
+        document.getElementById("click").play();
         hairSelected.kill();
         switch (e.key) {
             case 'hairBtn0':
@@ -177,6 +179,7 @@ RutaEspectral.AvatarConfig.prototype = {
         }
     },
     actionHead: function (e) {
+        document.getElementById("click").play();
         headSelected.kill();
         switch (e.key) {
             case 'headBtn0':
@@ -204,6 +207,7 @@ RutaEspectral.AvatarConfig.prototype = {
         armSelected = game.add.sprite(armSelected.position.x, armSelected.position.y, armSelected.key);
     },
     actionArm: function (e) {
+        document.getElementById("click").play();
         armSelected.kill();
         switch (e.key) {
             case 'armBtn0':
@@ -227,6 +231,7 @@ RutaEspectral.AvatarConfig.prototype = {
         }
     },
     actionFoot: function (e) {
+        document.getElementById("click").play();
         footSelected.kill()
         switch (e.key) {
             case 'footBtn0':

@@ -10,6 +10,7 @@ RutaEspectral.Splash.prototype = {
         game.add.button(630, 500, 'playBtn', this.playGame, this, 1, 1, 0);
     },
     playGame: function (e) {
+        document.getElementById("click").play();
         this.state.start('AvatarConfig');
     }
 };

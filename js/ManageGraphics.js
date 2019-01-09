@@ -586,3 +586,20 @@ var animateFishJump = function () {
         }
     }
 }
+
+var setCollectableElements = function () {
+    var horn = [100, 900, 1300, 4000, 5899, 7021, 8018, 9014, 10100, 11500];
+    var smoke = [400, 1500, 2000, 3510, 4899, 6231, 8518, 10114, 11500, 12721];
+    var radio = [300, 1000, 2300, 3600, 4349, 5021, 8918, 9600, 10500, 12000];
+    var telegraph = [800, 2010, 2700, 3818, 4619, 5735, 7777, 9900, 10803, 11221];
+    for (var h = 0; h < 9; h++) {
+        sHorn = collectables.create(horn[h], 30, 'horn');
+        sHorn.body.immovable = true;
+        sSmoke = collectables.create(smoke[h], 70, 'smoke');
+        sSmoke.body.immovable = true;
+        sTelegraph = collectables.create(telegraph[h], 110, 'telegraph');
+        sTelegraph.body.immovable = true;
+        sRadio = collectables.create(radio[h], 150, 'radio');
+        sRadio.body.immovable = true;
+    }
+}

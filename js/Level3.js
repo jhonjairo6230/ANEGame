@@ -2,7 +2,7 @@ var player, bioHSprite, platforms, elements, cursors, enemies;
 var fishesSprite = [];
 var initLVl3 = false,
     isUp = true;
-var sHorn, sRadio, sSmoke, sTelegraph;
+var sHorn, sRadio, sSmoke, sTelegraph, collectables;
 
 RutaEspectral.Level3 = function (game) {};
 RutaEspectral.Level3.prototype = {
@@ -14,9 +14,16 @@ RutaEspectral.Level3.prototype = {
         game.load.image('platformL', 'assets/level3/platformL.png');
         game.load.image('platformR', 'assets/level3/platformR.png');
         game.load.image('platformC', 'assets/level3/platformC.png');
+        game.load.image('horn', 'assets/level3/sHorn.png');
+        game.load.image('radio', 'assets/level3/sRadio.png');
+        game.load.image('smoke', 'assets/level3/sSmoke.png');
+        game.load.image('telegraph', 'assets/level3/sTelegraph.png');
+
         game.load.image('bgLives', 'assets/level1/bgLives.png');
         game.load.image('star', 'assets/star.png');
         game.load.spritesheet('closeBtn', 'assets/buttons/closeBtn.png', 40, 40);
+
+
     },
     create: function () {
         levelState = 3;
@@ -44,6 +51,10 @@ RutaEspectral.Level3.prototype = {
         enemies = game.add.group();
         enemies.enableBody = true;
         addFishSprite(enemies);
+
+        collectables = game.add.group();
+        collectables.enableBody = true;
+        setCollectableElements();
     },
     update: function () {
         var hitPlatform = game.physics.arcade.collide(player, platforms);

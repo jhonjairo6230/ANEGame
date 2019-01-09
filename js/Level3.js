@@ -10,7 +10,7 @@ RutaEspectral.Level3.prototype = {
         game.load.image('background', 'assets/level3/backgroundLVL3.png');
         //game.load.spritesheet('sprite' + selectedSprite, 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
         game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 14 + '.png', spriteSizes[14].width / 11, spriteSizes[14].height);
-        game.load.spritesheet('spriteFish', 'assets/level3/fishSprite.png', (183 / 4), 80);
+        game.load.spritesheet('spriteFish', 'assets/level3/fishSprite.png', (180 / 4), 80);
         game.load.image('platformL', 'assets/level3/platformL.png');
         game.load.image('platformR', 'assets/level3/platformR.png');
         game.load.image('platformC', 'assets/level3/platformC.png');

@@ -349,7 +349,7 @@ function setPlayerLvl2() {
             }
             break;
         case 3:
-            player = game.add.sprite(520, 400, 'spritePlayer');
+            player = game.add.sprite(7620, 400, 'spritePlayer');
             //player = game.add.sprite(320, 400, 'spritePlayer');
             break;
         default:
@@ -438,7 +438,13 @@ var setPlatforms = function (elements, pMoveGroup) {
             ];
             var vrh = [415, 1850, 3264, 4690, 6124, 7550, 8961, 10397, 11770, 12962];
             var vlh = [890, 2318, 3737, 5165, 6594, 8024, 9440, 10868, 12234, 13385];
-            var vSky = [100, 300, 500, 200];
+            var vSkyH = [100, 300, 530, 989, 1251, 1458, 1868, 2489, 3148, 3461, 4009,
+                4356, 4729, 5470, 5832, 7188, 7433, 7760, 8427, 8745, 9097, 9808, 10063,
+                10499, 11185, 11511
+            ];
+            var vSkyV = [250, 355, 200, 200, 355, 270, 250, 355, 355, 200, 200, 355, 240,
+                355, 200, 200, 355, 210, 355, 200, 100, 355, 210, 300, 355, 205
+            ];
             for (var i = 0; i < vch.length; i++) {
                 var platform = elements.create(vch[i], 480, 'platformC');
                 platform.body.immovable = true;
@@ -452,14 +458,9 @@ var setPlatforms = function (elements, pMoveGroup) {
                 platform.body.immovable = true;
 
             }
-            for (var s = 0; s < vSky.length; s++) {
-                if ((s % 2) == 0) {
-                    var platform = elements.create(vSky[s], s + 240, 'platformS');
-                    platform.body.immovable = true;
-                } else {
-                    var platform = elements.create(vSky[s], s + 370, 'platformS');
-                    platform.body.immovable = true;
-                }
+            for (var s = 0; s < vSkyH.length; s++) {
+                var platform = elements.create(vSkyH[s], vSkyV[s], 'platformS');
+                platform.body.immovable = true;
             }
 
             break;
@@ -600,17 +601,21 @@ var animateFishJump = function () {
 
 var setCollectableElements = function () {
     var horn = [100, 900, 1300, 4000, 5899, 7021, 8018, 9014, 10100, 11500];
-    var smoke = [400, 1500, 2000, 3510, 4899, 6231, 8518, 10114, 11500, 12721];
-    var radio = [300, 1000, 2300, 3600, 4349, 5021, 8918, 9600, 10500, 12000];
-    var telegraph = [800, 2010, 2700, 3818, 4619, 5735, 7777, 9900, 10803, 11221];
+    var smoke = [400, 1500, 2000, 3510, 4899, 6201, 8718, 10114, 11500, 12721];
+    var radio = [20, 1000, 2300, 3600, 4349, 5021, 8918, 9600, 10500, 12000];
+    var telegraph = [800, 2010, 2700, 3818, 4619, 5735, 7577, 9900, 10803, 11221];
+    var vHT = [41, 400, 110, 250, 267, 130, 400, 420, 95, 118];
+    var vSR = [380, 120, 157, 350, 121, 333, 86, 144, 212, 73];
+    var a = 9;
     for (var h = 0; h < 9; h++) {
-        sHorn = collectables.create(horn[h], 30, 'horn');
+        sHorn = collectables.create(horn[h], vHT[h], 'horn');
         sHorn.body.immovable = true;
-        sSmoke = collectables.create(smoke[h], 70, 'smoke');
+        sSmoke = collectables.create(smoke[h], vSR[a], 'smoke');
         sSmoke.body.immovable = true;
-        sTelegraph = collectables.create(telegraph[h], 110, 'telegraph');
+        sTelegraph = collectables.create(telegraph[h], vHT[a], 'telegraph');
         sTelegraph.body.immovable = true;
-        sRadio = collectables.create(radio[h], 150, 'radio');
+        sRadio = collectables.create(radio[h], vSR[h], 'radio');
         sRadio.body.immovable = true;
+        a -= 1;
     }
 }

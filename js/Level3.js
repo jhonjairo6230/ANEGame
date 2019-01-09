@@ -1,5 +1,7 @@
-var player, bioHSprite, platforms, elements, cursors;
-var initLVl3 = false;
+var player, bioHSprite, platforms, elements, cursors, enemies;
+var fishesSprite = [];
+var initLVl3 = false,
+    isUp = true;
 var sHorn, sRadio, sSmoke, sTelegraph;
 
 RutaEspectral.Level3 = function (game) {};
@@ -8,6 +10,7 @@ RutaEspectral.Level3.prototype = {
         game.load.image('background', 'assets/level3/backgroundLVL3.png');
         //game.load.spritesheet('sprite' + selectedSprite, 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
         game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 14 + '.png', spriteSizes[14].width / 11, spriteSizes[14].height);
+        game.load.spritesheet('spriteFish', 'assets/level3/fishSprite.png', (183 / 4), 80);
         game.load.image('platformL', 'assets/level3/platformL.png');
         game.load.image('platformR', 'assets/level3/platformR.png');
         game.load.image('platformC', 'assets/level3/platformC.png');
@@ -27,6 +30,7 @@ RutaEspectral.Level3.prototype = {
         platforms.enableBody = true;
         setPlatforms(platforms, null);
         setPlayerLvl2();
+
         var stbackround = game.add.image(640, 0, 'bgLives');
         stbackround.fixedToCamera = true;
         stbackround.scale.set(2, 1);
@@ -36,11 +40,20 @@ RutaEspectral.Level3.prototype = {
         var st2 = game.add.image(0, 0, 'bgLives');
         st2.fixedToCamera = true;
         showLives();
+
+        enemies = game.add.group();
+        enemies.enableBody = true;
+        addFishSprite(enemies);
     },
     update: function () {
         var hitPlatform = game.physics.arcade.collide(player, platforms);
+        var losLive0 = game.physics.arcade.collide(player, enemies);
         player.checkWorldBounds = true;
         player.events.onOutOfBounds.add(this.die, this);
+        animateFishJump();
+        if (losLive0) {
+            this.die();
+        }
         cursors = game.input.keyboard.createCursorKeys();
         player.body.velocity.x = 0;
         if (cursors.left.isDown) {
@@ -72,7 +85,7 @@ RutaEspectral.Level3.prototype = {
         }
         showLives();
         game.paused = true;
-        infoText(message14, '20px', game.camera.view.x + 200, 200, 240, 80, function () {
+        infoText(message14, '20px', game.camera.view.x + 200, 200, 300, 100, function () {
             game.paused = false;
             game.state.start('Level3');
         });

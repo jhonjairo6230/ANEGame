@@ -349,8 +349,8 @@ function setPlayerLvl2() {
             }
             break;
         case 3:
-            player = game.add.sprite(320, 400, 'spritePlayer');
-            //player = game.add.sprite(12000, 400, 'spritePlayer');
+            player = game.add.sprite(520, 400, 'spritePlayer');
+            //player = game.add.sprite(320, 400, 'spritePlayer');
             break;
         default:
             break;
@@ -551,4 +551,38 @@ var PlatformsStage1 = function (elements) {
     platformS17.body.immovable = true;
     var platformS18 = elements.create(1500, 160, 'platform');
     platformS18.body.immovable = true;
+}
+//************************************** */
+//************************************** */
+//***************LEVEL 3**************** */
+//************************************** */
+//************************************** */
+var addFishSprite = function (enemies) {
+    var fishes = [800, 2200, 3610, 5044, 6480, 7900, 9320, 10750, 12120];
+    for (var i = 0; i < fishes.length; i++) {
+        fishesSprite[i] = game.add.sprite(fishes[i], 500, 'spriteFish');
+        fishesSprite[i].animations.add('up', [0, 1], 2, true);
+        fishesSprite[i].animations.add('down', [2, 3], 2, true);
+        game.physics.arcade.enable(fishesSprite[i]);
+        fishesSprite[i].body.bounce.y = 0.1;
+        fishesSprite[i].body.immovable = true;
+        enemies.add(fishesSprite[i]);
+    }
+
+}
+
+var animateFishJump = function () {
+    for (var i = 0; i < fishesSprite.length; i++) {
+        if (fishesSprite[i].position.y > 280 && isUp) {
+            isUp = true;
+            fishesSprite[i].animations.play('up');
+            fishesSprite[i].body.velocity.setTo(0, -100);
+        } else if (fishesSprite[i].position.y < 680) {
+            isUp = false;
+            fishesSprite[i].animations.play('down');
+            fishesSprite[i].body.velocity.setTo(0, 100);
+        } else {
+            isUp = true;
+        }
+    }
 }

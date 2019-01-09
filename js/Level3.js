@@ -3,10 +3,10 @@ var fishesSprite = [];
 var initLVl3 = false,
     isUp = true;
 var sHorn, sRadio, sSmoke, sTelegraph, collectables;
-var countSmoke = 1,
-    countHorn = 1,
-    countTelegraph = 1,
-    countRadio = 1;
+var countSmoke = 0,
+    countHorn = 0,
+    countTelegraph = 0,
+    countRadio = 0;
 
 RutaEspectral.Level3 = function (game) {};
 RutaEspectral.Level3.prototype = {
@@ -23,6 +23,10 @@ RutaEspectral.Level3.prototype = {
         game.load.image('radio', 'assets/level3/sRadio.png');
         game.load.image('smoke', 'assets/level3/sSmoke.png');
         game.load.image('telegraph', 'assets/level3/sTelegraph.png');
+        game.load.image('s0', 'assets/level3/cuerno.png');
+        game.load.image('s1', 'assets/level3/radio.png');
+        game.load.image('s2', 'assets/level3/humo.png');
+        game.load.image('s3', 'assets/level3/telegrafo.png');
 
         game.load.image('bgLives', 'assets/level1/bgLives.png');
         game.load.image('star', 'assets/star.png');
@@ -51,6 +55,11 @@ RutaEspectral.Level3.prototype = {
         stars.fixedToCamera = true;
         var st2 = game.add.image(0, 0, 'bgLives');
         st2.fixedToCamera = true;
+        for (n = 0; n < 4; n++) {
+            game.add.image(200 + (n * 100), 0, 'bgLives').fixedToCamera = true;
+            game.add.image(240 + (n * 100), 4, 's' + n).fixedToCamera = true;
+        }
+
         showLives();
 
         enemies = game.add.group();
@@ -96,6 +105,7 @@ RutaEspectral.Level3.prototype = {
     },
     die: function () {
         document.getElementById("lostLive").play();
+        countHorn = countRadio = countSmoke = countTelegraph = 0;
         initLVl3 = false;
         countLives -= 1;
         if (countLives == 0) {
@@ -110,10 +120,10 @@ RutaEspectral.Level3.prototype = {
         });
     },
     render: function () {
-        game.debug.text(player.position.x, 15, 18, "#2565e5");
-        game.debug.text("H" + countHorn, 300, 18, "#2565e5");
-        game.debug.text("R" + countRadio, 400, 18, "#2565e5");
-        game.debug.text("T" + countTelegraph, 500, 18, "#2565e5");
-        game.debug.text("S" + countSmoke, 600, 18, "#2565e5");
+        //game.debug.text(player.position.x, 15, 18, "#2565e5");
+        game.debug.text(countHorn + "x", 220, 18, "#2565e5");
+        game.debug.text(countRadio + "x", 320, 18, "#2565e5");
+        game.debug.text(countTelegraph + "x", 420, 18, "#2565e5");
+        game.debug.text(countSmoke + "x", 520, 18, "#2565e5");
     }
 }

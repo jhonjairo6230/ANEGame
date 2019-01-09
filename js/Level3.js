@@ -3,6 +3,10 @@ var fishesSprite = [];
 var initLVl3 = false,
     isUp = true;
 var sHorn, sRadio, sSmoke, sTelegraph, collectables;
+var countSmoke = 1,
+    countHorn = 1,
+    countTelegraph = 1,
+    countRadio = 1;
 
 RutaEspectral.Level3 = function (game) {};
 RutaEspectral.Level3.prototype = {
@@ -60,6 +64,9 @@ RutaEspectral.Level3.prototype = {
     update: function () {
         var hitPlatform = game.physics.arcade.collide(player, platforms);
         var losLive0 = game.physics.arcade.collide(player, enemies);
+
+        game.physics.arcade.overlap(player, collectables, collectElements, null, this);
+
         player.checkWorldBounds = true;
         player.events.onOutOfBounds.add(this.die, this);
         animateFishJump();
@@ -104,5 +111,9 @@ RutaEspectral.Level3.prototype = {
     },
     render: function () {
         game.debug.text(player.position.x, 15, 18, "#2565e5");
+        game.debug.text("H" + countHorn, 300, 18, "#2565e5");
+        game.debug.text("R" + countRadio, 400, 18, "#2565e5");
+        game.debug.text("T" + countTelegraph, 500, 18, "#2565e5");
+        game.debug.text("S" + countSmoke, 600, 18, "#2565e5");
     }
 }

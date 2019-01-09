@@ -349,7 +349,7 @@ function setPlayerLvl2() {
             }
             break;
         case 3:
-            player = game.add.sprite(7620, 400, 'spritePlayer');
+            player = game.add.sprite(320, 400, 'spritePlayer');
             //player = game.add.sprite(320, 400, 'spritePlayer');
             break;
         default:
@@ -439,10 +439,10 @@ var setPlatforms = function (elements, pMoveGroup) {
             var vrh = [415, 1850, 3264, 4690, 6124, 7550, 8961, 10397, 11770, 12962];
             var vlh = [890, 2318, 3737, 5165, 6594, 8024, 9440, 10868, 12234, 13385];
             var vSkyH = [100, 300, 530, 989, 1251, 1458, 1868, 2489, 3148, 3461, 4009,
-                4356, 4729, 5470, 5832, 7188, 7433, 7760, 8427, 8745, 9097, 9808, 10063,
+                4356, 4729, 5470, 5832, 7188, 7433, 7760, 8427, 8745, 9067, 9808, 10063,
                 10499, 11185, 11511
             ];
-            var vSkyV = [250, 355, 200, 200, 355, 270, 250, 355, 355, 200, 200, 355, 240,
+            var vSkyV = [250, 355, 200, 250, 355, 270, 250, 355, 355, 200, 200, 355, 240,
                 355, 200, 200, 355, 210, 355, 200, 100, 355, 210, 300, 355, 205
             ];
             for (var i = 0; i < vch.length; i++) {
@@ -618,4 +618,25 @@ var setCollectableElements = function () {
         sRadio.body.immovable = true;
         a -= 1;
     }
+}
+
+var collectElements = function (player, collectable) {
+    document.getElementById("collect").play();
+    switch (collectable.key) {
+        case "radio":
+            countRadio += 1;
+            break;
+        case "telegraph":
+            countTelegraph += 1;
+            break;
+        case "smoke":
+            countSmoke += 1;
+            break;
+        case "horn":
+            countHorn += 1;
+            break;
+        default:
+            break;
+    }
+    collectable.kill();
 }

@@ -113,18 +113,7 @@ var showLives = function () {
         }
     }
 };
-// var render = function () {
-//     if (isInitLVL1) {
-//         if (timerL1.running) {
-//             timeRest = this.formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000));
-//             game.debug.text(this.formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000)), 15, 18, "#2565e5");
-//         } else {
-//             isInitLVL1 = false;
-//             spaceSuitPhysics = false;
-//             game.state.start('Level1');
-//         }
-//     }
-// };
+
 var endTimer = function () {
     timerL1.stop();
 };
@@ -351,11 +340,20 @@ var closeAdvLvl2 = function () {
 }
 
 function setPlayerLvl2() {
-    if (collectGls) {
-        player = game.add.sprite(2295, 500, 'spriteA');
-    } else {
-        player = game.add.sprite(320, 500, 'spriteA');
-        // player = game.add.sprite(2295, 50, 'spriteA');
+    switch (levelState) {
+        case 2:
+            if (collectGls) {
+                player = game.add.sprite(2295, 500, 'spriteA');
+            } else {
+                player = game.add.sprite(320, 500, 'spriteA');
+            }
+            break;
+        case 3:
+            // player = game.add.sprite(320, 400, 'spritePlayer');
+            player = game.add.sprite(12000, 400, 'spritePlayer');
+            break;
+        default:
+            break;
     }
 
     player.animations.add('right', [7, 8, 9, 10], 8, true);
@@ -377,58 +375,86 @@ var addSatellites = function (x, y, platform) {
 }
 
 var setPlatforms = function (elements, pMoveGroup) {
-    //Platform in the floor
-    PlatformsStage1(elements, platform);
+    switch (levelState) {
+        case 2:
+            //Platform in the floor
+            PlatformsStage1(elements, platform);
 
-    var platform = elements.create(2500, 567, 'platform');
-    platform.body.immovable = true;
-    var platform = elements.create(2900, 567, 'platform');
-    platform.body.immovable = true;
-    var platform = elements.create(3350, 567, 'platformF0');
-    platform.body.immovable = true;
-    var platform = elements.create(4047, 567, 'platformF2');
-    platform.body.immovable = true;
-    var platform = elements.create(4444, 567, 'platform');
-    platform.body.immovable = true;
-    var platform = elements.create(4500, 567, 'platform');
-    platform.body.immovable = true;
-    platformMV = pMoveGroup.create(4709, 567, 'platform');
-    platformMV.body.immovable = true;
-    var platform = elements.create(5300, 567, 'platformF1');
-    platform.body.immovable = true;
-    var platform = elements.create(5910, 567, 'platformF0');
-    platform.body.immovable = true;
-    var platform = elements.create(6800, 567, 'platform');
-    platform.body.immovable = true;
+            var platform = elements.create(2500, 567, 'platform');
+            platform.body.immovable = true;
+            var platform = elements.create(2900, 567, 'platform');
+            platform.body.immovable = true;
+            var platform = elements.create(3350, 567, 'platformF0');
+            platform.body.immovable = true;
+            var platform = elements.create(4047, 567, 'platformF2');
+            platform.body.immovable = true;
+            var platform = elements.create(4444, 567, 'platform');
+            platform.body.immovable = true;
+            var platform = elements.create(4500, 567, 'platform');
+            platform.body.immovable = true;
+            platformMV = pMoveGroup.create(4709, 567, 'platform');
+            platformMV.body.immovable = true;
+            var platform = elements.create(5300, 567, 'platformF1');
+            platform.body.immovable = true;
+            var platform = elements.create(5910, 567, 'platformF0');
+            platform.body.immovable = true;
+            var platform = elements.create(6800, 567, 'platform');
+            platform.body.immovable = true;
 
-    //platforms in color line
-    var platform = elements.create(2680, 400, 'platform');
-    platform.body.immovable = true;
-    var platform = elements.create(3100, 400, 'platformF0');
-    platform.body.immovable = true;
-    var platform = elements.create(4250, 400, 'platform');
-    platform.body.immovable = true;
-    var platform = elements.create(5000, 400, 'platformF1');
-    platform.body.immovable = true;
-    var platform = elements.create(6148, 400, 'platform');
-    platform.body.immovable = true;
-    platformMH = pMoveGroup.create(6500, 400, 'platform');
-    platformMH.body.immovable = true;
+            //platforms in color line
+            var platform = elements.create(2680, 400, 'platform');
+            platform.body.immovable = true;
+            var platform = elements.create(3100, 400, 'platformF0');
+            platform.body.immovable = true;
+            var platform = elements.create(4250, 400, 'platform');
+            platform.body.immovable = true;
+            var platform = elements.create(5000, 400, 'platformF1');
+            platform.body.immovable = true;
+            var platform = elements.create(6148, 400, 'platform');
+            platform.body.immovable = true;
+            platformMH = pMoveGroup.create(6500, 400, 'platform');
+            platformMH.body.immovable = true;
 
-    //platforms in thirds
-    var platform = elements.create(2980, 240, 'platform');
-    platform.body.immovable = true;
-    var platform = elements.create(3800, 240, 'platformF1');
-    platform.body.immovable = true;
-    pltMovement = elements.create(4500, 240, 'platform');
-    pltMovement.body.immovable = true;
-    pltMovement.body.velocity.x = -200;
-    var platform = elements.create(5400, 240, 'platformF1');
-    platform.body.immovable = true;
-    var platform = elements.create(6348, 240, 'platform');
-    platform.body.immovable = true;
-    var platform = elements.create(6700, 240, 'platformF1');
-    platform.body.immovable = true;
+            //platforms in thirds
+            var platform = elements.create(2980, 240, 'platform');
+            platform.body.immovable = true;
+            var platform = elements.create(3800, 240, 'platformF1');
+            platform.body.immovable = true;
+            pltMovement = elements.create(4500, 240, 'platform');
+            pltMovement.body.immovable = true;
+            pltMovement.body.velocity.x = -200;
+            var platform = elements.create(5400, 240, 'platformF1');
+            platform.body.immovable = true;
+            var platform = elements.create(6348, 240, 'platform');
+            platform.body.immovable = true;
+            var platform = elements.create(6700, 240, 'platformF1');
+            platform.body.immovable = true;
+            break;
+        case 3:
+            var vch = [0, 290, 1167, 1424, 1690, 2580, 2841, 3110, 4017,
+                4300, 4500, 5450, 5707, 5972, 6876, 7145, 7406, 8270,
+                8500, 8760, 9730, 9995, 10200, 11157, 11412, 11670, 12526,
+                12786, 13500, 13758, 14017
+            ];
+            var vrh = [415, 1850, 3264, 4690, 6124, 7550, 8961, 10397, 11770, 12962];
+            var vlh = [890, 2318, 3737, 5165, 6594, 8024, 9440, 10868, 12234, 13385];
+            for (var i = 0; i < vch.length; i++) {
+                var platform = elements.create(vch[i], 480, 'platformC');
+                platform.body.immovable = true;
+            }
+            for (var i = 0; i < vrh.length; i++) {
+                var platform = elements.create(vrh[i], 480, 'platformR');
+                platform.body.immovable = true;
+            }
+            for (var i = 0; i < vlh.length; i++) {
+                var platform = elements.create(vlh[i], 480, 'platformL');
+                platform.body.immovable = true;
+            }
+
+            break;
+        default:
+            break;
+    }
 }
 
 var addPlanets = function (planet) {

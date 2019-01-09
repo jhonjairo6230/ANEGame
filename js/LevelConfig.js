@@ -7,5 +7,6 @@
     game.state.add('Level1', RutaEspectral.Level1);
     game.state.add('PassLevel', RutaEspectral.PassLevel);
     game.state.add('Level2', RutaEspectral.Level2);
-    game.state.start('Splash');
+    game.state.add('Level3', RutaEspectral.Level3);
+    game.state.start('Level3');
 })();

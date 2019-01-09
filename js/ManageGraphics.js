@@ -349,8 +349,8 @@ function setPlayerLvl2() {
             }
             break;
         case 3:
-            // player = game.add.sprite(320, 400, 'spritePlayer');
-            player = game.add.sprite(12000, 400, 'spritePlayer');
+            player = game.add.sprite(320, 400, 'spritePlayer');
+            //player = game.add.sprite(12000, 400, 'spritePlayer');
             break;
         default:
             break;

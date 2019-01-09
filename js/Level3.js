@@ -11,6 +11,9 @@ RutaEspectral.Level3.prototype = {
         game.load.image('platformL', 'assets/level3/platformL.png');
         game.load.image('platformR', 'assets/level3/platformR.png');
         game.load.image('platformC', 'assets/level3/platformC.png');
+        game.load.image('bgLives', 'assets/level1/bgLives.png');
+        game.load.image('star', 'assets/star.png');
+        game.load.spritesheet('closeBtn', 'assets/buttons/closeBtn.png', 40, 40);
     },
     create: function () {
         levelState = 3;
@@ -23,11 +26,21 @@ RutaEspectral.Level3.prototype = {
         platforms = game.add.group();
         platforms.enableBody = true;
         setPlatforms(platforms, null);
-
         setPlayerLvl2();
+        var stbackround = game.add.image(640, 0, 'bgLives');
+        stbackround.fixedToCamera = true;
+        stbackround.scale.set(2, 1);
+        stars = game.add.group();
+        stars.enableBody = true;
+        stars.fixedToCamera = true;
+        var st2 = game.add.image(0, 0, 'bgLives');
+        st2.fixedToCamera = true;
+        showLives();
     },
     update: function () {
         var hitPlatform = game.physics.arcade.collide(player, platforms);
+        player.checkWorldBounds = true;
+        player.events.onOutOfBounds.add(this.die, this);
         cursors = game.input.keyboard.createCursorKeys();
         player.body.velocity.x = 0;
         if (cursors.left.isDown) {
@@ -48,6 +61,21 @@ RutaEspectral.Level3.prototype = {
                 player.body.velocity.y = -velocityLevel2.firstPart;
             }
         }
+    },
+    die: function () {
+        document.getElementById("lostLive").play();
+        initLVl3 = false;
+        countLives -= 1;
+        if (countLives == 0) {
+            countLives = 3;
+            game.state.start('Level3');
+        }
+        showLives();
+        game.paused = true;
+        infoText(message14, '20px', game.camera.view.x + 200, 200, 240, 80, function () {
+            game.paused = false;
+            game.state.start('Level3');
+        });
     },
     render: function () {
         game.debug.text(player.position.x, 15, 18, "#2565e5");

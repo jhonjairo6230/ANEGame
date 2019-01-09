@@ -13,3 +13,5 @@ var message10 = 'Si deseas elegir el camino correcto debes encontrar las gafas';
 var message11 = 'No te choques Asteroides, satellites o planetas';
 var message12 = 'Mantente sobre las plataformas';
 var message13 = 'Se te acabó el tiempo :(';
+//Level 3
+var message14 = 'No te caigas a la laguna';

@@ -14,6 +14,7 @@ RutaEspectral.Level3.prototype = {
         game.load.image('platformL', 'assets/level3/platformL.png');
         game.load.image('platformR', 'assets/level3/platformR.png');
         game.load.image('platformC', 'assets/level3/platformC.png');
+        game.load.image('platformS', 'assets/level3/platformSky.png');
         game.load.image('horn', 'assets/level3/sHorn.png');
         game.load.image('radio', 'assets/level3/sRadio.png');
         game.load.image('smoke', 'assets/level3/sSmoke.png');

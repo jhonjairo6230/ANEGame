@@ -438,6 +438,7 @@ var setPlatforms = function (elements, pMoveGroup) {
             ];
             var vrh = [415, 1850, 3264, 4690, 6124, 7550, 8961, 10397, 11770, 12962];
             var vlh = [890, 2318, 3737, 5165, 6594, 8024, 9440, 10868, 12234, 13385];
+            var vSky = [100, 300, 500, 200];
             for (var i = 0; i < vch.length; i++) {
                 var platform = elements.create(vch[i], 480, 'platformC');
                 platform.body.immovable = true;
@@ -449,6 +450,16 @@ var setPlatforms = function (elements, pMoveGroup) {
             for (var i = 0; i < vlh.length; i++) {
                 var platform = elements.create(vlh[i], 480, 'platformL');
                 platform.body.immovable = true;
+
+            }
+            for (var s = 0; s < vSky.length; s++) {
+                if ((s % 2) == 0) {
+                    var platform = elements.create(vSky[s], s + 240, 'platformS');
+                    platform.body.immovable = true;
+                } else {
+                    var platform = elements.create(vSky[s], s + 370, 'platformS');
+                    platform.body.immovable = true;
+                }
             }
 
             break;

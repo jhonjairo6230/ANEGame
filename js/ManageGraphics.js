@@ -30,7 +30,9 @@ var infoText = function (txt, letterSize, x, y, width, height, action) {
 var closeTextInfo = function (e) {
     bar.kill();
     text.kill();
-    e.kill();
+    if (e) {
+        e.kill();
+    }
 };
 var startTimer = function (minute, seconds) {
     timerL1 = game.time.create(false);
@@ -349,7 +351,7 @@ function setPlayerLvl2() {
             }
             break;
         case 3:
-            player = game.add.sprite(8420, 400, 'spritePlayer');
+            player = game.add.sprite(320, 400, 'spritePlayer');
             //player = game.add.sprite(320, 400, 'spritePlayer');
             break;
         default:
@@ -693,4 +695,12 @@ var collectElements = function (player, collectable) {
             break;
     }
     collectable.kill();
+}
+
+var initLevel3 = function () {
+    document.getElementById("click").play();
+    initLVl3 = true;
+    game.paused = false;
+    closeTextInfo();
+    startTimer(3, 0);
 }

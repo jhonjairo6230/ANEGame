@@ -79,6 +79,10 @@ RutaEspectral.Level3.prototype = {
         collectables = game.add.group();
         collectables.enableBody = true;
         setCollectableElements();
+        game.paused = true;
+        infoText(message15, '20px', game.camera.view.x + 200, 200, 400, 150, function () {
+            initLevel3();
+        });
     },
     update: function () {
         var hitPlatform = game.physics.arcade.collide(player, platforms);
@@ -126,16 +130,25 @@ RutaEspectral.Level3.prototype = {
         }
         showLives();
         game.paused = true;
-        infoText(message14, '20px', game.camera.view.x + 200, 200, 300, 100, function () {
+        var msg = timerL1.running ? message14 : message13;
+        infoText(msg, '20px', game.camera.view.x + 200, 200, 300, 100, function () {
             game.paused = false;
             game.state.start('Level3');
         });
     },
     render: function () {
-        game.debug.text(player.position.x, 15, 18, "#2565e5");
-        game.debug.text(countHorn + "x", 220, 18, "#2565e5");
-        game.debug.text(countRadio + "x", 320, 18, "#2565e5");
-        game.debug.text(countTelegraph + "x", 420, 18, "#2565e5");
-        game.debug.text(countSmoke + "x", 520, 18, "#2565e5");
+        if (initLVl3) {
+            if (timerL1.running) {
+                timeRest = formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000));
+                game.debug.text(formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000)), 15, 18, "#2565e5");
+            } else {
+                this.die();
+            }
+            //game.debug.text(player.position.x, 15, 18, "#2565e5");
+            game.debug.text(countHorn + "x", 220, 18, "#2565e5");
+            game.debug.text(countRadio + "x", 320, 18, "#2565e5");
+            game.debug.text(countTelegraph + "x", 420, 18, "#2565e5");
+            game.debug.text(countSmoke + "x", 520, 18, "#2565e5");
+        }
     }
 }

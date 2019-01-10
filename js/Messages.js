@@ -15,3 +15,4 @@ var message12 = 'Mantente sobre las plataformas';
 var message13 = 'Se te acabó el tiempo :(';
 //Level 3
 var message14 = '¡Esquiva todos los peligros que puedas encontrar!';
+var message15 = '¡ya estás en el planeta tierra, ahora debes comunicarte con la ciudad, para esto recolecta las diferentes ondas sonoras y prueba con cada una de ellas!';

@@ -3,7 +3,8 @@ var fishesSprite = [],
     biosSprite = [];
 var initLVl3 = false,
     isUp = true,
-    isLeft = true;
+    isLeft = true,
+    isLeft12 = true;
 var sHorn, sRadio, sSmoke, sTelegraph, collectables;
 var countSmoke = 0,
     countHorn = 0,

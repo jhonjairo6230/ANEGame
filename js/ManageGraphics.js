@@ -349,7 +349,7 @@ function setPlayerLvl2() {
             }
             break;
         case 3:
-            player = game.add.sprite(9437, 400, 'spritePlayer');
+            player = game.add.sprite(8420, 400, 'spritePlayer');
             //player = game.add.sprite(320, 400, 'spritePlayer');
             break;
         default:
@@ -439,11 +439,11 @@ var setPlatforms = function (elements, pMoveGroup) {
             var vrh = [415, 1850, 3264, 4690, 6124, 7550, 8961, 10397, 11770, 12962];
             var vlh = [890, 2318, 3737, 5165, 6594, 8024, 9440, 10868, 12234, 13385];
             var vSkyH = [100, 300, 530, 989, 1251, 1458, 1868, 2489, 3148, 3461, 4009,
-                4356, 4729, 5470, 5832, 7188, 7433, 7760, 8427, 8745, 9067, 9808, 10063,
-                10499, 11185, 11511
+                4356, 4729, 5470, 5832, 7188, 7433, 7760, 8427, 8613, 8745, 9067, 9808, 10063,
+                10499, 11185, 11511, 11637
             ];
             var vSkyV = [250, 355, 200, 250, 355, 270, 250, 355, 355, 200, 200, 355, 240,
-                355, 200, 200, 355, 210, 355, 200, 100, 355, 210, 300, 355, 205
+                355, 200, 200, 355, 210, 355, 200, 200, 150, 355, 210, 300, 355, 205, 205
             ];
             for (var i = 0; i < vch.length; i++) {
                 var platform = elements.create(vch[i], 480, 'platformC');
@@ -584,9 +584,15 @@ var addFishSprite = function (enemies) {
 }
 
 var addBioSprite = function (enemies) {
-    var bios = [1550, 1600, 2984, 4407, 4457, 5834, 5884, 7242, 7292, 10104, 10154, 11535];
+    var bios = [1550, 1600, 2984, 4407, 4457, 5834, 5884, 7242, 7292, 10104,
+        10154, 11535, 11657, 8783
+    ];
     for (var i = 0; i < bios.length; i++) {
-        biosSprite[i] = game.add.sprite(bios[i], 440, 'spriteBio');
+        if (i < 12) {
+            biosSprite[i] = game.add.sprite(bios[i], 440, 'spriteBio');
+        } else {
+            biosSprite[i] = game.add.sprite(bios[i], 100, 'spriteBio');
+        }
         biosSprite[i].animations.add('left', [2, 1, 0], 8, true);
         biosSprite[i].animations.add('right', [0, 1, 2], 8, true);
         game.physics.arcade.enable(biosSprite[i]);
@@ -601,16 +607,31 @@ var addBioSprite = function (enemies) {
 
 var animateBio = function () {
     for (var i = 0; i < biosSprite.length; i++) {
-        if (biosSprite[0].position.x > 883 && isLeft) {
-            isLeft = true;
-            biosSprite[i].animations.play('left');
-            biosSprite[i].body.velocity.setTo(-120, 100);
-        } else if (biosSprite[1].position.x < 2100) {
-            isLeft = false;
-            biosSprite[i].animations.play('right');
-            biosSprite[i].body.velocity.setTo(120, 100);
+        if (i < 12) {
+            if (biosSprite[0].position.x > 883 && isLeft) {
+                isLeft = true;
+                biosSprite[i].animations.play('left');
+                biosSprite[i].body.velocity.setTo(-120, 100);
+            } else if (biosSprite[1].position.x < 2100) {
+                isLeft = false;
+                biosSprite[i].animations.play('right');
+                biosSprite[i].body.velocity.setTo(120, 100);
+            } else {
+                isLeft = true;
+            }
         } else {
-            isLeft = true;
+            if (biosSprite[12].position.x > 11500 && isLeft12) {
+                isLeft12 = true;
+                biosSprite[i].animations.play('left');
+                biosSprite[i].body.velocity.setTo(-120, 100);
+            } else if (biosSprite[12].position.x < 11720) {
+                isLeft12 = false;
+                biosSprite[i].animations.play('right');
+                biosSprite[i].body.velocity.setTo(120, 100);
+            } else {
+                isLeft12 = true;
+            }
+
         }
     }
 }

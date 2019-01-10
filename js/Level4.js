@@ -1,10 +1,9 @@
 var player, bioHSprite, platforms, elements, bottomLine, cursors, enemies, enemiesBio, line, roadLine;
-var fishesSprite = [],
+var carsSprite = [],
     biosSprite = [];
 var initLVl4 = false,
-    isUp = true,
-    isLeft = true,
-    isLeft12 = true;
+    isLeftCar = true,
+    isLeftTruck = true;
 var collectables, messageInfo, messageRadio;
 var countSmoke = 0,
     countHorn = 0,
@@ -23,8 +22,8 @@ RutaEspectral.Level4.prototype = {
 
         game.load.image('bottomLine', 'assets/level4/bottomLine.png');
         game.load.image('roadLine', 'assets/level4/roadLine.png');
-        game.load.spritesheet('spriteCar', 'assets/level4/carSprite.png', (689 / 6), 60);
-        game.load.spritesheet('truckCar', 'assets/level4/truckSprite.png', (10391 / 6), 80);
+        game.load.spritesheet('spriteCar', 'assets/level4/carSprite.png', (570 / 6), 50);
+        game.load.spritesheet('spriteTruck', 'assets/level4/truckSprite.png', (1217 / 6), 70);
 
         game.load.image('bgLives', 'assets/level1/bgLives.png');
         game.load.image('star', 'assets/star.png');
@@ -41,6 +40,9 @@ RutaEspectral.Level4.prototype = {
         addLines();
         setPlatforms(platforms, null);
         setPlayer();
+        enemies = game.add.group();
+        enemies.enableBody = true;
+        addCarSprite(enemies);
         var stbackround = game.add.image(640, 0, 'bgLives');
         stbackround.fixedToCamera = true;
         stbackround.scale.set(2, 1);
@@ -49,13 +51,16 @@ RutaEspectral.Level4.prototype = {
         stars.fixedToCamera = true;
         var st2 = game.add.image(0, 0, 'bgLives');
         st2.fixedToCamera = true;
-        showLives()
+        showLives();
     },
     update() {
         var hitPlatform = game.physics.arcade.collide(player, platforms);
         var hitFloor = game.physics.arcade.collide(player, lineBottom);
         var hitRoadLine = game.physics.arcade.collide(player, roadLine);
         player.checkWorldBounds = true;
+
+        animateCarsMove();
+
         cursors = game.input.keyboard.createCursorKeys();
         player.body.velocity.x = 0;
         if (cursors.left.isDown) {

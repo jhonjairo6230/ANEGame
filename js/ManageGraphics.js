@@ -814,3 +814,52 @@ var addLines = function () {
     roadLine.body.immovable = true;
     roadLine.body.checkCollision.down = false;
 }
+
+var addCarSprite = function (enemies) {
+    var cars = [1550, 1750, 2984, 4407, 4657, 5334, 5384, 6342, 6892];
+    for (var i = 0; i < cars.length; i++) {
+        if ((i % 2) == 0) {
+            carsSprite[i] = game.add.sprite(cars[i], 450, 'spriteCar');
+        } else {
+            carsSprite[i] = game.add.sprite(cars[i], 520, 'spriteTruck');
+        }
+        carsSprite[i].animations.add('left', [2, 1, 0], 10, true);
+        carsSprite[i].animations.add('right', [3, 4, 5], 10, true);
+        game.physics.arcade.enable(carsSprite[i]);
+        carsSprite[i].body.bounce.y = 0.2;
+        // carsSprite[i].body.setCircle(20)
+        //biosSprite[i].body.gravity.y = 300;
+        carsSprite[i].body.collideWorldBounds = true;
+        enemies.add(carsSprite[i]);
+    }
+}
+
+var animateCarsMove = function () {
+    for (var i = 0; i < carsSprite.length; i++) {
+        if ((i % 2) != 0) {
+            if (carsSprite[1].position.x > 20 && isLeftTruck) {
+                isLeftTruck = true;
+                carsSprite[i].animations.play('left');
+                carsSprite[i].body.velocity.setTo(-80, 0);
+            } else if (carsSprite[7].position.x < 6800) {
+                isLeftTruck = false;
+                carsSprite[i].animations.play('right');
+                carsSprite[i].body.velocity.setTo(80, 0);
+            } else {
+                isLeftTruck = true;
+            }
+        } else {
+            if (carsSprite[8].position.x < 6800 && isLeftCar) {
+                isLeftCar = true;
+                carsSprite[i].animations.play('right');
+                carsSprite[i].body.velocity.setTo(100, 0);
+            } else if (carsSprite[0].position.x > 20) {
+                isLeftCar = false;
+                carsSprite[i].animations.play('left');
+                carsSprite[i].body.velocity.setTo(-100, 0);
+            } else {
+                isLeftCar = true;
+            }
+        }
+    }
+}

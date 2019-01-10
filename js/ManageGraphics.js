@@ -716,6 +716,7 @@ var initLevel3 = function () {
 }
 
 var createDialogSelect = function () {
+    timerL1.paused = true;
     dialogBg = game.add.image(12336, 100, 'dialogBg');
     if (countHorn == 10) {
         btnHorn = game.add.button(12356, 200, 'btnHorn', this.testSignal, this, 1, 1, 0);
@@ -755,6 +756,7 @@ var testSignal = function (e) {
 
 
 var closeDialog = function (e) {
+    timerL1.paused = false;
     dialogBg.kill();
     if (messageInfo) {
         messageInfo.kill();

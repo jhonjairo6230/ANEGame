@@ -25,6 +25,9 @@ RutaEspectral.Level4.prototype = {
         game.load.image('roadLine', 'assets/level4/roadLine.png');
         game.load.spritesheet('spriteCar', 'assets/level4/carSprite.png', (689 / 6), 60);
         game.load.spritesheet('truckCar', 'assets/level4/truckSprite.png', (10391 / 6), 80);
+
+        game.load.image('bgLives', 'assets/level1/bgLives.png');
+        game.load.image('star', 'assets/star.png');
     },
     create() {
         levelState = 4;
@@ -38,6 +41,15 @@ RutaEspectral.Level4.prototype = {
         addLines();
         setPlatforms(platforms, null);
         setPlayer();
+        var stbackround = game.add.image(640, 0, 'bgLives');
+        stbackround.fixedToCamera = true;
+        stbackround.scale.set(2, 1);
+        stars = game.add.group();
+        stars.enableBody = true;
+        stars.fixedToCamera = true;
+        var st2 = game.add.image(0, 0, 'bgLives');
+        st2.fixedToCamera = true;
+        showLives()
     },
     update() {
         var hitPlatform = game.physics.arcade.collide(player, platforms);

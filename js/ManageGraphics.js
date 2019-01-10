@@ -477,6 +477,18 @@ var setPlatforms = function (elements, pMoveGroup) {
             }
 
             break;
+        case 4:
+            var vSkyH = [100, 500, 830, 945, 1751, 2000, 2300, 2829, 3148, 3461, 4009,
+                4356, 4729, 5470, 5832, 5188, 6433, 6760
+            ];
+            var vSkyV = [385, 350, 270, 270, 385, 270, 140, 355, 355, 200, 200, 355, 240,
+                355, 200, 200, 355, 210
+            ];
+            for (var s = 0; s < vSkyH.length; s++) {
+                var platform = elements.create(vSkyH[s], vSkyV[s], 'platformS');
+                platform.body.immovable = true;
+            }
+            break;
         default:
             break;
     }
@@ -786,4 +798,19 @@ var closeDialog = function (e) {
         btnSmoke.kill();
     }
 
+}
+
+//************************************** */
+//************************************** */
+//***************LEVEL 3**************** */
+//************************************** */
+//************************************** */
+var addLines = function () {
+    line = game.add.group();
+    line.enableBody = true;
+    lineBottom = line.create(0, 599, 'bottomLine');
+    lineBottom.body.immovable = true;
+    roadLine = line.create(0, 510, 'roadLine');
+    roadLine.body.immovable = true;
+    roadLine.body.checkCollision.down = false;
 }

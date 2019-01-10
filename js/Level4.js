@@ -74,21 +74,20 @@ RutaEspectral.Level4.prototype = {
             player.frame = 5;
         }
         if (cursors.up.isDown && player.body.touching.down) {
-            if (hitRoadLine) {
+            if (hitRoadLine || hitPlatform) {
                 var jumpS = document.getElementById("jump");
                 jumpS.volume = 0.4;
                 jumpS.play();
             }
-            if (player.position.x > 2100) {
-                player.body.velocity.y = -velocityLevel2.secondPart;
-            } else {
-                player.body.velocity.y = -velocityLevel2.firstPart;
-            }
+
+            player.body.velocity.y = -velocityLevel2.firstPart;
+
         }
         roadLine.body.checkCollision.up = true;
         if (cursors.down.isDown && hitRoadLine) {
             hitRoadLine = false;
             roadLine.body.checkCollision.up = false;
+            player.body.velocity.y = velocityLevel2.firstPart;
         }
 
     },

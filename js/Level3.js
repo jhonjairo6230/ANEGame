@@ -1,13 +1,15 @@
-var player, bioHSprite, platforms, elements, cursors, enemies;
-var fishesSprite = [];
+var player, bioHSprite, platforms, elements, cursors, enemies, enemiesBio;
+var fishesSprite = [],
+    biosSprite = [];
 var initLVl3 = false,
-    isUp = true;
+    isUp = true,
+    isLeft = true;
 var sHorn, sRadio, sSmoke, sTelegraph, collectables;
 var countSmoke = 0,
     countHorn = 0,
     countTelegraph = 0,
     countRadio = 0;
-
+var increment = -120;
 RutaEspectral.Level3 = function (game) {};
 RutaEspectral.Level3.prototype = {
     preload: function () {
@@ -15,6 +17,7 @@ RutaEspectral.Level3.prototype = {
         //game.load.spritesheet('sprite' + selectedSprite, 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
         game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 14 + '.png', spriteSizes[14].width / 11, spriteSizes[14].height);
         game.load.spritesheet('spriteFish', 'assets/level3/fishSprite.png', (180 / 4), 80);
+        game.load.spritesheet('spriteBio', 'assets/level3/bioSprite.png', (120 / 3), 40);
         game.load.image('platformL', 'assets/level3/platformL.png');
         game.load.image('platformR', 'assets/level3/platformR.png');
         game.load.image('platformC', 'assets/level3/platformC.png');
@@ -42,11 +45,17 @@ RutaEspectral.Level3.prototype = {
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.physics.arcade.checkCollision.down = false;
 
+
+        enemiesBio = game.add.group();
+        enemiesBio.enableBody = true;
+        game.physics.arcade.enable(enemiesBio);
+
+
         platforms = game.add.group();
         platforms.enableBody = true;
         setPlatforms(platforms, null);
         setPlayerLvl2();
-
+        addBioSprite(enemiesBio);
         var stbackround = game.add.image(640, 0, 'bgLives');
         stbackround.fixedToCamera = true;
         stbackround.scale.set(2, 1);
@@ -72,14 +81,16 @@ RutaEspectral.Level3.prototype = {
     },
     update: function () {
         var hitPlatform = game.physics.arcade.collide(player, platforms);
+        game.physics.arcade.collide(enemiesBio, platforms);
         var losLive0 = game.physics.arcade.collide(player, enemies);
-
+        var losLive1 = game.physics.arcade.collide(player, enemiesBio);
         game.physics.arcade.overlap(player, collectables, collectElements, null, this);
 
         player.checkWorldBounds = true;
         player.events.onOutOfBounds.add(this.die, this);
         animateFishJump();
-        if (losLive0) {
+        animateBio();
+        if (losLive0 || losLive1) {
             this.die();
         }
         cursors = game.input.keyboard.createCursorKeys();
@@ -120,7 +131,7 @@ RutaEspectral.Level3.prototype = {
         });
     },
     render: function () {
-        //game.debug.text(player.position.x, 15, 18, "#2565e5");
+        game.debug.text(player.position.x, 15, 18, "#2565e5");
         game.debug.text(countHorn + "x", 220, 18, "#2565e5");
         game.debug.text(countRadio + "x", 320, 18, "#2565e5");
         game.debug.text(countTelegraph + "x", 420, 18, "#2565e5");

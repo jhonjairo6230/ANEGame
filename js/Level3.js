@@ -16,8 +16,8 @@ RutaEspectral.Level3 = function (game) {};
 RutaEspectral.Level3.prototype = {
     preload: function () {
         game.load.image('background', 'assets/level3/backgroundLVL3.png');
-        game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
-        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 14 + '.png', spriteSizes[14].width / 11, spriteSizes[14].height);
+        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
+        game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 14 + '.png', spriteSizes[14].width / 11, spriteSizes[14].height);
         game.load.spritesheet('spriteFish', 'assets/level3/fishSprite.png', (180 / 4), 80);
         game.load.spritesheet('spriteBio', 'assets/level3/bioSprite.png', (120 / 3), 40);
         game.load.image('platformL', 'assets/level3/platformL.png');
@@ -67,7 +67,7 @@ RutaEspectral.Level3.prototype = {
         platforms.enableBody = true;
 
         setPlatforms(platforms, null);
-        setPlayerLvl2();
+        setPlayer();
         addBioSprite(enemiesBio);
         var stbackround = game.add.image(640, 0, 'bgLives');
         stbackround.fixedToCamera = true;

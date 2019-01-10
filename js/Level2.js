@@ -75,7 +75,7 @@ RutaEspectral.Level2.prototype = {
         liveUp.body.immovable = true;
         setPlatforms(elements, pMoveGroup);
         addObstructions();
-        setPlayerLvl2();
+        setPlayer();
         bordersWin = game.add.group();
         bordersWin.enableBody = true;
         var winFlag = bordersWin.create(7400, 500, 'winFlag');
@@ -210,7 +210,9 @@ RutaEspectral.Level2.prototype = {
             player.frame = 5;
         }
         if (cursors.up.isDown && player.body.touching.down) {
-            document.getElementById("jump").play();
+            var jumpS = document.getElementById("jump");
+            jumpS.volume = 0.4;
+            jumpS.play();
             if (player.position.x > 2100) {
                 player.body.velocity.y = -velocityLevel2.secondPart;
             } else {

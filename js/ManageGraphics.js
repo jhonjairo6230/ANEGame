@@ -348,7 +348,7 @@ var closeAdvLvl2 = function () {
     // mainTheme.play();
 }
 
-function setPlayerLvl2() {
+function setPlayer() {
     switch (levelState) {
         case 2:
             if (collectGls) {
@@ -358,6 +358,10 @@ function setPlayerLvl2() {
             }
             break;
         case 3:
+            player = game.add.sprite(320, 400, 'spritePlayer');
+            //player = game.add.sprite(320, 400, 'spritePlayer');
+            break;
+        case 4:
             player = game.add.sprite(320, 400, 'spritePlayer');
             //player = game.add.sprite(320, 400, 'spritePlayer');
             break;

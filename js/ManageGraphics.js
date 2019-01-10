@@ -63,6 +63,7 @@ var closeAdvLvl1 = function (e) {
         game.paused = false;
         this.setSpaceSuit(7800, 350);
     }
+
 };
 var initLevel1 = function (e) {
     document.getElementById("click").play();
@@ -80,6 +81,9 @@ var initLevel1 = function (e) {
         realPlayer.kill();
         spaceSuitPhysics = true;
     }
+    var mainTheme = document.getElementById("mainTheme")
+    mainTheme.volume = 0.3;
+    mainTheme.play();
 };
 
 var resetPlayer = function (x, y) {
@@ -339,6 +343,9 @@ var closeAdvLvl2 = function () {
     } else {
         startTimer(3, 0);
     }
+    // var mainTheme = document.getElementById("mainTheme")
+    // mainTheme.volume = 0.4;
+    // mainTheme.play();
 }
 
 function setPlayerLvl2() {
@@ -702,5 +709,75 @@ var initLevel3 = function () {
     initLVl3 = true;
     game.paused = false;
     closeTextInfo();
-    startTimer(3, 0);
+    startTimer(3, 30);
+    // var mainTheme = document.getElementById("mainTheme")
+    // mainTheme.volume = 0.4;
+    // mainTheme.play();
+}
+
+var createDialogSelect = function () {
+    dialogBg = game.add.image(12336, 100, 'dialogBg');
+    if (countHorn == 10) {
+        btnHorn = game.add.button(12356, 200, 'btnHorn', this.testSignal, this, 1, 1, 0);
+    }
+    if (countRadio == 10) {
+        btnRadio = game.add.button(12486, 200, 'btnRadio', this.testSignal, this, 1, 1, 0);
+    }
+    if (countTelegraph == 10) {
+        btnTelegraph = game.add.button(12616, 200, 'btnTelegraph', this.testSignal, this, 1, 1, 0);
+    }
+    if (countSmoke == 10) {
+        btnSmoke = game.add.button(12746, 200, 'btnSmoke', this.testSignal, this, 1, 1, 0);
+    }
+    //    / game.paused = true;
+}
+var testSignal = function (e) {
+    //closeDialog();
+    switch (e.key) {
+        case 'btnHorn':
+            messageInfo = game.add.image(12366, 100, 'messageHorn');
+            break;
+        case 'btnRadio':
+            messageRadio = game.add.image(12366, 100, 'messageRadio');
+            break;
+        case 'btnTelegraph':
+            messageInfo = game.add.image(12366, 100, 'messageTelegraph');
+            break;
+        case 'btnSmoke':
+            messageInfo = game.add.image(12366, 100, 'messageSmoke');
+            break;
+        default:
+            break;
+    }
+    btncls = game.add.button(12850, 100, 'closeBtn', this.closeDialog, this, 1, 1, 0);
+}
+
+
+
+var closeDialog = function (e) {
+    dialogBg.kill();
+    if (messageInfo) {
+        messageInfo.kill();
+    }
+    btncls.kill();
+    if (btnHorn) {
+        btnHorn.kill();
+    }
+    if (btnRadio) {
+        btnRadio.kill();
+        if (messageRadio) {
+            levelState = 3;
+            countLives += 1;
+            //showLives();
+            document.getElementById("changeLevel").play();
+            game.state.start('PassLevel');
+        }
+    }
+    if (btnTelegraph) {
+        btnTelegraph.kill();
+    }
+    if (btnSmoke) {
+        btnSmoke.kill();
+    }
+
 }

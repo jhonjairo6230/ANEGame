@@ -362,7 +362,7 @@ function setPlayer() {
             //player = game.add.sprite(320, 400, 'spritePlayer');
             break;
         case 4:
-            player = game.add.sprite(320, 400, 'spritePlayer');
+            player = game.add.sprite(7000, 400, 'spritePlayer');
             //player = game.add.sprite(320, 400, 'spritePlayer');
             break;
         default:
@@ -770,8 +770,8 @@ var setCollectableElements = function () {
         case 4:
             countPhone = countRadio = countTv = 0;
             var tv = [1500, 2000, 3510, 4899, 6201];
-            var radio = [20, 1300, 2300, 3600, 5231];
-            var phone = [148, 3110, 4400, 5776, 6390];
+            var radio = [20, 1300, 2300, 4000, 5231];
+            var phone = [148, 2910, 4400, 5776, 6390];
             var vT = [530, 430, 70, 200, 340];
             var vP = [340, 187, 180, 121, 530];
             var vR = [530, 350, 50, 120, 80];
@@ -817,30 +817,30 @@ var collectElements = function (player, collectable) {
                     if (countPhone == 0 && countTv == 0) {
                         countRadio += 1;
                     } else {
-                        collectables.kill();
+                        //collectables.kill();
                         game.paused = true;
                         showMessageInfo(game.camera.view.x + 200, 100, 'collectDiferent');
-                        setCollectableElements();
+                        //setCollectableElements();
                     }
                     break;
                 case "tv":
                     if (countPhone == 0 && countRadio == 0) {
                         countTv += 1;
                     } else {
-                        collectables.kill();
+                        //collectables.kill();
                         game.paused = true;
                         showMessageInfo(game.camera.view.x + 200, 100, 'collectDiferent');
-                        setCollectableElements();
+                        //setCollectableElements();
                     }
                     break;
                 case "phone":
                     if (countRadio == 0 && countTv == 0) {
                         countPhone += 1;
                     } else {
-                        collectables.kill();
+                        //collectables.kill();
                         game.paused = true;
                         showMessageInfo(game.camera.view.x + 200, 100, 'collectDiferent');
-                        setCollectableElements();
+                        //setCollectableElements();
                     }
                     break;
                 default:
@@ -1034,38 +1034,50 @@ var closeMessageInfo = function () {
     messageInfo.kill();
     btncls.kill();
     game.paused = false;
+    collectables.kill();
+    setCollectableElements();
 }
 
 var addRocks = function (signal) {
     rocks = game.add.group();
     rocks.enableBody = true;
-    var rocksPhone = [500, 748, 1003, 1300];
-    var rocksTv = [500, 736, 1150, 1350];
+    var rocksPhone = [500, 748, 1003, 1370];
+    var rocksTv = [500, 736, 1150, 1370];
     var rocksRadio = [548, 903];
-    for (var i = 0; i < rocksPhone.length - 1; i++) {
+    for (var i = 0; i < rocksPhone.length; i++) {
         var rock;
         if (i < 2 && (signal == 2)) {
-            rock = line.create(rocksRadio[i], 380, 'rock0');
+            rock = rocks.create(rocksRadio[i], 380, 'rock0');
             rock.body.immovable = true;
         }
         if ((i % 2) == 0) {
+
             if (signal == 1) {
-                rock = line.create(rocksTv[i], 200, 'rock0');
+                rock = rocks.create(rocksTv[i], 200, 'rock0');
                 rock.body.immovable = true;
             }
             if (signal == 3) {
-                rock = line.create(rocksPhone[i], 559, 'rock0');
+                rock = rocks.create(rocksPhone[i], 559, 'rock0');
                 rock.body.immovable = true;
             }
+
         } else {
-            if (signal == 1) {
-                rock = line.create(rocksTv[i], 200, 'rock1');
+            if (signal == 1 && i != 3) {
+                rock = rocks.create(rocksTv[i], 200, 'rock1');
                 rock.body.immovable = true;
             }
             if (signal == 3) {
-                rock = line.create(rocksPhone[i], 559, 'rock1');
+                rock = rocks.create(rocksPhone[i], 559, 'rock1');
                 rock.body.immovable = true;
             }
         }
+    }
+    if (signal == 3) {
+        rock = rocks.create(rocksTv[3], 480, 'rock2');
+        rock.body.immovable = true;
+    }
+    if (signal == 1) {
+        rock = rocks.create(rocksPhone[3], 130, 'rock3');
+        rock.body.immovable = true;
     }
 }

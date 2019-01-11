@@ -11,6 +11,7 @@ var countPhone = 0,
     countTv = 0,
     countRadio = 0;
 var increment = -120;
+var signal;
 var btnRadio, btnTV, btnPhone;
 RutaEspectral.Level4 = function (game) {};
 RutaEspectral.Level4.prototype = {
@@ -101,7 +102,18 @@ RutaEspectral.Level4.prototype = {
             //this.die();
         }
         if (finish) {
+            countRadio = 5;
             if (countTv == 5 || countPhone == 5 || countRadio == 5) {
+                if (countTv == 5) {
+                    signal = 1;
+                }
+                if (countRadio == 5) {
+                    signal = 2;
+                }
+                if (countPhone == 5) {
+                    signal = 3;
+                }
+                timerL1.paused = true;
                 game.state.start('Level4_2');
             } else {
                 game.paused = true;

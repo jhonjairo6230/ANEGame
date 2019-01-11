@@ -18,3 +18,5 @@ var message14 = '¡Esquiva todos los peligros que puedas encontrar!';
 var message15 = '¡ya estás en el planeta tierra, ahora debes comunicarte con la ciudad, para esto recolecta las diferentes ondas sonoras y prueba con cada una de ellas!';
 var message16 = 'Comunicate con la ciudad, seleciona una de las señales que recogiste para ello';
 var message17 = 'Debes recolectar al menos 10 señales de un mismo tipo para poder comunicarte';
+//Level 4
+var message18 = 'Recolecta cinco elementos con los que creas te puedes comunicar con la ciudad, ¡Cuidado, si recolectas dos elementos diferentes se reinicia la cuenta!';

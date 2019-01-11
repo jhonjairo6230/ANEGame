@@ -831,15 +831,24 @@ var collectElements = function (player, collectable) {
     collectable.kill();
 }
 
-var initLevel3 = function () {
+var initLevel = function () {
     document.getElementById("click").play();
-    initLVl3 = true;
-    game.paused = false;
-    closeTextInfo();
-    startTimer(3, 30);
-    // var mainTheme = document.getElementById("mainTheme")
-    // mainTheme.volume = 0.4;
-    // mainTheme.play();
+    switch (levelState) {
+        case 3:
+            initLVl3 = true;
+            game.paused = false;
+            closeTextInfo();
+            startTimer(3, 30);
+            break;
+        case 4:
+            initLVl4 = true;
+            game.paused = false;
+            closeTextInfo();
+            startTimer(2, 30);
+            break;
+        default:
+            break;
+    }
 }
 
 var createDialogSelect = function () {

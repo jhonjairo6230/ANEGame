@@ -68,6 +68,10 @@ RutaEspectral.Level4.prototype = {
         }
         showLives();
         setCollectableElements();
+        game.paused = true;
+        infoText(message18, '20px', game.camera.view.x + 200, 200, 400, 150, function () {
+            initLevel();
+        });
     },
     update() {
         var hitPlatform = game.physics.arcade.collide(player, platforms);
@@ -119,7 +123,7 @@ RutaEspectral.Level4.prototype = {
     die: function () {
         document.getElementById("lostLive").play();
         countRadio = countTv = countPhone = 0;
-        initLVl3 = false;
+        initLVl4 = false;
         countLives -= 1;
         if (countLives == 0) {
             countLives = 3;
@@ -127,16 +131,24 @@ RutaEspectral.Level4.prototype = {
         }
         showLives();
         game.paused = true;
-        // var msg = timerL1.running ? message14 : message13;
-        infoText("msg", '20px', game.camera.view.x + 200, 200, 300, 100, function () {
+        var msg = timerL1.running ? message14 : message13;
+        infoText(msg, '20px', game.camera.view.x + 200, 200, 300, 100, function () {
             game.paused = false;
             game.state.start('Level4');
         });
     },
     render() {
-        game.debug.text(player.position.x + "-" + player.position.y, 15, 18, "#2565e5");
-        game.debug.text(countPhone + "x", 220, 18, "#2565e5");
-        game.debug.text(countRadio + "x", 320, 18, "#2565e5");
-        game.debug.text(countTv + "x", 420, 18, "#2565e5");
+        if (initLVl4) {
+            if (timerL1.running) {
+                timeRest = formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000));
+                game.debug.text(formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000)), 15, 18, "#2565e5");
+            } else {
+                this.die();
+            }
+            //game.debug.text(player.position.x + "-" + player.position.y, 15, 18, "#2565e5");
+            game.debug.text(countPhone + "x", 220, 18, "#2565e5");
+            game.debug.text(countRadio + "x", 320, 18, "#2565e5");
+            game.debug.text(countTv + "x", 420, 18, "#2565e5");
+        }
     }
 }

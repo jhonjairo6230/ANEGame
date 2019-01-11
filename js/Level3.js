@@ -91,7 +91,7 @@ RutaEspectral.Level3.prototype = {
         setCollectableElements();
         game.paused = true;
         infoText(message15, '20px', game.camera.view.x + 200, 200, 400, 150, function () {
-            initLevel3();
+            initLevel();
         });
     },
     update: function () {

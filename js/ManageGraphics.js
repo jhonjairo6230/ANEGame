@@ -771,9 +771,9 @@ var setCollectableElements = function () {
             countPhone = countRadio = countTv = 0;
             var tv = [1500, 2000, 3510, 4899, 6201];
             var radio = [20, 1300, 2300, 3600, 5231];
-            var phone = [148, 2610, 4400, 5776, 6390];
+            var phone = [148, 3110, 4400, 5776, 6390];
             var vT = [530, 430, 70, 200, 340];
-            var vP = [340, 87, 180, 121, 530];
+            var vP = [340, 187, 180, 121, 530];
             var vR = [530, 350, 50, 120, 80];
             for (var h = 0; h < tv.length; h++) {
                 sTV = collectables.create(tv[h], vT[h], 'tv');

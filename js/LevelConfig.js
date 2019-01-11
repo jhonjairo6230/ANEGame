@@ -9,5 +9,6 @@
     game.state.add('Level2', RutaEspectral.Level2);
     game.state.add('Level3', RutaEspectral.Level3);
     game.state.add('Level4', RutaEspectral.Level4);
-    game.state.start('Level4');
+    game.state.add('Level4_2', RutaEspectral.Level4_2);
+    game.state.start('Level4_2');
 })();

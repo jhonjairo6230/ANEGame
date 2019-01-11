@@ -8,9 +8,8 @@ var initLVl4 = false,
     isLeftBio2 = true,
     isLeftBio3 = true;
 var collectables, messageInfo, messageRadio;
-var countSmoke = 0,
-    countHorn = 0,
-    countTelegraph = 0,
+var countWifi = 0,
+    countTV = 0,
     countRadio = 0;
 var increment = -120;
 var btnRadio, btnHorn, btnSmoke, btnTelegraph;
@@ -30,6 +29,8 @@ RutaEspectral.Level4.prototype = {
 
         game.load.image('bgLives', 'assets/level1/bgLives.png');
         game.load.image('star', 'assets/star.png');
+
+        game.load.spritesheet('closeBtn', 'assets/buttons/closeBtn.png', 40, 40);
     },
     create() {
         levelState = 4;
@@ -61,10 +62,17 @@ RutaEspectral.Level4.prototype = {
         var hitPlatform = game.physics.arcade.collide(player, platforms);
         var hitFloor = game.physics.arcade.collide(player, lineBottom);
         var hitRoadLine = game.physics.arcade.collide(player, roadLine);
+        var losLive0 = game.physics.arcade.collide(player, enemies);
+        var losLive1 = game.physics.arcade.collide(player, enemiesBio);
+
         player.checkWorldBounds = true;
 
         animateCarsMove();
         animateBio();
+        if (losLive0 || losLive1) {
+            this.die();
+        }
+
         cursors = game.input.keyboard.createCursorKeys();
         player.body.velocity.x = 0;
         if (cursors.left.isDown) {
@@ -94,6 +102,23 @@ RutaEspectral.Level4.prototype = {
             player.body.velocity.y = velocityLevel2.firstPart;
         }
 
+    },
+    die: function () {
+        document.getElementById("lostLive").play();
+        countRadio = countTv = countWifi = 0;
+        initLVl3 = false;
+        countLives -= 1;
+        if (countLives == 0) {
+            countLives = 3;
+            game.state.start('Level4');
+        }
+        showLives();
+        game.paused = true;
+        // var msg = timerL1.running ? message14 : message13;
+        infoText("msg", '20px', game.camera.view.x + 200, 200, 300, 100, function () {
+            game.paused = false;
+            game.state.start('Level4');
+        });
     },
     render() {
         game.debug.text(player.position.x, 15, 18, "#2565e5");

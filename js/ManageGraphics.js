@@ -768,6 +768,7 @@ var setCollectableElements = function () {
             }
             break;
         case 4:
+            countPhone = countRadio = countTv = 0;
             var tv = [1500, 2000, 3510, 4899, 6201];
             var radio = [20, 1300, 2300, 3600, 5231];
             var phone = [148, 2610, 4400, 5776, 6390];
@@ -813,13 +814,28 @@ var collectElements = function (player, collectable) {
         case 4:
             switch (collectable.key) {
                 case "radio":
-                    countRadio += 1;
+                    if (countPhone == 0 && countTv == 0) {
+                        countRadio += 1;
+                    } else {
+                        collectables.kill();
+                        setCollectableElements();
+                    }
                     break;
                 case "tv":
-                    countTv += 1;
+                    if (countPhone == 0 && countRadio == 0) {
+                        countTv += 1;
+                    } else {
+                        collectables.kill();
+                        setCollectableElements();
+                    }
                     break;
                 case "phone":
-                    countPhone += 1;
+                    if (countRadio == 0 && countTv == 0) {
+                        countPhone += 1;
+                    } else {
+                        collectables.kill();
+                        setCollectableElements();
+                    }
                     break;
                 default:
                     break;

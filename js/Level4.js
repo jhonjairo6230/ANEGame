@@ -1,12 +1,11 @@
-var player, bioHSprite, platforms, elements, bottomLine, cursors, enemies, enemiesBio, line, roadLine;
+var player, bioHSprite, platforms, elements, bottomLine, cursors, enemies, enemiesBio, line, roadLine, bFinish;
 var carsSprite = [],
     biosSprite = [];
 var initLVl4 = false,
     isLeftCar = true,
     isLeftTruck = true,
     isLeftBio0 = true,
-    isLeftBio2 = true,
-    isLeftBio3 = true;
+    isLeftBio2 = true;
 var collectables, messageInfo, messageRadio, sTV, sRadio, sPhone;
 var countPhone = 0,
     countTv = 0,
@@ -21,6 +20,8 @@ RutaEspectral.Level4.prototype = {
         game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 14 + '.png', spriteSizes[14].width / 11, spriteSizes[14].height);
         game.load.spritesheet('spriteBio', 'assets/level3/bioSprite.png', (120 / 3), 40);
         game.load.image('platformS', 'assets/level3/platformSky.png');
+
+        game.load.image('Lpx', 'assets/Level2/lineSun.png');
 
         game.load.image('bottomLine', 'assets/level4/bottomLine.png');
         game.load.image('roadLine', 'assets/level4/roadLine.png');
@@ -68,6 +69,10 @@ RutaEspectral.Level4.prototype = {
         }
         showLives();
         setCollectableElements();
+        bFinish = game.add.group();
+        bFinish.enableBody = true;
+        var borderS = bFinish.create(7054, 1, 'Lpx');
+        borderS.body.immovable = true;
         game.paused = true;
         infoText(message18, '20px', game.camera.view.x + 200, 200, 400, 150, function () {
             initLevel();
@@ -79,7 +84,7 @@ RutaEspectral.Level4.prototype = {
         var hitRoadLine = game.physics.arcade.collide(player, roadLine);
         var losLive0 = game.physics.arcade.collide(player, enemies);
         var losLive1 = game.physics.arcade.collide(player, enemiesBio);
-
+        var finish = game.physics.arcade.collide(player, bFinish);
         game.physics.arcade.overlap(player, collectables, collectElements, null, this);
 
         player.checkWorldBounds = true;
@@ -89,7 +94,18 @@ RutaEspectral.Level4.prototype = {
         if (losLive0 || losLive1) {
             //this.die();
         }
-
+        if (finish) {
+            if (countTv == 5 || countPhone == 5 || countRadio == 5) {
+                //Pasa a nivel 4_2
+            } else {
+                game.paused = true;
+                infoText(message19, '20px', game.camera.view.x + 200, 200, 350, 100, function () {
+                    player.position.x = player.position.x - 20;
+                    game.paused = false;
+                    closeTextInfo();
+                });
+            }
+        }
         cursors = game.input.keyboard.createCursorKeys();
         player.body.velocity.x = 0;
         if (cursors.left.isDown) {

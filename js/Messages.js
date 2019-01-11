@@ -20,3 +20,4 @@ var message16 = 'Comunicate con la ciudad, seleciona una de las señales que rec
 var message17 = 'Debes recolectar al menos 10 señales de un mismo tipo para poder comunicarte';
 //Level 4
 var message18 = 'Recolecta cinco elementos con los que creas te puedes comunicar con la ciudad, ¡Cuidado, si recolectas dos elementos diferentes se reinicia la cuenta!';
+var message19 = 'Recolecta cinco elementos para poder continuar';

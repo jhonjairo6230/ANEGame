@@ -1,12 +1,12 @@
-var player, platforms, elements, bottomLine, cursors, enemies, enemiesBio, line, roadLine, bFinish;
-var carsSprite = [],
-    biosSprite = [];
-var initLVl4 = false,
-    isLeftCar = true,
-    isLeftTruck = true,
-    isLeftBio0 = true,
-    isLeftBio2 = true;
-var collectables, messageInfo, messageRadio, sTV, sRadio, sPhone;
+var player, platforms, rocks, bottomLine, cursors, line, roadLine, bFinish;
+// var carsSprite = [],
+//     biosSprite = [];
+// var initLVl4 = false,
+//     isLeftCar = true,
+//     isLeftTruck = true,
+//     isLeftBio0 = true,
+//     isLeftBio2 = true;
+// var collectables, messageInfo, messageRadio, sTV, sRadio, sPhone;
 RutaEspectral.Level4_2 = function (game) {};
 RutaEspectral.Level4_2.prototype = {
     preload: function () {
@@ -19,7 +19,10 @@ RutaEspectral.Level4_2.prototype = {
         game.load.image('messageInfo1', 'assets/level4/messageInfo3.png');
         game.load.image('messageInfo2', 'assets/level4/messageInfo4.png');
         game.load.image('bottomLine', 'assets/level4/bottomLine4_2.png');
-        //game.load.image('roadLine', 'assets/level4/roadLine.png');
+        game.load.image('rock0', 'assets/level4/rock0.png');
+        game.load.image('rock1', 'assets/level4/rock1.png');
+        game.load.image('rock2', 'assets/level4/rock2.png');
+        game.load.image('mountainRock', 'assets/level4/mountainrock.png');
 
         game.load.image('bgLives', 'assets/level1/bgLives.png');
         game.load.image('star', 'assets/star.png');
@@ -50,6 +53,7 @@ RutaEspectral.Level4_2.prototype = {
         var st2 = game.add.image(0, 0, 'bgLives');
         st2.fixedToCamera = true;
         showLives();
+        addRocks(3);
     },
     update: function () {
         var hitFloor = game.physics.arcade.collide(player, line);

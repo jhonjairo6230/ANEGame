@@ -1035,3 +1035,37 @@ var closeMessageInfo = function () {
     btncls.kill();
     game.paused = false;
 }
+
+var addRocks = function (signal) {
+    rocks = game.add.group();
+    rocks.enableBody = true;
+    var rocksPhone = [500, 748, 1003, 1300];
+    var rocksTv = [500, 736, 1150, 1350];
+    var rocksRadio = [548, 903];
+    for (var i = 0; i < rocksPhone.length - 1; i++) {
+        var rock;
+        if (i < 2 && (signal == 2)) {
+            rock = line.create(rocksRadio[i], 380, 'rock0');
+            rock.body.immovable = true;
+        }
+        if ((i % 2) == 0) {
+            if (signal == 1) {
+                rock = line.create(rocksTv[i], 200, 'rock0');
+                rock.body.immovable = true;
+            }
+            if (signal == 3) {
+                rock = line.create(rocksPhone[i], 559, 'rock0');
+                rock.body.immovable = true;
+            }
+        } else {
+            if (signal == 1) {
+                rock = line.create(rocksTv[i], 200, 'rock1');
+                rock.body.immovable = true;
+            }
+            if (signal == 3) {
+                rock = line.create(rocksPhone[i], 559, 'rock1');
+                rock.body.immovable = true;
+            }
+        }
+    }
+}

@@ -818,6 +818,8 @@ var collectElements = function (player, collectable) {
                         countRadio += 1;
                     } else {
                         collectables.kill();
+                        game.paused = true;
+                        showMessageInfo(game.camera.view.x + 200, 100, 'collectDiferent');
                         setCollectableElements();
                     }
                     break;
@@ -826,6 +828,8 @@ var collectElements = function (player, collectable) {
                         countTv += 1;
                     } else {
                         collectables.kill();
+                        game.paused = true;
+                        showMessageInfo(game.camera.view.x + 200, 100, 'collectDiferent');
                         setCollectableElements();
                     }
                     break;
@@ -834,6 +838,8 @@ var collectElements = function (player, collectable) {
                         countPhone += 1;
                     } else {
                         collectables.kill();
+                        game.paused = true;
+                        showMessageInfo(game.camera.view.x + 200, 100, 'collectDiferent');
                         setCollectableElements();
                     }
                     break;
@@ -998,4 +1004,34 @@ var animateCarsMove = function () {
             }
         }
     }
+}
+
+var showMessageInfo = function (x, y, state) {
+    //closeDialog();
+    switch (state) {
+        case 'finish':
+            messageInfo = game.add.image(x, y, 'messageInfo0');
+            break;
+        case 'collectDiferent':
+            messageInfo = game.add.image(x, y, 'messageInfo0');
+            break;
+        case 'radio':
+            messageInfo = game.add.image(x, y, 'messageInfo2');
+            break;
+        case 'phone':
+            messageInfo = game.add.image(x, y, 'messageInfo3');
+            break;
+        case 'tv':
+            messageInfo = game.add.image(x, y, 'messageInfo4');
+            break;
+        default:
+            break;
+    }
+    btncls = game.add.button(x + 460, y, 'closeBtn', this.closeMessageInfo, this, 1, 1, 0);
+}
+
+var closeMessageInfo = function () {
+    messageInfo.kill();
+    btncls.kill();
+    game.paused = false;
 }

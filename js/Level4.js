@@ -31,6 +31,12 @@ RutaEspectral.Level4.prototype = {
         game.load.image('tv', 'assets/level4/sTV.png');
         game.load.image('radio', 'assets/level4/sRadio.png');
         game.load.image('phone', 'assets/level4/sPhone.png');
+        game.load.image('messageInfo0', 'assets/level4/messageInfo0.png')
+        game.load.image('messageInfo1', 'assets/level4/messageInfo1.png')
+        game.load.image('messageInfo2', 'assets/level4/messageInfo2.png')
+        game.load.image('messageInfo1', 'assets/level4/messageInfo3.png')
+        game.load.image('messageInfo2', 'assets/level4/messageInfo4.png')
+
         game.load.spritesheet('spriteCar', 'assets/level4/carSprite.png', (570 / 6), 50);
         game.load.spritesheet('spriteTruck', 'assets/level4/truckSprite.png', (1217 / 6), 70);
 

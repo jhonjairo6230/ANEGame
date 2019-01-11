@@ -3,8 +3,8 @@ RutaEspectral.Level4_2 = function (game) {};
 RutaEspectral.Level4_2.prototype = {
     preload: function () {
         game.load.image('background', 'assets/level4/background4_2.png');
-        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
-        game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 14 + '.png', spriteSizes[14].width / 11, spriteSizes[14].height);
+        game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
+        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 14 + '.png', spriteSizes[14].width / 11, spriteSizes[14].height);
         game.load.image('messageInfo0', 'assets/level4/messageInfo0.png');
         game.load.image('messageInfo1', 'assets/level4/messageInfo1.png');
         game.load.image('messageInfo2', 'assets/level4/messageInfo2.png');
@@ -17,6 +17,11 @@ RutaEspectral.Level4_2.prototype = {
         game.load.image('rock2', 'assets/level4/rock2.png');
         game.load.image('rock3', 'assets/level4/rock3.png');
         game.load.image('winFlag', 'assets/level1/winFlag.png');
+        game.load.image('messageInfo0', 'assets/level4/messageInfo0.png');
+        game.load.image('messageInfo1', 'assets/level4/messageInfo1.png');
+        game.load.image('messageInfo2', 'assets/level4/messageInfo2.png');
+        game.load.image('messageInfo3', 'assets/level4/messageInfo3.png');
+        game.load.image('messageInfo4', 'assets/level4/messageInfo4.png');
 
         game.load.image('bgLives', 'assets/level1/bgLives.png');
         game.load.image('star', 'assets/star.png');
@@ -75,17 +80,17 @@ RutaEspectral.Level4_2.prototype = {
         var lost = game.physics.arcade.collide(player, rocks);
         if (signal != 2) {
             if (game.physics.arcade.collide(player, lineFinish)) {
-                this.die();
+                this.message();
             }
         } else {
             if (game.physics.arcade.collide(player, bordersWin)) {
                 levelState = 4;
+                document.getElementById("changeLevel").play();
                 game.state.start('PassLevel');
             }
         }
         if (lost) {
-            //game.state.start('Level4');
-            this.die();
+            this.message();
         }
         cursors = game.input.keyboard.createCursorKeys();
         player.body.velocity.x = 0;
@@ -117,14 +122,20 @@ RutaEspectral.Level4_2.prototype = {
             game.state.start('Level4');
         }
         showLives();
+        game.paused = false;
+        game.state.start('Level4');
+    },
+    message: function () {
         game.paused = true;
-        // var msg = timerL1.running ? message14 : message13;
-        infoText("msg", '20px', game.camera.view.x + 200, 200, 300, 100, function () {
-            game.paused = false;
-            game.state.start('Level4');
-        });
+        if (signal == 1) {
+            messageInfo = game.add.image(game.camera.view.x + 100, 100, 'messageInfo4');
+        }
+        if (signal == 3) {
+            messageInfo = game.add.image(game.camera.view.x + 100, 100, 'messageInfo3');
+        }
+        btncls = game.add.button(game.camera.view.x + 100 + 460, 100, 'closeBtn', this.die, this, 1, 1, 0);
     },
     render() {
-        game.debug.text(player.position.x + "-" + player.position.y, 15, 18, "#2565e5");
+        //game.debug.text(player.position.x + "-" + player.position.y, 15, 18, "#2565e5");
     }
 }

@@ -362,7 +362,7 @@ function setPlayer() {
             //player = game.add.sprite(320, 400, 'spritePlayer');
             break;
         case 4:
-            player = game.add.sprite(7000, 400, 'spritePlayer');
+            player = game.add.sprite(320, 400, 'spritePlayer');
             //player = game.add.sprite(320, 400, 'spritePlayer');
             break;
         default:
@@ -635,6 +635,7 @@ var addBioSprite = function () {
             break;
         case 4:
             var bios = [892, 945, 2384, 3546, 5810];
+            biosSprite = [];
             for (var i = 0; i < bios.length; i++) {
                 if (i < 2) {
                     biosSprite[i] = game.add.sprite(bios[i], 231, 'spriteBio');

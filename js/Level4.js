@@ -17,8 +17,8 @@ RutaEspectral.Level4 = function (game) {};
 RutaEspectral.Level4.prototype = {
     preload: function () {
         game.load.image('background', 'assets/level4/backgroundLVL4.png');
-        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
-        game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 14 + '.png', spriteSizes[14].width / 11, spriteSizes[14].height);
+        game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
+        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 14 + '.png', spriteSizes[14].width / 11, spriteSizes[14].height);
         game.load.spritesheet('spriteBio', 'assets/level3/bioSprite.png', (120 / 3), 40);
         game.load.image('platformS', 'assets/level3/platformSky.png');
 
@@ -35,8 +35,8 @@ RutaEspectral.Level4.prototype = {
         game.load.image('messageInfo0', 'assets/level4/messageInfo0.png');
         game.load.image('messageInfo1', 'assets/level4/messageInfo1.png');
         game.load.image('messageInfo2', 'assets/level4/messageInfo2.png');
-        game.load.image('messageInfo1', 'assets/level4/messageInfo3.png');
-        game.load.image('messageInfo2', 'assets/level4/messageInfo4.png');
+        game.load.image('messageInfo3', 'assets/level4/messageInfo3.png');
+        game.load.image('messageInfo4', 'assets/level4/messageInfo4.png');
 
         game.load.spritesheet('spriteCar', 'assets/level4/carSprite.png', (570 / 6), 50);
         game.load.spritesheet('spriteTruck', 'assets/level4/truckSprite.png', (1217 / 6), 70);
@@ -99,10 +99,10 @@ RutaEspectral.Level4.prototype = {
         animateCarsMove();
         animateBio();
         if (losLive0 || losLive1) {
-            //this.die();
+            this.die();
         }
         if (finish) {
-            countRadio = 5;
+            countTv = 5;
             if (countTv == 5 || countPhone == 5 || countRadio == 5) {
                 if (countTv == 5) {
                     signal = 1;

@@ -478,11 +478,11 @@ var setPlatforms = function (elements, pMoveGroup) {
 
             break;
         case 4:
-            var vSkyH = [100, 500, 830, 945, 1751, 2000, 2300, 2829, 3148, 3461, 4009,
-                4356, 4729, 5470, 5832, 5188, 6433, 6760
+            var vSkyH = [100, 500, 830, 945, 1751, 2000, 2300, 2829, 3148, 3461, 4100,
+                4356, 4685, 5470, 5732, 5188, 6433, 6760
             ];
-            var vSkyV = [385, 350, 270, 270, 385, 270, 140, 355, 355, 200, 200, 355, 240,
-                355, 200, 200, 355, 210
+            var vSkyV = [385, 350, 270, 270, 385, 270, 140, 385, 305, 200, 267, 385, 270,
+                385, 270, 270, 385, 270
             ];
             for (var s = 0; s < vSkyH.length; s++) {
                 var platform = elements.create(vSkyH[s], vSkyV[s], 'platformS');
@@ -608,56 +608,121 @@ var addFishSprite = function (enemies) {
 
 }
 
-var addBioSprite = function (enemies) {
-    var bios = [1550, 1600, 2984, 4407, 4457, 5834, 5884, 7242, 7292, 10104,
-        10154, 11535, 11657, 8783
-    ];
-    for (var i = 0; i < bios.length; i++) {
-        if (i < 12) {
-            biosSprite[i] = game.add.sprite(bios[i], 440, 'spriteBio');
-        } else {
-            biosSprite[i] = game.add.sprite(bios[i], 100, 'spriteBio');
-        }
-        biosSprite[i].animations.add('left', [2, 1, 0], 8, true);
-        biosSprite[i].animations.add('right', [0, 1, 2], 8, true);
-        game.physics.arcade.enable(biosSprite[i]);
-        biosSprite[i].body.bounce.y = 0.2;
-        biosSprite[i].body.setCircle(20)
-        //biosSprite[i].body.gravity.y = 300;
-        biosSprite[i].body.collideWorldBounds = true;
-        enemies.add(biosSprite[i]);
+var addBioSprite = function () {
+    enemiesBio = game.add.group();
+    enemiesBio.enableBody = true;
+    game.physics.arcade.enable(enemiesBio);
+    switch (levelState) {
+        case 3:
+            var bios = [1550, 1600, 2984, 4407, 4457, 5834, 5884, 7242, 7292, 10104,
+                10154, 11535, 11657, 8783
+            ];
+            for (var i = 0; i < bios.length; i++) {
+                if (i < 12) {
+                    biosSprite[i] = game.add.sprite(bios[i], 440, 'spriteBio');
+                } else {
+                    biosSprite[i] = game.add.sprite(bios[i], 100, 'spriteBio');
+                }
+                biosSprite[i].animations.add('left', [2, 1, 0], 8, true);
+                biosSprite[i].animations.add('right', [0, 1, 2], 8, true);
+                game.physics.arcade.enable(biosSprite[i]);
+                biosSprite[i].body.bounce.y = 0.2;
+                biosSprite[i].body.setCircle(20)
+                //biosSprite[i].body.gravity.y = 300;
+                biosSprite[i].body.collideWorldBounds = true;
+                enemiesBio.add(biosSprite[i]);
+            }
+            break;
+        case 4:
+            var bios = [892, 945, 2384, 3546, 5810];
+            for (var i = 0; i < bios.length; i++) {
+                if (i < 2) {
+                    biosSprite[i] = game.add.sprite(bios[i], 231, 'spriteBio');
+                } else if (i == 2) {
+                    biosSprite[i] = game.add.sprite(bios[i], 100, 'spriteBio');
+                } else if (i == 3) {
+                    biosSprite[i] = game.add.sprite(bios[i], 160, 'spriteBio');
+                } else {
+                    biosSprite[i] = game.add.sprite(bios[i], 230, 'spriteBio');
+                }
+                biosSprite[i].animations.add('left', [2, 1, 0], 8, true);
+                biosSprite[i].animations.add('right', [0, 1, 2], 8, true);
+                game.physics.arcade.enable(biosSprite[i]);
+                biosSprite[i].body.bounce.y = 0.2;
+                biosSprite[i].body.setCircle(20)
+                //biosSprite[i].body.gravity.y = 300;
+                biosSprite[i].body.collideWorldBounds = true;
+                enemies.add(biosSprite[i]);
+            }
+            break;
+        default:
+            break;
     }
 }
 
 
 var animateBio = function () {
-    for (var i = 0; i < biosSprite.length; i++) {
-        if (i < 12) {
-            if (biosSprite[0].position.x > 883 && isLeft) {
-                isLeft = true;
-                biosSprite[i].animations.play('left');
-                biosSprite[i].body.velocity.setTo(-120, 100);
-            } else if (biosSprite[1].position.x < 2100) {
-                isLeft = false;
-                biosSprite[i].animations.play('right');
-                biosSprite[i].body.velocity.setTo(120, 100);
-            } else {
-                isLeft = true;
+    switch (levelState) {
+        case 3:
+            for (var i = 0; i < biosSprite.length; i++) {
+                if (i < 12) {
+                    if (biosSprite[0].position.x > 883 && isLeft) {
+                        isLeft = true;
+                        biosSprite[i].animations.play('left');
+                        biosSprite[i].body.velocity.setTo(-120, 100);
+                    } else if (biosSprite[1].position.x < 2100) {
+                        isLeft = false;
+                        biosSprite[i].animations.play('right');
+                        biosSprite[i].body.velocity.setTo(120, 100);
+                    } else {
+                        isLeft = true;
+                    }
+                } else {
+                    if (biosSprite[12].position.x > 2292 && isLeft12) {
+                        isLeft12 = true;
+                        biosSprite[i].animations.play('left');
+                        biosSprite[i].body.velocity.setTo(-120, 100);
+                    } else if (biosSprite[12].position.x < 11720) {
+                        isLeft12 = false;
+                        biosSprite[i].animations.play('right');
+                        biosSprite[i].body.velocity.setTo(120, 100);
+                    } else {
+                        isLeft12 = true;
+                    }
+                }
             }
-        } else {
-            if (biosSprite[12].position.x > 11500 && isLeft12) {
-                isLeft12 = true;
-                biosSprite[i].animations.play('left');
-                biosSprite[i].body.velocity.setTo(-120, 100);
-            } else if (biosSprite[12].position.x < 11720) {
-                isLeft12 = false;
-                biosSprite[i].animations.play('right');
-                biosSprite[i].body.velocity.setTo(120, 100);
-            } else {
-                isLeft12 = true;
+            break;
+        case 4:
+            for (var i = 0; i < biosSprite.length; i++) {
+                if (i < 2) {
+                    if (biosSprite[0].position.x > 826 && isLeftBio0) {
+                        isLeftBio0 = true;
+                        biosSprite[i].animations.play('left');
+                        biosSprite[i].body.velocity.setTo(-80, 0);
+                    } else if (biosSprite[1].position.x < 1038) {
+                        isLeftBio0 = false;
+                        biosSprite[i].animations.play('right');
+                        biosSprite[i].body.velocity.setTo(80, 0);
+                    } else {
+                        isLeftBio0 = true;
+                    }
+                } else {
+                    if (biosSprite[2].position.x > 2293 && isLeftBio2) {
+                        isLeftBio2 = true;
+                        biosSprite[i].animations.play('left');
+                        biosSprite[i].body.velocity.setTo(-60, 0);
+                    } else if (biosSprite[4].position.x < 5832) {
+                        isLeftBio2 = false;
+                        biosSprite[i].animations.play('right');
+                        biosSprite[i].body.velocity.setTo(60, 0);
+                    } else {
+                        isLeftBio2 = true;
+                    }
+                }
             }
-
-        }
+            break;
+        default:
+            break;
     }
 }
 

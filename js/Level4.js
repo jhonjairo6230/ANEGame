@@ -3,7 +3,10 @@ var carsSprite = [],
     biosSprite = [];
 var initLVl4 = false,
     isLeftCar = true,
-    isLeftTruck = true;
+    isLeftTruck = true,
+    isLeftBio0 = true,
+    isLeftBio2 = true,
+    isLeftBio3 = true;
 var collectables, messageInfo, messageRadio;
 var countSmoke = 0,
     countHorn = 0,
@@ -43,6 +46,7 @@ RutaEspectral.Level4.prototype = {
         enemies = game.add.group();
         enemies.enableBody = true;
         addCarSprite(enemies);
+        addBioSprite();
         var stbackround = game.add.image(640, 0, 'bgLives');
         stbackround.fixedToCamera = true;
         stbackround.scale.set(2, 1);
@@ -60,7 +64,7 @@ RutaEspectral.Level4.prototype = {
         player.checkWorldBounds = true;
 
         animateCarsMove();
-
+        animateBio();
         cursors = game.input.keyboard.createCursorKeys();
         player.body.velocity.x = 0;
         if (cursors.left.isDown) {

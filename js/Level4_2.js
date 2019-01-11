@@ -16,6 +16,7 @@ RutaEspectral.Level4_2.prototype = {
         game.load.image('rock1', 'assets/level4/rock1.png');
         game.load.image('rock2', 'assets/level4/rock2.png');
         game.load.image('rock3', 'assets/level4/rock3.png');
+        game.load.image('winFlag', 'assets/level1/winFlag.png');
 
         game.load.image('bgLives', 'assets/level1/bgLives.png');
         game.load.image('star', 'assets/star.png');
@@ -33,6 +34,11 @@ RutaEspectral.Level4_2.prototype = {
             lineFin = lineFinish.create(1540, 0, 'lineF');
             lineFin.body.immovable = true;
             lineFin.body.velocity.setTo(-100, 0);
+        } else {
+            bordersWin = game.add.group();
+            bordersWin.enableBody = true;
+            var winFlag = bordersWin.create(1483, 320, 'winFlag');
+            winFlag.body.immovable = true;
         }
 
 
@@ -70,6 +76,11 @@ RutaEspectral.Level4_2.prototype = {
         if (signal != 2) {
             if (game.physics.arcade.collide(player, lineFinish)) {
                 this.die();
+            }
+        } else {
+            if (game.physics.arcade.collide(player, bordersWin)) {
+                levelState = 4;
+                game.state.start('PassLevel');
             }
         }
         if (lost) {

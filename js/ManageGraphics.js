@@ -791,18 +791,39 @@ var setCollectableElements = function () {
 
 var collectElements = function (player, collectable) {
     document.getElementById("collect").play();
-    switch (collectable.key) {
-        case "radio":
-            countRadio += 1;
+    switch (levelState) {
+        case 3:
+            switch (collectable.key) {
+                case "radio":
+                    countRadio += 1;
+                    break;
+                case "telegraph":
+                    countTelegraph += 1;
+                    break;
+                case "smoke":
+                    countSmoke += 1;
+                    break;
+                case "horn":
+                    countHorn += 1;
+                    break;
+                default:
+                    break;
+            }
             break;
-        case "telegraph":
-            countTelegraph += 1;
-            break;
-        case "smoke":
-            countSmoke += 1;
-            break;
-        case "horn":
-            countHorn += 1;
+        case 4:
+            switch (collectable.key) {
+                case "radio":
+                    countRadio += 1;
+                    break;
+                case "tv":
+                    countTv += 1;
+                    break;
+                case "phone":
+                    countPhone += 1;
+                    break;
+                default:
+                    break;
+            }
             break;
         default:
             break;

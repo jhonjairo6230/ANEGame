@@ -9,7 +9,7 @@ var initLVl4 = false,
     isLeftBio3 = true;
 var collectables, messageInfo, messageRadio, sTV, sRadio, sPhone;
 var countPhone = 0,
-    countTV = 0,
+    countTv = 0,
     countRadio = 0;
 var increment = -120;
 var btnRadio, btnTV, btnPhone;
@@ -24,9 +24,9 @@ RutaEspectral.Level4.prototype = {
 
         game.load.image('bottomLine', 'assets/level4/bottomLine.png');
         game.load.image('roadLine', 'assets/level4/roadLine.png');
-        // game.load.image('s0', 'assets/level4/tv.png');
-        // game.load.image('s1', 'assets/level4/radio.png');
-        // game.load.image('s2', 'assets/level4/phone.png');
+        game.load.image('s0', 'assets/level4/phone.png');
+        game.load.image('s1', 'assets/level4/radio.png');
+        game.load.image('s2', 'assets/level4/tv.png');
         game.load.image('tv', 'assets/level4/sTV.png');
         game.load.image('radio', 'assets/level4/sRadio.png');
         game.load.image('phone', 'assets/level4/sPhone.png');
@@ -62,6 +62,10 @@ RutaEspectral.Level4.prototype = {
         stars.fixedToCamera = true;
         var st2 = game.add.image(0, 0, 'bgLives');
         st2.fixedToCamera = true;
+        for (n = 0; n < 3; n++) {
+            game.add.image(200 + (n * 100), 0, 'bgLives').fixedToCamera = true;
+            game.add.image(240 + (n * 100), 4, 's' + n).fixedToCamera = true;
+        }
         showLives();
         setCollectableElements();
     },
@@ -71,6 +75,8 @@ RutaEspectral.Level4.prototype = {
         var hitRoadLine = game.physics.arcade.collide(player, roadLine);
         var losLive0 = game.physics.arcade.collide(player, enemies);
         var losLive1 = game.physics.arcade.collide(player, enemiesBio);
+
+        game.physics.arcade.overlap(player, collectables, collectElements, null, this);
 
         player.checkWorldBounds = true;
 
@@ -129,5 +135,8 @@ RutaEspectral.Level4.prototype = {
     },
     render() {
         game.debug.text(player.position.x + "-" + player.position.y, 15, 18, "#2565e5");
+        game.debug.text(countPhone + "x", 220, 18, "#2565e5");
+        game.debug.text(countRadio + "x", 320, 18, "#2565e5");
+        game.debug.text(countTv + "x", 420, 18, "#2565e5");
     }
 }

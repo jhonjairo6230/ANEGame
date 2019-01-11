@@ -86,8 +86,8 @@ RutaEspectral.Level3.prototype = {
         enemies.enableBody = true;
         addFishSprite(enemies);
 
-        collectables = game.add.group();
-        collectables.enableBody = true;
+        // collectables = game.add.group();
+        // collectables.enableBody = true;
         setCollectableElements();
         game.paused = true;
         infoText(message15, '20px', game.camera.view.x + 200, 200, 400, 150, function () {

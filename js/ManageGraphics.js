@@ -744,23 +744,48 @@ var animateFishJump = function () {
 }
 
 var setCollectableElements = function () {
-    var horn = [100, 900, 1300, 4000, 5899, 7021, 8018, 9014, 10100, 11500];
-    var smoke = [400, 1500, 2000, 3510, 4899, 6201, 8718, 10114, 11500, 12721];
-    var radio = [20, 1000, 2300, 3600, 4349, 5021, 8918, 9600, 10500, 11910];
-    var telegraph = [800, 2010, 2700, 3818, 4619, 5735, 7577, 9900, 10803, 11221];
-    var vHT = [141, 400, 110, 250, 267, 130, 400, 420, 95, 118];
-    var vSR = [380, 120, 157, 350, 121, 333, 86, 144, 212, 103];
-    var a = 9;
-    for (var h = 0; h < 10; h++) {
-        sHorn = collectables.create(horn[h], vHT[h], 'horn');
-        sHorn.body.immovable = true;
-        sSmoke = collectables.create(smoke[h], vSR[a], 'smoke');
-        sSmoke.body.immovable = true;
-        sTelegraph = collectables.create(telegraph[h], vHT[a], 'telegraph');
-        sTelegraph.body.immovable = true;
-        sRadio = collectables.create(radio[h], vSR[h], 'radio');
-        sRadio.body.immovable = true;
-        a -= 1;
+    collectables = game.add.group();
+    collectables.enableBody = true;
+    switch (levelState) {
+        case 3:
+            var horn = [100, 900, 1300, 4000, 5899, 7021, 8018, 9014, 10100, 11500];
+            var smoke = [400, 1500, 2000, 3510, 4899, 6201, 8718, 10114, 11500, 12721];
+            var radio = [20, 1000, 2300, 3600, 4349, 5021, 8918, 9600, 10500, 11910];
+            var telegraph = [800, 2010, 2700, 3818, 4619, 5735, 7577, 9900, 10803, 11221];
+            var vHT = [141, 400, 110, 250, 267, 130, 400, 420, 95, 118];
+            var vSR = [380, 120, 157, 350, 121, 333, 86, 144, 212, 103];
+            var a = 9;
+            for (var h = 0; h < 10; h++) {
+                sHorn = collectables.create(horn[h], vHT[h], 'horn');
+                sHorn.body.immovable = true;
+                sSmoke = collectables.create(smoke[h], vSR[a], 'smoke');
+                sSmoke.body.immovable = true;
+                sTelegraph = collectables.create(telegraph[h], vHT[a], 'telegraph');
+                sTelegraph.body.immovable = true;
+                sRadio = collectables.create(radio[h], vSR[h], 'radio');
+                sRadio.body.immovable = true;
+                a -= 1;
+            }
+            break;
+        case 4:
+            var tv = [1500, 2000, 3510, 4899, 6201];
+            var radio = [20, 1300, 2300, 3600, 5231];
+            var phone = [148, 2610, 4400, 5776, 6390];
+            var vT = [530, 430, 70, 200, 340];
+            var vP = [340, 87, 180, 121, 530];
+            var vR = [530, 350, 50, 120, 80];
+            for (var h = 0; h < tv.length; h++) {
+                sTV = collectables.create(tv[h], vT[h], 'tv');
+                sTV.body.immovable = true;
+                sRadio = collectables.create(radio[h], vR[h], 'radio');
+                sRadio.body.immovable = true;
+                sPhone = collectables.create(phone[h], vP[h], 'phone');
+                sPhone.body.immovable = true;
+                a -= 1;
+            }
+            break;
+        default:
+            break;
     }
 }
 

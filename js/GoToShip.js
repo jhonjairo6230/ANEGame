@@ -38,7 +38,7 @@ RutaEspectral.GoToShip.prototype = {
             spaceSuitPhysics = false;
             switch (levelState) {
                 case 1:
-                    game.state.start('Level1');
+                    game.state.start('Level3');
                     break;
                 case 2:
                     game.state.start('Level2');

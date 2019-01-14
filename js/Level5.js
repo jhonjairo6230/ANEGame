@@ -50,6 +50,9 @@ RutaEspectral.Level5.prototype = {
 
         game.load.spritesheet('closeBtn', 'assets/buttons/closeBtn.png', 40, 40);
         game.load.spritesheet('testBtn', 'assets/level5/testBtn.png', 98, 50);
+
+        game.load.image('message0', 'assets/level5/message0.png');
+        game.load.image('message1', 'assets/level5/message1.png');
     },
     create: function () {
         levelState = 5;
@@ -138,7 +141,22 @@ RutaEspectral.Level5.prototype = {
         }
     },
     testSignal: function (e) {
-        console.log("click");
+        if (countAntennas > 18) {
+            message1 = game.add.sprite(game.camera.view.x + 200, 200, 'message1');
+            game.time.events.add(3000, this.removePicture, this, message1);
+        } else {
+            message1 = game.add.sprite(game.camera.view.x + 200, 200, 'message0');
+            game.time.events.add(3000, this.removePicture, this, message1);
+        }
+    },
+    removePicture: function (pic) {
+        pic.visible = false;
+        game.time.events.add(30, this.finalMessage, this, 5);
+    },
+    finalMessage: function (sl) {
+        document.getElementById("changeLevel").play();
+        stateLavel = sl;
+        game.state.start('finalLevel');
     },
     die: function () {
         document.getElementById("lostLive").play();

@@ -369,8 +369,8 @@ function setPlayer() {
             player = game.add.sprite(320, 400, 'spritePlayer');
             break;
         case 5:
-            player = game.add.sprite(7000, 400, 'spritePlayer');
-            //player = game.add.sprite(320, 400, 'spritePlayer');
+            // player = game.add.sprite(7000, 400, 'spritePlayer');
+            player = game.add.sprite(320, 400, 'spritePlayer');
             break;
         default:
             break;

@@ -910,41 +910,45 @@ var collectElements = function (player, collectable) {
                 case "radio":
                     countRadio += 1;
                     if (countRadio == 1) {
-                        game.paused = true;
-                        infoText('radio', '20px', game.camera.view.x + 200, 200, 300, 120, function () {
-                            closeTextInfo();
-                            game.paused = false;
-                        });
+                        //game.paused = true;
+                        game.time.events.add(100, showDescript, this, 'radioInf');
+                        // infoText('radio', '20px', game.camera.view.x + 200, 200, 300, 120, function () {
+                        //     closeTextInfo();
+                        //     game.paused = false;
+                        // });
                     }
                     break;
                 case "telegraph":
                     countTelegraph += 1;
                     if (countTelegraph == 1) {
-                        game.paused = true;
-                        infoText('telegraph', '20px', game.camera.view.x + 200, 200, 300, 120, function () {
-                            closeTextInfo();
-                            game.paused = false;
-                        });
+                        //game.paused = true;
+                        game.time.events.add(100, showDescript, this, 'telegrafoInf');
+                        // infoText('telegraph', '20px', game.camera.view.x + 200, 200, 300, 120, function () {
+                        //     closeTextInfo();
+                        //     game.paused = false;
+                        // });
                     }
                     break;
                 case "smoke":
                     countSmoke += 1;
                     if (countSmoke == 1) {
-                        game.paused = true;
-                        infoText('smoke', '20px', game.camera.view.x + 200, 200, 300, 120, function () {
-                            closeTextInfo();
-                            game.paused = false;
-                        });
+                        //game.paused = true;
+                        game.time.events.add(100, showDescript, this, 'humoInf');
+                        // infoText('smoke', '20px', game.camera.view.x + 200, 200, 300, 120, function () {
+                        //     closeTextInfo();
+                        //     game.paused = false;
+                        // });
                     }
                     break;
                 case "horn":
                     countHorn += 1;
                     if (countHorn == 1) {
-                        game.paused = true;
-                        infoText('horn', '20px', game.camera.view.x + 200, 200, 300, 120, function () {
-                            closeTextInfo();
-                            game.paused = false;
-                        });
+                        //game.paused = true;
+                        game.time.events.add(100, showDescript, this, 'cuernoInf');
+                        // infoText('horn', '20px', game.camera.view.x + 200, 200, 300, 120, function () {
+                        //     closeTextInfo();
+                        //     game.paused = false;
+                        // });
                     }
                     break;
                 default:
@@ -1028,6 +1032,15 @@ var collectElements = function (player, collectable) {
             break;
     }
     collectable.kill();
+}
+
+var showDescript = function (pic) {
+    messageR = game.add.sprite(game.camera.view.x + 200, 200, pic);
+    game.time.events.add(1000, removeMsg, this, pic);
+}
+
+var removeMsg = function (pic) {
+    messageR.kill();
 }
 
 var initLevel = function () {

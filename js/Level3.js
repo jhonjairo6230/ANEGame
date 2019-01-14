@@ -11,13 +11,13 @@ var countSmoke = 0,
     countTelegraph = 0,
     countRadio = 0;
 var increment = -120;
-var btnRadio, btnHorn, btnSmoke, btnTelegraph;
+var btnRadio, btnHorn, btnSmoke, btnTelegraph, messageR;
 RutaEspectral.Level3 = function (game) {};
 RutaEspectral.Level3.prototype = {
     preload: function () {
         game.load.image('background', 'assets/level3/backgroundLVL3.png');
-        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
-        game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 31 + '.png', spriteSizes[31].width / 11, spriteSizes[14].height);
+        game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
+        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 31 + '.png', spriteSizes[31].width / 11, spriteSizes[14].height);
         game.load.spritesheet('spriteFish', 'assets/level3/fishSprite.png', (207 / 4), 80);
         game.load.spritesheet('spriteBio', 'assets/level3/bioSprite.png', (120 / 3), 40);
         game.load.image('platformL', 'assets/level3/platformL.png');
@@ -48,6 +48,11 @@ RutaEspectral.Level3.prototype = {
         game.load.image('messageRadio', 'assets/level3/messageRadio.png');
         game.load.image('messageTelegraph', 'assets/level3/messageTelegraph.png');
         game.load.image('messageSmoke', 'assets/level3/messageSmoke.png');
+
+        game.load.image('radioInf', 'assets/level3/radioInf.png');
+        game.load.image('telegrafoInf', 'assets/level3/telegrafoInf.png');
+        game.load.image('humoInf', 'assets/level3/humoInf.png');
+        game.load.image('cuernoInf', 'assets/level3/cuernoInf.png');
         game.load.image('winFlag', 'assets/level1/winFlag.png');
     },
     create: function () {

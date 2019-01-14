@@ -273,8 +273,6 @@ RutaEspectral.Level1.prototype = {
                 lLive = true;
                 game.paused = true;
                 if (spaceSuitPhysics) {
-                    spaceSuitPhysics = false;
-                    isSuitCollected = false;
                     spaceA.kill();
                 } else {
                     playerFire = game.add.sprite(player.position.x, player.position.y, 'rocketFire');
@@ -282,6 +280,10 @@ RutaEspectral.Level1.prototype = {
                     player.kill();
                     realPlayer.kill();
                 }
+                spaceSuitPhysics = false;
+                isSuitCollected = false;
+                collected = false;
+                elementsCollected = 0;
                 showLives();
                 infoText(message13, '20px', game.camera.view.x + 300, 200, 300, 80, function () {
                     game.paused = false;

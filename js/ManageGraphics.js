@@ -71,8 +71,8 @@ var initLevel1 = function (e) {
     if (!isPaused) {
         isInitLVL1 = true;
         this.resetPlayer(200, 200);
-        //this.startTimer(minuteConfig, secondsConfig);
-        this.startTimer(2, 0);
+        this.startTimer(minuteConfig, secondsConfig);
+        //this.startTimer(2, 0);
     } else {
         game.paused = false;
         isPaused = false;

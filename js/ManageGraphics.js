@@ -61,6 +61,7 @@ var closeAdvLvl1 = function (e) {
         game.state.start('Level1');
     } else {
         game.paused = false;
+        spaceSuitPhysics = true;
         this.setSpaceSuit(7800, 350);
     }
 
@@ -70,7 +71,8 @@ var initLevel1 = function (e) {
     if (!isPaused) {
         isInitLVL1 = true;
         this.resetPlayer(200, 200);
-        this.startTimer(minuteConfig, secondsConfig);
+        //this.startTimer(minuteConfig, secondsConfig);
+        this.startTimer(2, 0);
     } else {
         game.paused = false;
         isPaused = false;
@@ -94,7 +96,7 @@ var resetPlayer = function (x, y) {
         realPlayer.kill();
     }
     player = game.add.sprite(x, y, 'rocket');
-    realPlayer = game.add.sprite(x + 20, y - 5, 'px');
+    realPlayer = game.add.sprite(x + 22, y + 20, 'px');
     game.physics.arcade.enable(player);
     game.physics.arcade.enable(realPlayer);
     player.body.bounce.y = 0.2;
@@ -495,17 +497,30 @@ var setPlatforms = function (elements, pMoveGroup) {
 }
 
 var addPlanets = function (planet) {
+    var p = game.add.group();
+    // p.enableBody = true;
     switch (levelState) {
         case 1:
             for (var i = 0; i < planet1.length; i++) {
-                var p1 = planet.create(planet1[i].x, planet1[i].y, 'planet1');
-                p1.body.immovable = true;
-                var p2 = planet.create(planet2[i].x, planet2[i].y, 'planet2');
-                p2.body.immovable = true;
-                var p3 = planet.create(planet3[i].x, planet3[i].y, 'planet3');
-                p3.body.immovable = true;
-                var p4 = planet.create(planet4[i].x, planet4[i].y, 'planet4');
-                p4.body.immovable = true;
+                var p1 = p.create(planet1[i].x, planet1[i].y, 'planet1');
+                // p1.body.immovable = true;
+                var p1A = planet.create(planet1[i].x + 10, planet1[i].y + 3, 'circleP1');
+                p1A.body.setCircle(14);
+                //p1A.body.immovable = true;
+                var p2 = p.create(planet2[i].x, planet2[i].y, 'planet2');
+                var p3A = planet.create(planet2[i].x + 4, planet2[i].y + 4, 'circleP2');
+                p3A.body.setCircle(62);
+                p3A.body.immovable = true;
+                var p3 = p.create(planet3[i].x, planet3[i].y, 'planet3');
+                var p3A = planet.create(planet3[i].x + 9, planet3[i].y + 5, 'circleP3');
+                p3A.body.setCircle(35);
+                p3A.body.immovable = true;
+                var p4 = p.create(planet4[i].x, planet4[i].y, 'planet4');
+                //p4.body.immovable = true;
+                //p4.body.collideWorldBounds = true;
+                var p4A = planet.create(planet4[i].x + 15, planet4[i].y + 8, 'circleP4');
+                p4A.body.setCircle(30);
+                p4A.body.immovable = true;
             }
             break;
         case 2:

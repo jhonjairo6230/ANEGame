@@ -365,8 +365,8 @@ function setPlayer() {
             //player = game.add.sprite(12000, 400, 'spritePlayer');
             break;
         case 4:
+            //player = game.add.sprite(6000, 400, 'spritePlayer');
             player = game.add.sprite(320, 400, 'spritePlayer');
-            //player = game.add.sprite(320, 400, 'spritePlayer');
             break;
         default:
             break;
@@ -1136,12 +1136,12 @@ var addRocks = function (signal) {
             }
         }
     }
-    if (signal == 3) {
-        rock = rocks.create(rocksTv[3], 480, 'rock2');
-        rock.body.immovable = true;
-    }
-    if (signal == 1) {
-        rock = rocks.create(rocksPhone[3], 130, 'rock3');
-        rock.body.immovable = true;
-    }
+    // if (signal == 3) {
+    //     rock = rocks.create(rocksTv[3], 480, 'rock2');
+    //     rock.body.immovable = true;
+    // }
+    // if (signal == 1) {
+    //     rock = rocks.create(rocksPhone[3], 130, 'rock3');
+    //     rock.body.immovable = true;
+    // }
 }

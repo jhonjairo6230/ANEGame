@@ -1,8 +1,9 @@
-var player, platforms, rocks, bottomLine, cursors, line, roadLine, bFinish, lineFinish;
+var player, platforms, rocks, bottomLine, cursors, line, roadLine, bFinish, lineFinish, bordersWin, bordersLost;
 RutaEspectral.Level4_2 = function (game) {};
 RutaEspectral.Level4_2.prototype = {
     preload: function () {
-        game.load.image('background', 'assets/level4/background4_2.png');
+        //game.load.image('background', 'assets/level4/background4_2.png');
+        game.load.image('background', 'assets/level4/bg4_2.png');
         game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
         //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 14 + '.png', spriteSizes[14].width / 11, spriteSizes[14].height);
         game.load.image('messageInfo0', 'assets/level4/messageInfo0.png');
@@ -22,38 +23,53 @@ RutaEspectral.Level4_2.prototype = {
         game.load.image('messageInfo2', 'assets/level4/messageInfo2.png');
         game.load.image('messageInfo3', 'assets/level4/messageInfo3.png');
         game.load.image('messageInfo4', 'assets/level4/messageInfo4.png');
+        game.load.image('messageInfo5', 'assets/level4/messageInfo5.png');
 
         game.load.image('bgLives', 'assets/level1/bgLives.png');
         game.load.image('star', 'assets/star.png');
         game.load.spritesheet('closeBtn', 'assets/buttons/closeBtn.png', 40, 40);
+        game.load.spritesheet('winBtn', 'assets/buttons/closeBtn.png', 40, 40);
     },
     create: function () {
+        // signal = 0;
         levelState = 4;
-        game.add.tileSprite(0, 0, 1542, 600, 'background');
-        game.world.setBounds(0, 0, 1542, 600);
+        game.add.tileSprite(0, 0, 1491, 600, 'background');
+        game.world.setBounds(0, 0, 1491, 600);
         game.renderer.roundPixels = true;
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        if (signal != 2) {
-            lineFinish = game.add.group();
-            lineFinish.enableBody = true;
-            lineFin = lineFinish.create(1540, 0, 'lineF');
-            lineFin.body.immovable = true;
-            lineFin.body.velocity.setTo(-100, 0);
-        } else {
-            bordersWin = game.add.group();
-            bordersWin.enableBody = true;
-            var winFlag = bordersWin.create(1483, 320, 'winFlag');
-            winFlag.body.immovable = true;
+        bordersWin = game.add.group();
+        bordersWin.enableBody = true;
+        // bordersLost = game.add.group();
+        // bordersLost.enableBody = true;
+        switch (signal) {
+            case 0:
+                var winFlag = bordersWin.create(1400, 05, 'winFlag');
+                winFlag.body.immovable = true;
+                break;
+            case 1:
+                var winFlag = bordersWin.create(1000, 155, 'winFlag');
+                winFlag.body.immovable = true;
+                break;
+            case 2:
+                var winFlag = bordersWin.create(1100, 315, 'winFlag');
+                winFlag.body.immovable = true;
+                break;
+            case 3:
+                var winFlag = bordersWin.create(800, 475, 'winFlag');
+                winFlag.body.immovable = true;
+                break;
+            default:
+                break;
         }
-
-
         line = game.add.group();
         line.enableBody = true;
-        lineBottom = line.create(0, 599, 'bottomLine');
+        lineBottom = line.create(0, 575, 'bottomLine');
         lineBottom.body.immovable = true;
-        lineBottom = line.create(0, 440, 'bottomLine');
+        lineBottom = line.create(0, 425, 'bottomLine');
         lineBottom.body.immovable = true;
         lineBottom = line.create(0, 245, 'bottomLine');
+        lineBottom.body.immovable = true;
+        lineBottom = line.create(0, 95, 'bottomLine');
         lineBottom.body.immovable = true;
         player = game.add.sprite(320, signal * 150, 'spritePlayer');
         player.animations.add('right', [7, 8, 9, 10], 8, true);
@@ -73,23 +89,11 @@ RutaEspectral.Level4_2.prototype = {
         var st2 = game.add.image(0, 0, 'bgLives');
         st2.fixedToCamera = true;
         showLives();
-        addRocks(signal);
+        // addRocks(signal);
     },
     update: function () {
         var hitFloor = game.physics.arcade.collide(player, line);
-        var lost = game.physics.arcade.collide(player, rocks);
-        if (signal != 2) {
-            if (game.physics.arcade.collide(player, lineFinish)) {
-                this.message();
-            }
-        } else {
-            if (game.physics.arcade.collide(player, bordersWin)) {
-                levelState = 4;
-                document.getElementById("changeLevel").play();
-                game.state.start('PassLevel');
-            }
-        }
-        if (lost) {
+        if (game.physics.arcade.collide(player, bordersWin)) {
             this.message();
         }
         cursors = game.input.keyboard.createCursorKeys();
@@ -125,15 +129,43 @@ RutaEspectral.Level4_2.prototype = {
         game.paused = false;
         game.state.start('Level4');
     },
+    winLevel: function (e) {
+        levelState = 4;
+        initLVl4 = false;
+        game.paused = false;
+        document.getElementById("changeLevel").play();
+        game.state.start('PassLevel');
+    },
     message: function () {
         game.paused = true;
-        if (signal == 1) {
-            messageInfo = game.add.image(game.camera.view.x + 100, 100, 'messageInfo4');
+        switch (signal) {
+            case 0:
+                messageInfo = game.add.image(game.camera.view.x + 100, 100, 'messageInfo2');
+                btncls = game.add.button(game.camera.view.x + 100 + 460, 100, 'winBtn', this.winLevel, this, 1, 1, 0);
+                break;
+            case 1:
+                messageInfo = game.add.image(game.camera.view.x + 100, 100, 'messageInfo3');
+                btncls = game.add.button(game.camera.view.x + 100 + 460, 100, 'closeBtn', this.die, this, 1, 1, 0);
+                break;
+            case 2:
+                messageInfo = game.add.image(game.camera.view.x + 100, 100, 'messageInfo4');
+                btncls = game.add.button(game.camera.view.x + 100 + 460, 100, 'closeBtn', this.die, this, 1, 1, 0);
+                break;
+            case 3:
+                messageInfo = game.add.image(game.camera.view.x + 100, 100, 'messageInfo5');
+                btncls = game.add.button(game.camera.view.x + 100 + 460, 100, 'closeBtn', this.die, this, 1, 1, 0);
+
+                break;
+            default:
+                break;
         }
-        if (signal == 3) {
-            messageInfo = game.add.image(game.camera.view.x + 100, 100, 'messageInfo3');
-        }
-        btncls = game.add.button(game.camera.view.x + 100 + 460, 100, 'closeBtn', this.die, this, 1, 1, 0);
+        // if (signal == 1) {
+        //     messageInfo = game.add.image(game.camera.view.x + 100, 100, 'messageInfo4');
+        // }
+        // if (signal == 3) {
+        //     messageInfo = game.add.image(game.camera.view.x + 100, 100, 'messageInfo3');
+        // }
+        // btncls = game.add.button(game.camera.view.x + 100 + 460, 100, 'closeBtn', this.die, this, 1, 1, 0);
     },
     render() {
         //game.debug.text(player.position.x + "-" + player.position.y, 15, 18, "#2565e5");

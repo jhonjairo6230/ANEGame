@@ -18,8 +18,8 @@ RutaEspectral.Level4 = function (game) {};
 RutaEspectral.Level4.prototype = {
     preload: function () {
         game.load.image('background', 'assets/level4/backgroundLVL4.png');
-        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
-        game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 8 + '.png', spriteSizes[8].width / 11, spriteSizes[14].height);
+        game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
+        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 8 + '.png', spriteSizes[8].width / 11, spriteSizes[14].height);
         game.load.spritesheet('spriteBio', 'assets/level3/bioSprite.png', (120 / 3), 40);
         game.load.image('platformS', 'assets/level3/platformSky.png');
 
@@ -40,6 +40,7 @@ RutaEspectral.Level4.prototype = {
         game.load.image('messageInfo2', 'assets/level4/messageInfo2.png');
         game.load.image('messageInfo3', 'assets/level4/messageInfo3.png');
         game.load.image('messageInfo4', 'assets/level4/messageInfo4.png');
+        game.load.image('indicator', 'assets/level4/indicator.png');
 
         game.load.spritesheet('spriteCar', 'assets/level4/carSprite.png', (570 / 6), 50);
         game.load.spritesheet('spriteTruck', 'assets/level4/truckSprite.png', (1217 / 6), 70);
@@ -86,6 +87,8 @@ RutaEspectral.Level4.prototype = {
         bFinish.enableBody = true;
         var borderS = bFinish.create(7054, 1, 'Lpx');
         borderS.body.immovable = true;
+        var indicator = game.add.image(6900, 300, 'indicator');
+        //indicator.body.immovable = true;
         game.paused = true;
         infoText(message18, '20px', game.camera.view.x + 200, 200, 400, 200, function () {
             initLevel();
@@ -111,16 +114,16 @@ RutaEspectral.Level4.prototype = {
             //countTv = 5;
             if (countTv == 5 || countPhone == 5 || countRadio == 5 || countWifi == 5) {
                 if (countTv == 5) {
-                    signal = 1;
-                }
-                if (countRadio == 5) {
                     signal = 2;
                 }
+                if (countRadio == 5) {
+                    signal = 0;
+                }
                 if (countPhone == 5) {
-                    signal = 3;
+                    signal = 1;
                 }
                 if (countWifi == 5) {
-                    signal = 4;
+                    signal = 3;
                 }
                 timerL1.paused = true;
                 game.state.start('Level4_2');

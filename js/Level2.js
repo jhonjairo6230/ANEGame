@@ -251,13 +251,24 @@ RutaEspectral.Level2.prototype = {
         });
     },
     showMessage: function () {
+        game.paused = true;
         if (!isError) {
-            message1 = game.add.sprite(game.camera.view.x + 200, 200, 'message1');
-            game.time.events.add(3000, this.removePicture, this, message1);
+            infoText(message22, '20px', game.camera.view.x + 200, 200, 300, 80, function () {
+                game.paused = false;
+                //game.state.start('Level2');
+                closeTextInfo();
+            });
+            //message1 = game.add.sprite(game.camera.view.x + 200, 200, 'message1');
+            // game.time.events.add(3000, this.removePicture, this, message1);
 
         } else {
-            message0 = game.add.sprite(game.camera.view.x, 200, 'message0');
-            game.time.events.add(3000, this.removePicture, this, message0);
+            // message0 = game.add.sprite(game.camera.view.x, 200, 'message0');
+            infoText(message21, '20px', game.camera.view.x + 200, 200, 300, 80, function () {
+                game.paused = false;
+                //game.state.start('Level2');
+                closeTextInfo();
+            });
+            //  game.time.events.add(3000, this.removePicture, this, message0);
         }
     },
     removePicture: function (pic) {

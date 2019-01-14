@@ -361,8 +361,8 @@ function setPlayer() {
             }
             break;
         case 3:
-            //player = game.add.sprite(320, 400, 'spritePlayer');
-            player = game.add.sprite(12000, 400, 'spritePlayer');
+            player = game.add.sprite(320, 400, 'spritePlayer');
+            //player = game.add.sprite(12000, 400, 'spritePlayer');
             break;
         case 4:
             player = game.add.sprite(320, 400, 'spritePlayer');
@@ -785,13 +785,15 @@ var setCollectableElements = function () {
             }
             break;
         case 4:
-            countPhone = countRadio = countTv = 0;
+            countPhone = countRadio = countTv = countWifi = 0;
             var tv = [1500, 2000, 3510, 4899, 6201];
             var radio = [20, 1300, 2300, 4000, 5231];
             var phone = [148, 2910, 4400, 5776, 6390];
+            var wifi = [531, 1038, 2006, 3512, 4688];
             var vT = [530, 430, 70, 200, 340];
             var vP = [340, 187, 180, 121, 530];
             var vR = [530, 350, 50, 120, 80];
+            var vW = [290, 120, 80, 530, 80];
             for (var h = 0; h < tv.length; h++) {
                 sTV = collectables.create(tv[h], vT[h], 'tv');
                 sTV.body.immovable = true;
@@ -799,7 +801,8 @@ var setCollectableElements = function () {
                 sRadio.body.immovable = true;
                 sPhone = collectables.create(phone[h], vP[h], 'phone');
                 sPhone.body.immovable = true;
-                a -= 1;
+                sWifi = collectables.create(wifi[h], vW[h], 'wifi');
+                sWifi.body.immovable = true;
             }
             break;
         default:
@@ -859,7 +862,7 @@ var collectElements = function (player, collectable) {
         case 4:
             switch (collectable.key) {
                 case "radio":
-                    if (countPhone == 0 && countTv == 0) {
+                    if (countPhone == 0 && countTv == 0 && countWifi == 0) {
                         countRadio += 1;
                     } else {
                         //collectables.kill();
@@ -869,7 +872,7 @@ var collectElements = function (player, collectable) {
                     }
                     break;
                 case "tv":
-                    if (countPhone == 0 && countRadio == 0) {
+                    if (countPhone == 0 && countRadio == 0 && countWifi == 0) {
                         countTv += 1;
                     } else {
                         //collectables.kill();
@@ -879,8 +882,18 @@ var collectElements = function (player, collectable) {
                     }
                     break;
                 case "phone":
-                    if (countRadio == 0 && countTv == 0) {
+                    if (countRadio == 0 && countTv == 0 && countWifi == 0) {
                         countPhone += 1;
+                    } else {
+                        //collectables.kill();
+                        game.paused = true;
+                        showMessageInfo(game.camera.view.x + 200, 100, 'collectDiferent');
+                        //setCollectableElements();
+                    }
+                    break;
+                case "wifi":
+                    if (countRadio == 0 && countTv == 0 && countPhone == 0) {
+                        countWifi += 1;
                     } else {
                         //collectables.kill();
                         game.paused = true;

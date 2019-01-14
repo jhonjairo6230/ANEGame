@@ -9,7 +9,8 @@ var initLVl4 = false,
 var collectables, messageInfo, messageRadio, sTV, sRadio, sPhone;
 var countPhone = 0,
     countTv = 0,
-    countRadio = 0;
+    countRadio = 0,
+    countWifi = 0;
 var increment = -120;
 var signal;
 var btnRadio, btnTV, btnPhone;
@@ -17,8 +18,8 @@ RutaEspectral.Level4 = function (game) {};
 RutaEspectral.Level4.prototype = {
     preload: function () {
         game.load.image('background', 'assets/level4/backgroundLVL4.png');
-        game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
-        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 14 + '.png', spriteSizes[14].width / 11, spriteSizes[14].height);
+        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
+        game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 8 + '.png', spriteSizes[8].width / 11, spriteSizes[14].height);
         game.load.spritesheet('spriteBio', 'assets/level3/bioSprite.png', (120 / 3), 40);
         game.load.image('platformS', 'assets/level3/platformSky.png');
 
@@ -29,9 +30,11 @@ RutaEspectral.Level4.prototype = {
         game.load.image('s0', 'assets/level4/phone.png');
         game.load.image('s1', 'assets/level4/radio.png');
         game.load.image('s2', 'assets/level4/tv.png');
+        game.load.image('s3', 'assets/level4/wifi.png');
         game.load.image('tv', 'assets/level4/sTV.png');
         game.load.image('radio', 'assets/level4/sRadio.png');
         game.load.image('phone', 'assets/level4/sPhone.png');
+        game.load.image('wifi', 'assets/level4/sWifi.png');
         game.load.image('messageInfo0', 'assets/level4/messageInfo0.png');
         game.load.image('messageInfo1', 'assets/level4/messageInfo1.png');
         game.load.image('messageInfo2', 'assets/level4/messageInfo2.png');
@@ -70,7 +73,7 @@ RutaEspectral.Level4.prototype = {
         stars.fixedToCamera = true;
         var st2 = game.add.image(0, 0, 'bgLives');
         st2.fixedToCamera = true;
-        for (n = 0; n < 3; n++) {
+        for (n = 0; n < 4; n++) {
             game.add.image(200 + (n * 100), 0, 'bgLives').fixedToCamera = true;
             game.add.image(240 + (n * 100), 4, 's' + n).fixedToCamera = true;
         }
@@ -81,7 +84,7 @@ RutaEspectral.Level4.prototype = {
         var borderS = bFinish.create(7054, 1, 'Lpx');
         borderS.body.immovable = true;
         game.paused = true;
-        infoText(message18, '20px', game.camera.view.x + 200, 200, 400, 150, function () {
+        infoText(message18, '20px', game.camera.view.x + 200, 200, 400, 200, function () {
             initLevel();
         });
     },
@@ -102,8 +105,8 @@ RutaEspectral.Level4.prototype = {
             this.die();
         }
         if (finish) {
-            countTv = 5;
-            if (countTv == 5 || countPhone == 5 || countRadio == 5) {
+            //countTv = 5;
+            if (countTv == 5 || countPhone == 5 || countRadio == 5 || countWifi == 5) {
                 if (countTv == 5) {
                     signal = 1;
                 }
@@ -112,6 +115,9 @@ RutaEspectral.Level4.prototype = {
                 }
                 if (countPhone == 5) {
                     signal = 3;
+                }
+                if (countWifi == 5) {
+                    signal = 4;
                 }
                 timerL1.paused = true;
                 game.state.start('Level4_2');
@@ -179,10 +185,11 @@ RutaEspectral.Level4.prototype = {
             } else {
                 this.die();
             }
-            //game.debug.text(player.position.x + "-" + player.position.y, 15, 18, "#2565e5");
+            // game.debug.text(player.position.x + "-" + player.position.y, 15, 18, "#2565e5");
             game.debug.text(countPhone + "x", 220, 18, "#2565e5");
             game.debug.text(countRadio + "x", 320, 18, "#2565e5");
             game.debug.text(countTv + "x", 420, 18, "#2565e5");
+            game.debug.text(countWifi + "x", 520, 18, "#2565e5");
         }
     }
 }

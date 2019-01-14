@@ -19,5 +19,5 @@ var message15 = '¡Ya estás en el planeta tierra, ahora debes comunicarte con l
 var message16 = 'Comunicate con la ciudad, seleciona una de las señales que recogiste para ello';
 var message17 = 'Debes recolectar al menos 10 señales de un mismo tipo para poder comunicarte';
 //Level 4
-var message18 = 'Recolecta cinco elementos con los que creas te puedes comunicar con la ciudad, ¡Cuidado, si recolectas dos elementos diferentes se reinicia la cuenta!';
+var message18 = ' ¡Recolecta cinco elementos del mismo tipo para viajar por la autopista de las comunicaciones hasta un receptor muy muy lejano sin ayuda extra. ¡Cuidado, si tomas uno de diferente tipo se reiniciará la cuenta!';
 var message19 = 'Recolecta cinco elementos para poder continuar';

@@ -356,13 +356,13 @@ function setPlayer() {
             if (collectGls) {
                 player = game.add.sprite(2295, 500, 'spriteA');
             } else {
-                //player = game.add.sprite(320, 500, 'spriteA');
-                player = game.add.sprite(6000, 500, 'spriteA');
+                player = game.add.sprite(320, 500, 'spriteA');
+                // player = game.add.sprite(6000, 500, 'spriteA');
             }
             break;
         case 3:
-            player = game.add.sprite(320, 400, 'spritePlayer');
-            //player = game.add.sprite(12000, 400, 'spritePlayer');
+            //player = game.add.sprite(320, 400, 'spritePlayer');
+            player = game.add.sprite(12000, 400, 'spritePlayer');
             break;
         case 4:
             player = game.add.sprite(320, 400, 'spritePlayer');

@@ -48,6 +48,7 @@ RutaEspectral.Level3.prototype = {
         game.load.image('messageRadio', 'assets/level3/messageRadio.png');
         game.load.image('messageTelegraph', 'assets/level3/messageTelegraph.png');
         game.load.image('messageSmoke', 'assets/level3/messageSmoke.png');
+        game.load.image('winFlag', 'assets/level1/winFlag.png');
     },
     create: function () {
         levelState = 3;
@@ -61,6 +62,10 @@ RutaEspectral.Level3.prototype = {
         mountain.enableBody = true;
         var m = mountain.create(12756, 140, 'mountain');
         m.body.immovable = true;
+        bordersWin = game.add.group();
+        bordersWin.enableBody = true;
+        var winFlag = bordersWin.create(12750, 380, 'winFlag');
+        winFlag.body.immovable = true;
         platforms = game.add.group();
         platforms.enableBody = true;
 
@@ -107,8 +112,6 @@ RutaEspectral.Level3.prototype = {
         animateFishJump();
         animateBio();
         if (mountainC) {
-            //    if (game.camera.x == 12412) {
-            game.paused = true;
             var msg;
             var isCollected = false;
             // countHorn = 10;
@@ -127,6 +130,7 @@ RutaEspectral.Level3.prototype = {
                 for (var i = 0; i < 900; i++) {
                     game.camera.x += i;
                 }
+                game.paused = true;
                 infoText(msg, '20px', game.camera.view.x + 200, 200, 300, 120, function () {
 
                     closeTextInfo();

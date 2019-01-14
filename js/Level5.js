@@ -15,8 +15,8 @@ RutaEspectral.Level5 = function (game) {};
 RutaEspectral.Level5.prototype = {
     preload: function () {
         game.load.image('background', 'assets/level5/bg5.png');
-        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
-        game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 8 + '.png', spriteSizes[8].width / 11, spriteSizes[14].height);
+        game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
+        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 8 + '.png', spriteSizes[8].width / 11, spriteSizes[14].height);
         game.load.spritesheet('spriteBio', 'assets/level3/bioSprite.png', (120 / 3), 40);
         game.load.image('platformS', 'assets/level3/platformSky.png');
 
@@ -192,11 +192,11 @@ RutaEspectral.Level5.prototype = {
         if (initLVl5) {
             if (timerL1.running) {
                 timeRest = formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000));
-                // game.debug.text(formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000)), 15, 18, "#2565e5");
+                game.debug.text(formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000)), 15, 18, "#2565e5");
             } else {
                 this.die();
             }
-            game.debug.text(player.position.x + "-" + player.position.y, 15, 18, "#2565e5");
+            //game.debug.text(player.position.x + "-" + player.position.y, 15, 18, "#2565e5");
 
         }
     }

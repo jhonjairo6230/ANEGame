@@ -285,7 +285,7 @@ RutaEspectral.Level2.prototype = {
                 });
             }
         }
-        game.debug.text(player.position.x, 15, 18, "#2565e5");
+        // game.debug.text(player.position.x, 15, 18, "#2565e5");
 
     }
 }

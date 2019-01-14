@@ -6,13 +6,10 @@ var initLVl5 = false,
     isLeftTruck = true,
     isLeftBio0 = true,
     isLeftBio2 = true;
-var collectables, messageInfo, messageRadio, sTV, sRadio, sPhone;
-var countPhone = 0,
-    countTv = 0,
-    countRadio = 0,
-    countWifi = 0;
+var collectables, messageInfo, messageRadio, sTV, sRadio, sPhone, signal;
+var countAntennas = 0;
 var increment = -120;
-var signal, bgGreen = [];
+var signal, bgGreen;
 var btnRadio, btnTV, btnPhone;
 RutaEspectral.Level5 = function (game) {};
 RutaEspectral.Level5.prototype = {
@@ -28,10 +25,11 @@ RutaEspectral.Level5.prototype = {
         game.load.image('bottomLine', 'assets/level5/bottomLine.png');
         game.load.image('roadLine', 'assets/level5/roadLine.png');
         game.load.image('antenna', 'assets/level5/antenna.png');
-        // game.load.image('s0', 'assets/level4/phone.png');
-        // game.load.image('s1', 'assets/level4/radio.png');
-        // game.load.image('s2', 'assets/level4/tv.png');
-        // game.load.image('s3', 'assets/level4/wifi.png');
+        game.load.image('ch0', 'assets/level5/ch0.png');
+        game.load.image('ch1', 'assets/level5/ch1.png');
+        game.load.image('ch2', 'assets/level5/ch2.png');
+        game.load.image('ch3', 'assets/level5/ch3.png');
+        game.load.image('ch4', 'assets/level5/ch4.png');
         // game.load.image('tv', 'assets/level4/sTV.png');
         // game.load.image('radio', 'assets/level4/sRadio.png');
         // game.load.image('phone', 'assets/level4/sPhone.png');
@@ -51,11 +49,12 @@ RutaEspectral.Level5.prototype = {
         game.load.image('star', 'assets/star.png');
 
         game.load.spritesheet('closeBtn', 'assets/buttons/closeBtn.png', 40, 40);
+        game.load.spritesheet('testBtn', 'assets/level5/testBtn.png', 98, 50);
     },
     create: function () {
         levelState = 5;
-        game.add.tileSprite(0, 0, 8614, 600, 'background');
-        game.world.setBounds(0, 0, 8614, 600);
+        game.add.tileSprite(0, 0, 8609, 600, 'background');
+        game.world.setBounds(0, 0, 8609, 600);
         game.renderer.roundPixels = true;
         game.physics.startSystem(Phaser.Physics.ARCADE);
         platforms = game.add.group();
@@ -75,11 +74,19 @@ RutaEspectral.Level5.prototype = {
         stars = game.add.group();
         stars.enableBody = true;
         stars.fixedToCamera = true;
+        // for (n = 0; n < 5; n++) {
+        signal = game.add.group();
+        signal.enableBody = true;
+        sg = signal.create(400, 0, 'ch0');
+        sg.fixedToCamera = true;
+        //game.add.image(240 + (n * 100), 4, 's' + n).fixedToCamera = true;
+        // }
         showLives();
         setCollectableElements();
+        btnHorn = game.add.button(8100, 350, 'testBtn', this.testSignal, this, 1, 1, 0);
         game.paused = true;
         game.add.image(0, 0, 'bgLives').fixedToCamera = true;
-        infoText('Nivel 5', '20px', game.camera.view.x + 200, 200, 400, 200, function () {
+        infoText(message20, '20px', game.camera.view.x + 200, 200, 400, 150, function () {
             initLevel();
         });
     },
@@ -129,6 +136,9 @@ RutaEspectral.Level5.prototype = {
             roadLine.body.checkCollision.up = false;
             player.body.velocity.y = velocityLevel2.firstPart;
         }
+    },
+    testSignal: function (e) {
+        console.log("click");
     },
     die: function () {
         document.getElementById("lostLive").play();

@@ -21,3 +21,5 @@ var message17 = 'Debes recolectar al menos 10 señales de un mismo tipo para pod
 //Level 4
 var message18 = ' ¡Recolecta cinco elementos del mismo tipo para viajar por la autopista de las comunicaciones hasta un receptor muy muy lejano sin ayuda extra. ¡Cuidado, si tomas uno de diferente tipo se reiniciará la cuenta!';
 var message19 = 'Recolecta cinco elementos para poder continuar';
+//level 5
+var message20 = 'Nivel final, llena la barra de señal recolectando todas las antenas que encuentres para poder comunicar dos ciudades distantes';

@@ -369,7 +369,7 @@ function setPlayer() {
             player = game.add.sprite(320, 400, 'spritePlayer');
             break;
         case 5:
-            player = game.add.sprite(320, 400, 'spritePlayer');
+            player = game.add.sprite(7000, 400, 'spritePlayer');
             //player = game.add.sprite(320, 400, 'spritePlayer');
             break;
         default:
@@ -877,10 +877,7 @@ var setCollectableElements = function () {
             }
             break;
         case 5:
-            //countPhone = countRadio = countTv = countWifi = 0;
-            // for (var i = 0; i < 4; i++) {
-            //     bgGreen[i].visible = false;
-            // }
+            countAntennas = 0;
             var tv = [1500, 2000, 3510, 4899, 6201];
             var radio = [20, 1300, 2300, 4000, 5231];
             var phone = [148, 2910, 4400, 5776, 6390];
@@ -998,6 +995,33 @@ var collectElements = function (player, collectable) {
                     break;
                 default:
                     break;
+            }
+            break;
+        case 5:
+            countAntennas += 1;
+            if (countAntennas > 4) {
+                signal.kill();
+                signal = game.add.group();
+                signal.enableBody = true;
+                signal.create(400, 0, 'ch1').fixedToCamera = true;
+            }
+            if (countAntennas > 9) {
+                signal.kill();
+                signal = game.add.group();
+                signal.enableBody = true;
+                signal.create(400, 0, 'ch2').fixedToCamera = true;
+            }
+            if (countAntennas > 14) {
+                signal.kill();
+                signal = game.add.group();
+                signal.enableBody = true;
+                signal.create(400, 0, 'ch3').fixedToCamera = true;
+            }
+            if (countAntennas > 19) {
+                signal.kill();
+                signal = game.add.group();
+                signal.enableBody = true;
+                signal.create(400, 0, 'ch4').fixedToCamera = true;
             }
             break;
         default:

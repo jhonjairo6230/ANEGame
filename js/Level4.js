@@ -12,7 +12,7 @@ var countPhone = 0,
     countRadio = 0,
     countWifi = 0;
 var increment = -120;
-var signal;
+var signal, bgGreen = [];
 var btnRadio, btnTV, btnPhone;
 RutaEspectral.Level4 = function (game) {};
 RutaEspectral.Level4.prototype = {
@@ -45,6 +45,7 @@ RutaEspectral.Level4.prototype = {
         game.load.spritesheet('spriteTruck', 'assets/level4/truckSprite.png', (1217 / 6), 70);
 
         game.load.image('bgLives', 'assets/level1/bgLives.png');
+        game.load.image('bgLivesG', 'assets/level4/bgLives.png');
         game.load.image('star', 'assets/star.png');
 
         game.load.spritesheet('closeBtn', 'assets/buttons/closeBtn.png', 40, 40);
@@ -71,10 +72,12 @@ RutaEspectral.Level4.prototype = {
         stars = game.add.group();
         stars.enableBody = true;
         stars.fixedToCamera = true;
-        var st2 = game.add.image(0, 0, 'bgLives');
-        st2.fixedToCamera = true;
+        game.add.image(0, 0, 'bgLives').fixedToCamera = true;
         for (n = 0; n < 4; n++) {
             game.add.image(200 + (n * 100), 0, 'bgLives').fixedToCamera = true;
+            bgGreen[n] = game.add.sprite(200 + (n * 100), 0, 'bgLivesG')
+            bgGreen[n].fixedToCamera = true;
+            bgGreen[n].visible = false;
             game.add.image(240 + (n * 100), 4, 's' + n).fixedToCamera = true;
         }
         showLives();
@@ -158,7 +161,6 @@ RutaEspectral.Level4.prototype = {
             roadLine.body.checkCollision.up = false;
             player.body.velocity.y = velocityLevel2.firstPart;
         }
-
     },
     die: function () {
         document.getElementById("lostLive").play();
@@ -186,6 +188,19 @@ RutaEspectral.Level4.prototype = {
                 this.die();
             }
             // game.debug.text(player.position.x + "-" + player.position.y, 15, 18, "#2565e5");
+            if (countPhone == 5) {
+                bgGreen[0].visible = true;
+            }
+            if (countRadio == 5) {
+                bgGreen[1].visible = true;
+            }
+
+            if (countTv == 5) {
+                bgGreen[2].visible = true;
+            }
+            if (countWifi == 5) {
+                bgGreen[3].visible = true;
+            }
             game.debug.text(countPhone + "x", 220, 18, "#2565e5");
             game.debug.text(countRadio + "x", 320, 18, "#2565e5");
             game.debug.text(countTv + "x", 420, 18, "#2565e5");

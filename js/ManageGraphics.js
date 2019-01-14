@@ -786,6 +786,9 @@ var setCollectableElements = function () {
             break;
         case 4:
             countPhone = countRadio = countTv = countWifi = 0;
+            for (var i = 0; i < 4; i++) {
+                bgGreen[i].visible = false;
+            }
             var tv = [1500, 2000, 3510, 4899, 6201];
             var radio = [20, 1300, 2300, 4000, 5231];
             var phone = [148, 2910, 4400, 5776, 6390];
@@ -1089,6 +1092,9 @@ var showMessageInfo = function (x, y, state) {
 }
 
 var closeMessageInfo = function () {
+    // if (bgGreen) {
+    //     bgGreen.kill();
+    // }
     messageInfo.kill();
     btncls.kill();
     game.paused = false;

@@ -138,7 +138,7 @@ var spriteSizes = [{
     name: "sprite0",
     widthHS: 234,
     heightHS: 300,
-    width: 455,
+    width: 438,
     height: 60
 }, {
     name: "sprite1",
@@ -150,13 +150,13 @@ var spriteSizes = [{
     name: "sprite2",
     widthHS: 246,
     heightHS: 300,
-    width: 457,
+    width: 469,
     height: 60
 }, {
     name: "sprite3",
     widthHS: 249,
     heightHS: 300,
-    width: 472,
+    width: 431,
     height: 60
 }, {
     name: "sprite4",
@@ -180,43 +180,43 @@ var spriteSizes = [{
     name: "sprite7",
     widthHS: 239,
     heightHS: 300,
-    width: 447,
+    width: 431,
     height: 60
 }, {
     name: "sprite8",
     widthHS: 239,
     heightHS: 300,
-    width: 403,
+    width: 431,
     height: 60
 }, {
     name: "sprite9",
     widthHS: 233,
     heightHS: 300,
-    width: 428,
+    width: 431,
     height: 60
 }, {
     name: "sprite10",
     widthHS: 226,
     heightHS: 300,
-    width: 403,
+    width: 431,
     height: 60
 }, {
     name: "sprite11",
     widthHS: 215,
     heightHS: 300,
-    width: 394,
+    width: 431,
     height: 60
 }, {
     name: "sprite12",
     widthHS: 236,
     heightHS: 300,
-    width: 463,
+    width: 431,
     height: 60
 }, {
     name: "sprite13",
     widthHS: 234,
     heightHS: 300,
-    width: 466,
+    width: 431,
     height: 60
 }, {
     name: "sprite14",
@@ -234,25 +234,25 @@ var spriteSizes = [{
     name: "sprite16",
     widthHS: 234,
     heightHS: 300,
-    width: 480,
+    width: 431,
     height: 60
 }, {
     name: "sprite17",
     widthHS: 230,
     heightHS: 300,
-    width: 430,
+    width: 472,
     height: 60
 }, {
     name: "sprite18",
     widthHS: 247,
     heightHS: 300,
-    width: 453,
+    width: 447,
     height: 60
 }, {
     name: "sprite19",
     widthHS: 239,
     heightHS: 300,
-    width: 445,
+    width: 431,
     height: 60
 }, {
     name: "sprite20",
@@ -270,13 +270,13 @@ var spriteSizes = [{
     name: "sprite22",
     widthHS: 234,
     heightHS: 300,
-    width: 457,
+    width: 431,
     height: 60
 }, {
     name: "sprite23",
     widthHS: 230,
     heightHS: 300,
-    width: 442,
+    width: 431,
     height: 60
 }, {
     name: "sprite24",
@@ -294,37 +294,37 @@ var spriteSizes = [{
     name: "sprite26",
     widthHS: 247,
     heightHS: 300,
-    width: 448,
+    width: 472,
     height: 60
 }, {
     name: "sprite27",
     widthHS: 238,
     heightHS: 300,
-    width: 482,
+    width: 472,
     height: 60
 }, {
     name: "sprite28",
     widthHS: 231,
     heightHS: 300,
-    width: 467,
+    width: 472,
     height: 60
 }, {
     name: "sprite29",
     widthHS: 238,
     heightHS: 300,
-    width: 455,
+    width: 472,
     height: 60
 }, {
     name: "sprite30",
     widthHS: 216,
     heightHS: 300,
-    width: 452,
+    width: 469,
     height: 60
 }, {
     name: "sprite31",
     widthHS: 223,
     heightHS: 300,
-    width: 420,
+    width: 469,
     height: 60
 }, {
     name: "sprite32",
@@ -336,19 +336,19 @@ var spriteSizes = [{
     name: "sprite33",
     widthHS: 212,
     heightHS: 300,
-    width: 423,
+    width: 434,
     height: 60
 }, {
     name: "sprite34",
     widthHS: 211,
     heightHS: 300,
-    width: 424,
+    width: 472,
     height: 60
 }, {
     name: "sprite35",
     widthHS: 219,
     heightHS: 300,
-    width: 424,
+    width: 472,
     height: 60
 }, {
     name: "spriteA",

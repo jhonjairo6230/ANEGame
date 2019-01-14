@@ -362,7 +362,7 @@ function setPlayer() {
             break;
         case 3:
             player = game.add.sprite(320, 400, 'spritePlayer');
-            //player = game.add.sprite(320, 400, 'spritePlayer');
+            //player = game.add.sprite(12000, 400, 'spritePlayer');
             break;
         case 4:
             player = game.add.sprite(320, 400, 'spritePlayer');
@@ -814,15 +814,43 @@ var collectElements = function (player, collectable) {
             switch (collectable.key) {
                 case "radio":
                     countRadio += 1;
+                    if (countRadio == 1) {
+                        game.paused = true;
+                        infoText('radio', '20px', game.camera.view.x + 200, 200, 300, 120, function () {
+                            closeTextInfo();
+                            game.paused = false;
+                        });
+                    }
                     break;
                 case "telegraph":
                     countTelegraph += 1;
+                    if (countTelegraph == 1) {
+                        game.paused = true;
+                        infoText('telegraph', '20px', game.camera.view.x + 200, 200, 300, 120, function () {
+                            closeTextInfo();
+                            game.paused = false;
+                        });
+                    }
                     break;
                 case "smoke":
                     countSmoke += 1;
+                    if (countSmoke == 1) {
+                        game.paused = true;
+                        infoText('smoke', '20px', game.camera.view.x + 200, 200, 300, 120, function () {
+                            closeTextInfo();
+                            game.paused = false;
+                        });
+                    }
                     break;
                 case "horn":
                     countHorn += 1;
+                    if (countHorn == 1) {
+                        game.paused = true;
+                        infoText('horn', '20px', game.camera.view.x + 200, 200, 300, 120, function () {
+                            closeTextInfo();
+                            game.paused = false;
+                        });
+                    }
                     break;
                 default:
                     break;

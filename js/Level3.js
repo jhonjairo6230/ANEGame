@@ -38,10 +38,10 @@ RutaEspectral.Level3.prototype = {
         game.load.image('star', 'assets/star.png');
 
         game.load.spritesheet('closeBtn', 'assets/buttons/closeBtn.png', 40, 40);
-        game.load.spritesheet('btnHorn', 'assets/level3/btnHorn.png', 209 / 2, 105);
+        game.load.spritesheet('btnHorn', 'assets/level3/btnHorn.png', 208 / 2, 105);
         game.load.spritesheet('btnSmoke', 'assets/level3/btnSmoke.png', 207 / 2, 104);
-        game.load.spritesheet('btnRadio', 'assets/level3/btnRadio.png', 210 / 2, 104);
-        game.load.spritesheet('btnTelegraph', 'assets/level3/btnTelegraph.png', 211 / 2, 104);
+        game.load.spritesheet('btnRadio', 'assets/level3/btnRadio.png', 208 / 2, 104);
+        game.load.spritesheet('btnTelegraph', 'assets/level3/btnTelegraph.png', 209 / 2, 104);
         game.load.image('dialogBg', 'assets/level3/dialogSelect.png');
 
         game.load.image('messageHorn', 'assets/level3/messageHorn.png');
@@ -113,7 +113,7 @@ RutaEspectral.Level3.prototype = {
             var isCollected = false;
             // countHorn = 10;
             // countRadio = 10;
-            // countSmoke = 1;
+            // countSmoke = 10;
             // countTelegraph = 10;
             if (countHorn == 10 || countRadio == 10 || countSmoke == 10 || countTelegraph == 10) {
                 msg = message16;

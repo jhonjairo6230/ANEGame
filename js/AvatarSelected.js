@@ -12,6 +12,7 @@ RutaEspectral.AvatarSelected.prototype = {
         game.load.image(footSelected.key, 'assets/avatarOptions/' + footSelected.key + '.png');
         game.load.image(hairSelected.key, 'assets/avatarOptions/' + hairSelected.key + '.png');
         game.load.image(armSelected.key, 'assets/avatarOptions/' + armSelected.key + '.png');
+        game.load.image('msgAvatar', 'assets/level1/messageAvatar.png');
         selectedSprite = RutaEspectral.selectSprite(hairSelected.key, headSelected.key, armSelected.key, footSelected.key);
         if (selectedSprite != -1) {
             game.load.spritesheet('sprite' + selectedSprite, 'assets/sprites/sayHello/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].widthHS, spriteSizes[selectedSprite].heightHS);
@@ -36,11 +37,12 @@ RutaEspectral.AvatarSelected.prototype = {
             //player.scale.set(1);
             player.animations.play('sayHello');
         }
-        title = game.add.text(400, 200, 'Felicidades,\n Personaje armado!', {
-            fontSize: '50px',
-            fill: '#ffabed',
-            font: 'Myriad pro'
-        });
+        // title = game.add.text(400, 200, 'Felicidades,\n Personaje armado!', {
+        //     fontSize: '50px',
+        //     fill: '#ffabed',
+        //     font: 'Myriad pro'
+        // });
+        game.add.image(380, 200, 'msgAvatar');
     },
     playGame: function (e) {
         document.getElementById("click").play();

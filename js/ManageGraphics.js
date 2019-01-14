@@ -98,9 +98,9 @@ var resetPlayer = function (x, y) {
     game.physics.arcade.enable(player);
     game.physics.arcade.enable(realPlayer);
     player.body.bounce.y = 0.2;
-    player.body.gravity.y = 200;
+    //player.body.gravity.y = 200;
     realPlayer.body.bounce.y = 0.2;
-    realPlayer.body.gravity.y = 200;
+    //realPlayer.body.gravity.y = 200;
     player.body.collideWorldBounds = true;
     realPlayer.body.collideWorldBounds = true;
     game.camera.follow(realPlayer, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);

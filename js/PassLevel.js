@@ -29,6 +29,9 @@ RutaEspectral.PassLevel.prototype = {
             case 4:
                 game.state.start('Level4');
                 break;
+            case 5:
+                game.state.start('Level5');
+                break;
             default:
                 break;
         }

@@ -1,4 +1,4 @@
-var player, bioHSprite, platforms, elements, cursors, enemies, enemiesBio, mountain;
+var player, bioHSprite, platforms, elements, cursors, enemies, enemiesBio, mountain, timeI;
 var fishesSprite = [],
     biosSprite = [];
 var initLVl3 = false,
@@ -16,8 +16,8 @@ RutaEspectral.Level3 = function (game) {};
 RutaEspectral.Level3.prototype = {
     preload: function () {
         game.load.image('background', 'assets/level3/backgroundLVL3.png');
-        game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
-        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 31 + '.png', spriteSizes[31].width / 11, spriteSizes[14].height);
+        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
+        game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 31 + '.png', spriteSizes[31].width / 11, spriteSizes[14].height);
         game.load.spritesheet('spriteFish', 'assets/level3/fishSprite.png', (207 / 4), 80);
         game.load.spritesheet('spriteBio', 'assets/level3/bioSprite.png', (120 / 3), 40);
         game.load.image('platformL', 'assets/level3/platformL.png');
@@ -91,8 +91,10 @@ RutaEspectral.Level3.prototype = {
         enemies.enableBody = true;
         addFishSprite(enemies);
 
-        // collectables = game.add.group();
-        // collectables.enableBody = true;
+        // timeI = game.add.group();
+        // timeI.enableBody = true;
+
+
         setCollectableElements();
         game.paused = true;
         infoText(message15, '20px', game.camera.view.x + 200, 200, 400, 150, function () {

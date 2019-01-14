@@ -368,6 +368,10 @@ function setPlayer() {
             //player = game.add.sprite(6000, 400, 'spritePlayer');
             player = game.add.sprite(320, 400, 'spritePlayer');
             break;
+        case 5:
+            player = game.add.sprite(320, 400, 'spritePlayer');
+            //player = game.add.sprite(320, 400, 'spritePlayer');
+            break;
         default:
             break;
     }
@@ -481,6 +485,18 @@ var setPlatforms = function (elements, pMoveGroup) {
 
             break;
         case 4:
+            var vSkyH = [100, 500, 830, 945, 1751, 2000, 2300, 2829, 3148, 3461, 4100,
+                4356, 4685, 5470, 5732, 5188, 6433, 6760
+            ];
+            var vSkyV = [385, 350, 270, 270, 385, 270, 140, 385, 305, 200, 267, 385, 270,
+                385, 270, 270, 385, 270
+            ];
+            for (var s = 0; s < vSkyH.length; s++) {
+                var platform = elements.create(vSkyH[s], vSkyV[s], 'platformS');
+                platform.body.immovable = true;
+            }
+            break;
+        case 5:
             var vSkyH = [100, 500, 830, 945, 1751, 2000, 2300, 2829, 3148, 3461, 4100,
                 4356, 4685, 5470, 5732, 5188, 6433, 6760
             ];
@@ -672,6 +688,29 @@ var addBioSprite = function () {
                 enemies.add(biosSprite[i]);
             }
             break;
+        case 5:
+            var bios = [892, 945, 2384, 3546, 5810];
+            biosSprite = [];
+            for (var i = 0; i < bios.length; i++) {
+                if (i < 2) {
+                    biosSprite[i] = game.add.sprite(bios[i], 231, 'spriteBio');
+                } else if (i == 2) {
+                    biosSprite[i] = game.add.sprite(bios[i], 100, 'spriteBio');
+                } else if (i == 3) {
+                    biosSprite[i] = game.add.sprite(bios[i], 160, 'spriteBio');
+                } else {
+                    biosSprite[i] = game.add.sprite(bios[i], 230, 'spriteBio');
+                }
+                biosSprite[i].animations.add('left', [2, 1, 0], 8, true);
+                biosSprite[i].animations.add('right', [0, 1, 2], 8, true);
+                game.physics.arcade.enable(biosSprite[i]);
+                biosSprite[i].body.bounce.y = 0.2;
+                biosSprite[i].body.setCircle(20)
+                //biosSprite[i].body.gravity.y = 300;
+                biosSprite[i].body.collideWorldBounds = true;
+                enemies.add(biosSprite[i]);
+            }
+            break;
         default:
             break;
     }
@@ -710,6 +749,35 @@ var animateBio = function () {
             }
             break;
         case 4:
+            for (var i = 0; i < biosSprite.length; i++) {
+                if (i < 2) {
+                    if (biosSprite[0].position.x > 826 && isLeftBio0) {
+                        isLeftBio0 = true;
+                        biosSprite[i].animations.play('left');
+                        biosSprite[i].body.velocity.setTo(-80, 0);
+                    } else if (biosSprite[1].position.x < 1038) {
+                        isLeftBio0 = false;
+                        biosSprite[i].animations.play('right');
+                        biosSprite[i].body.velocity.setTo(80, 0);
+                    } else {
+                        isLeftBio0 = true;
+                    }
+                } else {
+                    if (biosSprite[2].position.x > 2293 && isLeftBio2) {
+                        isLeftBio2 = true;
+                        biosSprite[i].animations.play('left');
+                        biosSprite[i].body.velocity.setTo(-60, 0);
+                    } else if (biosSprite[4].position.x < 5832) {
+                        isLeftBio2 = false;
+                        biosSprite[i].animations.play('right');
+                        biosSprite[i].body.velocity.setTo(60, 0);
+                    } else {
+                        isLeftBio2 = true;
+                    }
+                }
+            }
+            break;
+        case 5:
             for (var i = 0; i < biosSprite.length; i++) {
                 if (i < 2) {
                     if (biosSprite[0].position.x > 826 && isLeftBio0) {
@@ -805,6 +873,30 @@ var setCollectableElements = function () {
                 sPhone = collectables.create(phone[h], vP[h], 'phone');
                 sPhone.body.immovable = true;
                 sWifi = collectables.create(wifi[h], vW[h], 'wifi');
+                sWifi.body.immovable = true;
+            }
+            break;
+        case 5:
+            //countPhone = countRadio = countTv = countWifi = 0;
+            // for (var i = 0; i < 4; i++) {
+            //     bgGreen[i].visible = false;
+            // }
+            var tv = [1500, 2000, 3510, 4899, 6201];
+            var radio = [20, 1300, 2300, 4000, 5231];
+            var phone = [148, 2910, 4400, 5776, 6390];
+            var wifi = [531, 1038, 2006, 3512, 4688];
+            var vT = [530, 430, 70, 200, 340];
+            var vP = [340, 187, 180, 121, 530];
+            var vR = [530, 350, 50, 120, 80];
+            var vW = [290, 120, 80, 530, 80];
+            for (var h = 0; h < tv.length; h++) {
+                sTV = collectables.create(tv[h], vT[h], 'antenna');
+                sTV.body.immovable = true;
+                sRadio = collectables.create(radio[h], vR[h], 'antenna');
+                sRadio.body.immovable = true;
+                sPhone = collectables.create(phone[h], vP[h], 'antenna');
+                sPhone.body.immovable = true;
+                sWifi = collectables.create(wifi[h], vW[h], 'antenna');
                 sWifi.body.immovable = true;
             }
             break;
@@ -925,6 +1017,12 @@ var initLevel = function () {
             break;
         case 4:
             initLVl4 = true;
+            game.paused = false;
+            closeTextInfo();
+            startTimer(2, 30);
+            break;
+        case 5:
+            initLVl5 = true;
             game.paused = false;
             closeTextInfo();
             startTimer(2, 30);

@@ -1,6 +1,8 @@
 var player, platforms, elements, pMoveGroup, cursors, bSun, waveCollition, bordersWin, platformMV, platformMH;
 var initLVl2 = false;
 var glasses, closeBtn, obstructions, st, planet, bEarth, bEarthH, liveUpGroup, circle, circleT, pltMovement;
+var isError = false;
+var message0, message1;
 RutaEspectral.Level2 = function (game) {};
 RutaEspectral.Level2.prototype = {
     preload: function () {
@@ -31,6 +33,9 @@ RutaEspectral.Level2.prototype = {
         game.load.image('satellite', 'assets/level1/satelite.png');
         game.load.image('winFlag', 'assets/level1/winFlag.png');
         game.load.image('circleT', 'assets/level2/circleT.png');
+        game.load.image('finishLine', 'assets/level2/finishLine.png');
+        game.load.image('message0', 'assets/level2/message0.png');
+        game.load.image('message1', 'assets/level2/message1.png');
     },
     create: function () {
         levelState = 2;
@@ -59,10 +64,11 @@ RutaEspectral.Level2.prototype = {
         obstructions.enableBody = true;
         bSun = game.add.group();
         bSun.enableBody = true;
-        bEarth = game.add.group();
-        bEarth.enableBody = true;
+
         bEarthH = game.add.group();
         bEarthH.enableBody = true;
+        var finishLine = bEarthH.create(7120, 599, 'finishLine');
+        finishLine.body.immovable = true;
         var borderS = bSun.create(1650, 1, 'Lpx');
         borderS.body.immovable = true;
         glasses = game.add.group();
@@ -78,7 +84,7 @@ RutaEspectral.Level2.prototype = {
         setPlayer();
         bordersWin = game.add.group();
         bordersWin.enableBody = true;
-        var winFlag = bordersWin.create(7400, 500, 'winFlag');
+        var winFlag = bordersWin.create(7500, 360, 'winFlag');
         winFlag.body.immovable = true;
         var stbackround = game.add.image(640, 0, 'bgLives');
         stbackround.fixedToCamera = true;
@@ -102,6 +108,7 @@ RutaEspectral.Level2.prototype = {
         }
     },
     update: function () {
+        game.physics.arcade.collide(player, bEarthH);
         var hitPlatform = game.physics.arcade.collide(player, elements);
         var hitSun = game.physics.arcade.collide(player, bSun);
         var finish = game.physics.arcade.collide(player, bordersWin);
@@ -116,15 +123,22 @@ RutaEspectral.Level2.prototype = {
         if (circle) {
             if (player.position.y > 300 && player.position.y < 400) {
                 circleT.kill();
+                isError = false;
+                game.time.events.add(100, this.showMessage, this, message1);
             }
             if (player.position.y < 339) {
-                player.position.x = player.position.x - 200;
+                player.position.x = player.position.x - 500;
                 player.position.y = player.position.y - 50;
+                isError = true;
+                game.time.events.add(100, this.showMessage, this, message0);
             }
             if (player.position.y > 401) {
-                player.position.x = player.position.x - 50;
-                player.position.y = player.position.y - 200;
+                player.position.x = player.position.x - 800;
+                player.position.y = player.position.y - 50;
+                isError = true;
+                game.time.events.add(100, this.showMessage, this, message0);
             }
+
         }
         if (pltMovement.position.x < 4100) {
             pltMovement.body.velocity.x = 70;
@@ -236,6 +250,19 @@ RutaEspectral.Level2.prototype = {
             game.state.start('Level2');
         });
     },
+    showMessage: function () {
+        if (!isError) {
+            message1 = game.add.sprite(game.camera.view.x + 200, 200, 'message1');
+            game.time.events.add(3000, this.removePicture, this, message1);
+
+        } else {
+            message0 = game.add.sprite(game.camera.view.x, 200, 'message0');
+            game.time.events.add(3000, this.removePicture, this, message0);
+        }
+    },
+    removePicture: function (pic) {
+        pic.visible = false;
+    },
     render: function () {
         if (initLVl2) {
             if (timerL1.running) {
@@ -258,7 +285,7 @@ RutaEspectral.Level2.prototype = {
                 });
             }
         }
-        //game.debug.text(player.position.x, 15, 18, "#2565e5");
+        game.debug.text(player.position.x, 15, 18, "#2565e5");
 
     }
 }

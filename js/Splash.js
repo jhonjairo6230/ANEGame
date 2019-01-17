@@ -1,7 +1,7 @@
 RutaEspectral.Splash = function (game) {};
 RutaEspectral.Splash.prototype = {
     preload: function () {
-        game.load.image('backgroundS', 'assets/backgrounds/Splash.png');
+        game.load.image('backgroundS', 'assets/backgrounds/backgroundSpl.png');
         game.load.spritesheet('playBtn', 'assets/buttons/playBtn.png', 164, 79);
 
     },

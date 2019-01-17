@@ -20,7 +20,7 @@ var RutaEspectral = {
         if (hairSelected == "hair0" && (headSelected == "head0" || headSelected == "head1") && (armSelected == "arm0" || armSelected == "arm1") && (footSelected == "foot2" || footSelected == "foot3")) {
             return 2;
         }
-        if (hairSelected == "hair0" && (headSelected == "head2" || headSelected == "head3") && armSelected == "arm1" && (footSelected == "foot2" || footSelected == "foot3")) {
+        if (hairSelected == "hair0" && (headSelected == "head2" || headSelected == "head3") && (armSelected == "arm1" || armSelected == "arm0") && (footSelected == "foot2" || footSelected == "foot3")) {
             return 3;
         }
         if (hairSelected == "hair0" && (headSelected == "head0" || headSelected == "head1") && armSelected == "arm1" && footSelected == "foot3") {
@@ -80,7 +80,7 @@ var RutaEspectral = {
         if (hairSelected == "hair3" && (headSelected == "head0" || headSelected == "head1") && armSelected == "arm0" && (footSelected == "foot0" || footSelected == "foot1")) {
             return 22;
         }
-        if (hairSelected == "hair3" && (headSelected == "head2" || headSelected == "head3") && armSelected == "arm1" && (footSelected == "foot0" || footSelected == "foot1")) {
+        if (hairSelected == "hair3" && (headSelected == "head2" || headSelected == "head3") && (armSelected == "arm1" || armSelected == "arm0") && (footSelected == "foot0" || footSelected == "foot1")) {
             return 23;
         }
         if (hairSelected == "hair4" && (headSelected == "head0" || headSelected == "head1") && (armSelected == "arm0" || armSelected == "arm1") && (footSelected == "foot0" || footSelected == "foot1")) {

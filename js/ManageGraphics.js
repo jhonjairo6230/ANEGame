@@ -41,6 +41,22 @@ var startTimer = function (minute, seconds) {
     timerL1.start();
 };
 
+var addGamePad = function (hasButton) {
+    joystick = gamepad.addJoystick(100, game.world.height - 100, 1.2, 'gamepad');
+    button = gamepad.addButton(700, game.world.height - 100, 1.0, 'gamepad');
+    // //joystick.visible = false;
+    if (!hasButton) {
+        button.visible = false;
+    }
+    //game.plugins.removeAll();
+}
+var removeGamePad = function () {
+    button.visible = false;
+    joystick.visible = false;
+    gamepad.joystickPad.visible = false;
+    //joystick.position.x = 100;
+}
+
 var pauseAction = function () {
     if (!game.paused) {
         game.paused = true;
@@ -64,7 +80,12 @@ var pauseAction = function () {
             SoundBtn = game.add.button(soundConfigTxt.position.x + 180, 270, 'SoundBtn', silenceAllSounds, this, 1, 2, 2);
 
         }
-        controlConfigTxt = game.add.text(game.camera.view.x + 260, 340, 'Controles: ', style);
+        controlConfigTxt = game.add.text(game.camera.view.x + 260, 345, 'Controles: ', style);
+        if (joystickVisible) {
+            controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 330, 'ControlBtn', manageGamePad, this, 3, 2, 3);
+        } else {
+            controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 330, 'ControlBtn', manageGamePad, this, 1, 0, 0);
+        }
         levelConfigTxt = game.add.text(game.camera.view.x + 260, 410, 'Niveles: ', style);
         closePausebtn = game.add.button(game.camera.view.x + 520, 140, 'closeBtn', playGame, this, 1, 1, 0);
     } else {
@@ -79,6 +100,7 @@ var playGame = function (e) {
     soundConfigTxt.kill();
     SoundBtn.kill();
     controlConfigTxt.kill();
+    controlConfigBtn.kill();
     levelConfigTxt.kill();
     closePausebtn.kill();
     bgPaused.kill();
@@ -98,6 +120,26 @@ var silenceBgSound = function () {
         bgSoundBtn.kill();
         bgSoundBtn = game.add.button(bgSoundConfigTxt.position.x + 180, 200, 'bgSoundBtn', silenceBgSound, this, 1, 0, 1);
         isBgSound = true;
+    }
+}
+
+var manageGamePad = function () {
+    if (joystickVisible) {
+        controlConfigBtn.kill();
+        controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 330, 'ControlBtn', manageGamePad, this, 3, 2, 3);
+        joystickVisible = false;
+        removeGamePad();
+    } else {
+        controlConfigBtn.kill();
+        controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 330, 'ControlBtn', manageGamePad, this, 0, 1, 1);
+        joystickVisible = true;
+        if (levelState == 1) {
+            button.visible = false;
+        } else {
+            button.visible = true;
+        }
+        joystick.visible = true;
+        gamepad.joystickPad.visible = true;
     }
 }
 

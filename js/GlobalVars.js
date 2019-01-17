@@ -1,5 +1,7 @@
 var isBgSound = true,
-    isSound = true;
+    isSound = true,
+    joystickVisible = false;
+var gamepad, joystick, button;
 var game, bgPaused, soundConfigTxt, controlConfigTxt, levelConfigTxt, titlePauseTxt, bgSoundConfigTxt;
 var closePausebtn, bgSoundBtn, soundConfigBtn, levelConfigBtn, controlConfigBtn;
 //Total de vidas iniciales del juego

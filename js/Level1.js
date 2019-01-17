@@ -7,6 +7,9 @@ RutaEspectral.Level1.prototype = {
         game.load.spritesheet('pauseBtn', 'assets/buttons/pauseBtn.png', (57 / 2), 32);
         game.load.spritesheet('bgSoundBtn', 'assets/buttons/soundBgBtn.png', (186 / 3), 62);
         game.load.spritesheet('SoundBtn', 'assets/buttons/soundBtn.png', (186 / 3), 62);
+        game.load.spritesheet('ControlBtn', 'assets/buttons/controlsBtn.png', (341 / 4), 61);
+
+        this.load.spritesheet('gamepad', 'assets/dpad.png', 100, 100);
 
         game.load.image('rocket', 'assets/level1/rocket.png');
         game.load.image('rocketFire', 'assets/level1/rocketFire.png');
@@ -96,6 +99,9 @@ RutaEspectral.Level1.prototype = {
         });
         // this.infoText(message2, '20px', false, 150, 150, 520, 180);
         addSuitElements();
+        gamepad = game.plugins.add(Phaser.Plugin.VirtualGamepad);
+        addGamePad(false);
+        removeGamePad();
     },
     update: function () {
         //this.buildSpaceSuit();
@@ -187,20 +193,40 @@ RutaEspectral.Level1.prototype = {
                     });
                 }
                 spaceA.body.velocity.x = 0;
-                if (cursors.left.isDown) {
-                    spaceA.body.velocity.x = -velocityLevel1.suit;
-                    spaceA.animations.play('left');
-                } else if (cursors.right.isDown) {
-                    spaceA.body.velocity.x = velocityLevel1.suit;
-                    spaceA.animations.play('right');
+                if (joystickVisible == false) {
+                    if (cursors.left.isDown) {
+                        spaceA.body.velocity.x = -velocityLevel1.suit;
+                        spaceA.animations.play('left');
+                    } else if (cursors.right.isDown) {
+                        spaceA.body.velocity.x = velocityLevel1.suit;
+                        spaceA.animations.play('right');
+                    } else {
+                        spaceA.animations.stop();
+                        spaceA.frame = 5;
+                    }
+                    if (cursors.up.isDown) {
+                        spaceA.body.velocity.y = -velocityLevel1.suit;
+                    }
                 } else {
-                    spaceA.animations.stop();
-                    spaceA.frame = 5;
-                }
-                if (cursors.up.isDown) {
-                    spaceA.body.velocity.y = -velocityLevel1.suit;
+                    gamepad.joystickPad.visible = true;
+                    gamepad.joystick.visible = true;
+                    if (joystick.properties.left) {
+                        spaceA.body.velocity.x = -velocityLevel1.ship;
+                        spaceA.animations.play('left');
+                    }
+                    if (joystick.properties.right) {
+                        spaceA.body.velocity.x = velocityLevel1.ship;
+                        spaceA.animations.play('right');
+                    }
+                    if (joystick.properties.up) {
+                        spaceA.body.velocity.y = -velocityLevel1.ship;
+                    }
+                    if (joystick.properties.down) {
+                        spaceA.body.velocity.y = velocityLevel1.ship;
+                    }
                 }
             } else {
+                player.checkWorldBounds = true;
                 realPlayer.body.velocity.x = 0;
                 player.body.velocity.x = 0;
                 realPlayer.body.velocity.y = 0;
@@ -214,31 +240,59 @@ RutaEspectral.Level1.prototype = {
                 if (player.position.x > 4800 && player.position.x < 4810) {
                     shootingStart(3);
                 }
-                if (cursors.left.isDown) {
-                    player.body.velocity.x = -velocityLevel1.ship;
-                    realPlayer.body.velocity.x = -velocityLevel1.ship;
-                }
-                if (cursors.right.isDown) {
-                    player.body.velocity.x = velocityLevel1.ship;
-                    realPlayer.body.velocity.x = velocityLevel1.ship;
-                }
-                if (cursors.up.isDown) {
-                    player.body.velocity.y = -velocityLevel1.ship;
-                    realPlayer.body.velocity.y = -velocityLevel1.ship;
-                }
-                if (cursors.down.isDown) {
-                    player.body.velocity.y = velocityLevel1.ship;
-                    realPlayer.body.velocity.y = velocityLevel1.ship;
-                }
-            }
-
-            if (cursors.left.isDown) {
-                if (spaceSuitPhysics) {
-                    spaceA.body.velocity.x = -velocityLevel1.suit;
-                    spaceA.animations.play('left');
+                if (joystickVisible == false) {
+                    if (cursors.left.isDown) {
+                        player.body.velocity.x = -velocityLevel1.ship;
+                        realPlayer.body.velocity.x = -velocityLevel1.ship;
+                    }
+                    if (cursors.right.isDown) {
+                        player.body.velocity.x = velocityLevel1.ship;
+                        realPlayer.body.velocity.x = velocityLevel1.ship;
+                    }
+                    if (cursors.up.isDown) {
+                        player.body.velocity.y = -velocityLevel1.ship;
+                        if (player.position.y != 0) {
+                            realPlayer.body.velocity.y = -velocityLevel1.ship;
+                        }
+                    }
+                    if (cursors.down.isDown) {
+                        player.body.velocity.y = velocityLevel1.ship;
+                        if (player.position.y != 546) {
+                            realPlayer.body.velocity.y = velocityLevel1.ship;
+                        }
+                    }
+                    if (cursors.left.isDown) {
+                        if (spaceSuitPhysics) {
+                            spaceA.body.velocity.x = -velocityLevel1.suit;
+                            spaceA.animations.play('left');
+                        } else {
+                            player.body.velocity.x = -velocityLevel1.ship;
+                            realPlayer.body.velocity.x = -velocityLevel1.ship;
+                        }
+                    }
                 } else {
-                    player.body.velocity.x = -velocityLevel1.ship;
-                    realPlayer.body.velocity.x = -velocityLevel1.ship;
+                    gamepad.joystickPad.visible = true;
+                    gamepad.joystick.visible = true;
+                    if (joystick.properties.left) {
+                        player.body.velocity.x = -velocityLevel1.ship;
+                        realPlayer.body.velocity.x = -velocityLevel1.ship;
+                    }
+                    if (joystick.properties.right) {
+                        player.body.velocity.x = velocityLevel1.ship;
+                        realPlayer.body.velocity.x = velocityLevel1.ship;
+                    }
+                    if (joystick.properties.up) {
+                        player.body.velocity.y = -velocityLevel1.ship;
+                        if (player.position.y != 0) {
+                            realPlayer.body.velocity.y = -velocityLevel1.ship;
+                        }
+                    }
+                    if (joystick.properties.down) {
+                        player.body.velocity.y = velocityLevel1.ship;
+                        if (player.position.y != 546) {
+                            realPlayer.body.velocity.y = velocityLevel1.ship;
+                        }
+                    }
                 }
             }
         }

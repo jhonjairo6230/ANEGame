@@ -2,10 +2,10 @@ var selectedSprite, player, barG, elements, rockS;
 var isInitG = false;
 var video;
 var sprite;
-RutaEspectral.GoToShip = function (game) {
+RutaEspectral.Videos = function (game) {
 
 };
-RutaEspectral.GoToShip.prototype = {
+RutaEspectral.Videos.prototype = {
     preload: function () {
         switch (levelState) {
             case 1:

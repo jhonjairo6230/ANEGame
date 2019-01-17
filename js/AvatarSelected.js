@@ -18,7 +18,6 @@ RutaEspectral.AvatarSelected.prototype = {
             game.load.spritesheet('sprite' + selectedSprite, 'assets/sprites/sayHello/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].widthHS, spriteSizes[selectedSprite].heightHS);
         } else {
             game.load.spritesheet('spriteA', 'assets/sprites/sayHello/spriteA.png', spriteSizes[spriteSizes.length - 1].widthHS, spriteSizes[spriteSizes.length - 1].heightHS);
-            //game.load.spritesheet('sprite12', 'assets/sprites/sayHello/sprite0.png', 241, 300);
         }
     },
     create: function () {
@@ -28,25 +27,18 @@ RutaEspectral.AvatarSelected.prototype = {
         if (selectedSprite != -1) {
             var player = game.add.sprite(80, 130, 'sprite' + selectedSprite);
             player.animations.add('sayHello', [0, 1, 2], 5, true);
-            //player.scale.set(1);
             player.animations.play('sayHello');
 
         } else {
             var player = game.add.sprite(80, 130, 'spriteA');
             player.animations.add('sayHello', [0, 1, 2], 5, true);
-            //player.scale.set(1);
             player.animations.play('sayHello');
         }
-        // title = game.add.text(400, 200, 'Felicidades,\n Personaje armado!', {
-        //     fontSize: '50px',
-        //     fill: '#ffabed',
-        //     font: 'Myriad pro'
-        // });
         game.add.image(380, 200, 'msgAvatar');
     },
     playGame: function (e) {
         document.getElementById("click").play();
-        this.state.start('GoToShip');
+        this.state.start('Videos');
     },
     backPress: function (e) {
         document.getElementById("click").play();

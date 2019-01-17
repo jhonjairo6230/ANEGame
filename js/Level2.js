@@ -8,9 +8,13 @@ RutaEspectral.Level2 = function (game) {};
 RutaEspectral.Level2.prototype = {
     preload: function () {
         game.load.image('background', 'assets/level2/backgroundLevel2.png');
-
         game.load.image('pauseBackground', 'assets/backgrounds/pauseBackground.png');
         game.load.spritesheet('pauseBtn', 'assets/buttons/pauseBtn.png', (57 / 2), 32);
+        game.load.spritesheet('bgSoundBtn', 'assets/buttons/soundBgBtn.png', (186 / 3), 62);
+        game.load.spritesheet('SoundBtn', 'assets/buttons/soundBtn.png', (186 / 3), 62);
+        game.load.spritesheet('ControlBtn', 'assets/buttons/controlsBtn.png', (341 / 4), 61);
+
+        this.load.spritesheet('gamepad', 'assets/dpad.png', 100, 100);
 
         game.load.spritesheet('spriteA', 'assets/sprites/spriteA.png', spriteSizes[spriteSizes.length - 1].width / 11, spriteSizes[spriteSizes.length - 1].height);
         game.load.image('wave', 'assets/level2/wave.png');
@@ -110,6 +114,12 @@ RutaEspectral.Level2.prototype = {
             infoText(message6, '20px', 2100, 200, 380, 190, function () {
                 closeAdvLvl2();
             });
+        }
+        gamepad = game.plugins.add(Phaser.Plugin.VirtualGamepad);
+        addGamePad(true);
+        removeGamePad();
+        if (joystickVisible) {
+            showGamePad();
         }
     },
     update: function () {
@@ -230,26 +240,56 @@ RutaEspectral.Level2.prototype = {
         }
         cursors = game.input.keyboard.createCursorKeys();
         player.body.velocity.x = 0;
-        if (cursors.left.isDown) {
-            player.body.velocity.x = -velocityLevel2.moveX;
-            player.animations.play('left');
-        } else if (cursors.right.isDown) {
-            player.body.velocity.x = velocityLevel2.moveX;
-            player.animations.play('right');
-        } else {
-            player.animations.stop();
-            player.frame = 5;
-        }
-        if (cursors.up.isDown && player.body.touching.down) {
-            if (isSound) {
-                var jumpS = document.getElementById("jump");
-                jumpS.volume = 0.4;
-                jumpS.play();
-            }
-            if (player.position.x > 2100) {
-                player.body.velocity.y = -velocityLevel2.secondPart;
+        if (joystickVisible == false) {
+            if (cursors.left.isDown) {
+                player.body.velocity.x = -velocityLevel2.moveX;
+                player.animations.play('left');
+            } else if (cursors.right.isDown) {
+                player.body.velocity.x = velocityLevel2.moveX;
+                player.animations.play('right');
             } else {
-                player.body.velocity.y = -velocityLevel2.firstPart;
+                player.animations.stop();
+                player.frame = 5;
+            }
+            if (cursors.up.isDown && player.body.touching.down) {
+                if (isSound) {
+                    var jumpS = document.getElementById("jump");
+                    jumpS.volume = 0.4;
+                    jumpS.play();
+                }
+                if (player.position.x > 2100) {
+                    player.body.velocity.y = -velocityLevel2.secondPart;
+                } else {
+                    player.body.velocity.y = -velocityLevel2.firstPart;
+                }
+            }
+        } else {
+            gamepad.joystickPad.visible = true;
+            gamepad.joystick.visible = true;
+            if (joystick.properties.left) {
+                player.body.velocity.x = -velocityLevel2.moveX;
+                player.animations.play('left');
+            } else if (joystick.properties.right) {
+                player.body.velocity.x = velocityLevel2.moveX;
+                player.animations.play('right');
+            } else {
+                player.animations.stop();
+                player.frame = 5;
+            }
+            if (button.isDown && player.body.touching.down) {
+                if (isSound) {
+                    var jumpS = document.getElementById("jump");
+                    jumpS.volume = 0.4;
+                    jumpS.play();
+                }
+                if (player.position.x > 2100) {
+                    player.body.velocity.y = -velocityLevel2.secondPart;
+                } else {
+                    player.body.velocity.y = -velocityLevel2.firstPart;
+                }
+            }
+            if (joystick.properties.down) {
+                player.body.velocity.y = velocityLevel2.firstPart;
             }
         }
     },

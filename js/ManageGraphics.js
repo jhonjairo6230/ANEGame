@@ -50,6 +50,11 @@ var addGamePad = function (hasButton) {
     }
     //game.plugins.removeAll();
 }
+var showGamePad = function () {
+    button.visible = true;
+    joystick.visible = true;
+    gamepad.joystickPad.visible = true;
+}
 var removeGamePad = function () {
     button.visible = false;
     joystick.visible = false;

@@ -52,7 +52,14 @@ var pauseAction = function () {
         };
         titlePauseTxt = game.add.text(game.camera.view.x + 280, 160, 'Selecciona una opción', style);
         bgSoundConfigTxt = game.add.text(game.camera.view.x + 260, 210, 'Música fondo: ', style);
+        if (isBgSound) {
+            bgSoundBtn = game.add.button(bgSoundConfigTxt.position.x + 180, 200, 'bgSoundBtn', silenceBgSound, this, 1, 0, 1);
+        } else {
+            bgSoundBtn = game.add.button(bgSoundConfigTxt.position.x + 180, 200, 'bgSoundBtn', silenceBgSound, this, 1, 2, 2);
+        }
         soundConfigTxt = game.add.text(game.camera.view.x + 260, 270, 'Sonidos: ', style);
+        SoundBtn = game.add.button(soundConfigTxt.position.x + 180, 270, 'SoundBtn', playGame, this, 1, 0, 1);
+
         controlConfigTxt = game.add.text(game.camera.view.x + 260, 340, 'Controles: ', style);
         levelConfigTxt = game.add.text(game.camera.view.x + 260, 410, 'Niveles: ', style);
         closePausebtn = game.add.button(game.camera.view.x + 520, 140, 'closeBtn', playGame, this, 1, 1, 0);
@@ -64,12 +71,30 @@ var pauseAction = function () {
 var playGame = function (e) {
     titlePauseTxt.kill();
     bgSoundConfigTxt.kill();
+    bgSoundBtn.kill();
     soundConfigTxt.kill();
+    SoundBtn.kill();
     controlConfigTxt.kill();
     levelConfigTxt.kill();
     closePausebtn.kill();
     bgPaused.kill();
     game.paused = false;
+}
+
+var silenceBgSound = function () {
+    var mainTheme = document.getElementById("mainTheme")
+    mainTheme.volume = 0.3;
+    if (isBgSound) {
+        mainTheme.pause();
+        bgSoundBtn.kill();
+        bgSoundBtn = game.add.button(bgSoundConfigTxt.position.x + 180, 200, 'bgSoundBtn', silenceBgSound, this, 1, 2, 2);
+        isBgSound = false;
+    } else {
+        mainTheme.play();
+        bgSoundBtn.kill();
+        bgSoundBtn = game.add.button(bgSoundConfigTxt.position.x + 180, 200, 'bgSoundBtn', silenceBgSound, this, 1, 0, 1);
+        isBgSound = true;
+    }
 }
 
 //************************************** */

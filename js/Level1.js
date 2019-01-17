@@ -4,6 +4,9 @@ RutaEspectral.Level1.prototype = {
     preload: function () {
         game.load.image('background', 'assets/level1/background.png');
         game.load.image('pauseBackground', 'assets/backgrounds/pauseBackground.png');
+        game.load.spritesheet('pauseBtn', 'assets/buttons/pauseBtn.png', (57 / 2), 32);
+        game.load.spritesheet('bgSoundBtn', 'assets/buttons/soundBgBtn.png', (186 / 3), 62);
+        game.load.spritesheet('SoundBtn', 'assets/buttons/soundBtn.png', (186 / 3), 62);
 
         game.load.image('rocket', 'assets/level1/rocket.png');
         game.load.image('rocketFire', 'assets/level1/rocketFire.png');
@@ -45,7 +48,6 @@ RutaEspectral.Level1.prototype = {
         game.load.image('foot2', 'assets/level1/elementsSuit/foot2.png');
         game.load.image('bgSpaceSuit', 'assets/level1/elementsSuit/bgSpaceSuit.png');
 
-        game.load.spritesheet('pauseBtn', 'assets/buttons/pauseBtn.png', (57 / 2), 32);
         game.load.spritesheet('playBtn', 'assets/buttons/play2Btn.png', 134, 78);
         game.load.spritesheet('continueBtn', 'assets/buttons/continueBtn.png', 136, 79);
         game.load.spritesheet('closeBtn', 'assets/buttons/closeBtn.png', 40, 40);

@@ -15,8 +15,12 @@ RutaEspectral.Level5 = function (game) {};
 RutaEspectral.Level5.prototype = {
     preload: function () {
         game.load.image('background', 'assets/level5/bg5.png');
+        game.load.image('pauseBackground', 'assets/backgrounds/pauseBackground.png');
+        game.load.spritesheet('pauseBtn', 'assets/buttons/pauseBtn.png', (57 / 2), 32);
+
+        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 22 + '.png', spriteSizes[22].width / 11, spriteSizes[14].height);
         game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
-        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 8 + '.png', spriteSizes[8].width / 11, spriteSizes[14].height);
+
         game.load.spritesheet('spriteBio', 'assets/level3/bioSprite.png', (120 / 3), 40);
         game.load.image('platformS', 'assets/level3/platformSky.png');
 
@@ -30,16 +34,6 @@ RutaEspectral.Level5.prototype = {
         game.load.image('ch2', 'assets/level5/ch2.png');
         game.load.image('ch3', 'assets/level5/ch3.png');
         game.load.image('ch4', 'assets/level5/ch4.png');
-        // game.load.image('tv', 'assets/level4/sTV.png');
-        // game.load.image('radio', 'assets/level4/sRadio.png');
-        // game.load.image('phone', 'assets/level4/sPhone.png');
-        // game.load.image('wifi', 'assets/level4/sWifi.png');
-        // game.load.image('messageInfo0', 'assets/level4/messageInfo0.png');
-        // game.load.image('messageInfo1', 'assets/level4/messageInfo1.png');
-        // game.load.image('messageInfo2', 'assets/level4/messageInfo2.png');
-        // game.load.image('messageInfo3', 'assets/level4/messageInfo3.png');
-        // game.load.image('messageInfo4', 'assets/level4/messageInfo4.png');
-        // game.load.image('indicator', 'assets/level4/indicator.png');
 
         game.load.spritesheet('spriteCar', 'assets/level4/carSprite.png', (570 / 6), 50);
         game.load.spritesheet('spriteTruck', 'assets/level4/truckSprite.png', (1217 / 6), 70);
@@ -72,7 +66,7 @@ RutaEspectral.Level5.prototype = {
         addCarSprite(enemies);
         addBioSprite();
 
-        var stbackround = game.add.image(640, 0, 'bgLives');
+        var stbackround = game.add.image(610, 0, 'bgLives');
         stbackround.fixedToCamera = true;
         stbackround.scale.set(2, 1);
         stars = game.add.group();
@@ -196,8 +190,6 @@ RutaEspectral.Level5.prototype = {
             } else {
                 this.die();
             }
-            //game.debug.text(player.position.x + "-" + player.position.y, 15, 18, "#2565e5");
-
         }
     }
 }

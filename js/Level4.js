@@ -19,6 +19,9 @@ RutaEspectral.Level4 = function (game) {};
 RutaEspectral.Level4.prototype = {
     preload: function () {
         game.load.image('background', 'assets/level4/backgroundLVL4.png');
+        game.load.image('pauseBackground', 'assets/backgrounds/pauseBackground.png');
+        game.load.spritesheet('pauseBtn', 'assets/buttons/pauseBtn.png', (57 / 2), 32);
+
         game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
         //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 8 + '.png', spriteSizes[8].width / 11, spriteSizes[14].height);
         game.load.spritesheet('spriteBio', 'assets/level3/bioSprite.png', (120 / 3), 40);
@@ -68,7 +71,7 @@ RutaEspectral.Level4.prototype = {
         enemies.enableBody = true;
         addCarSprite(enemies);
         addBioSprite();
-        var stbackround = game.add.image(640, 0, 'bgLives');
+        var stbackround = game.add.image(610, 0, 'bgLives');
         stbackround.fixedToCamera = true;
         stbackround.scale.set(2, 1);
         stars = game.add.group();

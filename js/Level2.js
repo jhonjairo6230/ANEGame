@@ -8,6 +8,10 @@ RutaEspectral.Level2 = function (game) {};
 RutaEspectral.Level2.prototype = {
     preload: function () {
         game.load.image('background', 'assets/level2/backgroundLevel2.png');
+
+        game.load.image('pauseBackground', 'assets/backgrounds/pauseBackground.png');
+        game.load.spritesheet('pauseBtn', 'assets/buttons/pauseBtn.png', (57 / 2), 32);
+
         game.load.spritesheet('spriteA', 'assets/sprites/spriteA.png', spriteSizes[spriteSizes.length - 1].width / 11, spriteSizes[spriteSizes.length - 1].height);
         game.load.image('wave', 'assets/level2/wave.png');
         game.load.image('platform', 'assets/level2/platform.png');
@@ -87,7 +91,7 @@ RutaEspectral.Level2.prototype = {
         bordersWin.enableBody = true;
         var winFlag = bordersWin.create(7500, 360, 'winFlag');
         winFlag.body.immovable = true;
-        var stbackround = game.add.image(640, 0, 'bgLives');
+        var stbackround = game.add.image(610, 0, 'bgLives');
         stbackround.fixedToCamera = true;
         stbackround.scale.set(2, 1);
         stars = game.add.group();

@@ -35,10 +35,41 @@ var closeTextInfo = function (e) {
     }
 };
 var startTimer = function (minute, seconds) {
+    game.add.button(765, 0, 'pauseBtn', pauseAction, this, 0, 0, 1).fixedToCamera = true;
     timerL1 = game.time.create(false);
     timerEvent = timerL1.add(Phaser.Timer.MINUTE * minute + Phaser.Timer.SECOND * seconds, this.endTimer, this);
     timerL1.start();
 };
+
+var pauseAction = function () {
+    if (!game.paused) {
+        game.paused = true;
+        bgPaused = game.add.image(game.camera.view.x + 250, 150, 'pauseBackground');
+        var style = {
+            font: "25px Myriad",
+            fill: "#662d91",
+            align: "left",
+        };
+        titlePauseTxt = game.add.text(game.camera.view.x + 280, 160, 'Selecciona una opción', style);
+        bgSoundConfigTxt = game.add.text(game.camera.view.x + 260, 210, 'Música fondo: ', style);
+        soundConfigTxt = game.add.text(game.camera.view.x + 260, 270, 'Sonidos: ', style);
+        controlConfigTxt = game.add.text(game.camera.view.x + 260, 340, 'Controles: ', style);
+        levelConfigTxt = game.add.text(game.camera.view.x + 260, 410, 'Niveles: ', style);
+        closePausebtn = game.add.button(game.camera.view.x + 520, 140, 'closeBtn', playGame, this, 1, 1, 0);
+    } else {
+        playGame();
+    }
+}
+
+var playGame = function (e) {
+    titlePauseTxt.kill();
+    soundConfigTxt.kill();
+    controlConfigTxt.kill();
+    levelConfigTxt.kill();
+    closePausebtn.kill();
+    bgPaused.kill();
+    game.paused = false;
+}
 
 //************************************** */
 //************************************** */
@@ -116,7 +147,7 @@ var showLives = function () {
         stars.fixedToCamera = true;
         var w = 0;
         for (var i = 0; i < countLives; i++) {
-            var star = stars.create(766 - w, 5, 'star');
+            var star = stars.create(738 - w, 5, 'star');
             w += 22;
         }
     }

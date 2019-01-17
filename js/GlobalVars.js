@@ -1,4 +1,5 @@
-var game;
+var game, bgPaused, soundConfigTxt, controlConfigTxt, levelConfigTxt, titlePauseTxt;
+var closePausebtn, soundConfigBtn, levelConfigBtn, controlConfigBtn;
 //Total de vidas iniciales del juego
 var countLives = 3;
 //tiempo para pasar el  nivel 

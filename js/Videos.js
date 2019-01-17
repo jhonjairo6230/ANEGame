@@ -14,6 +14,9 @@ RutaEspectral.Videos.prototype = {
             case 2:
                 game.load.video('video', 'assets/videos/astronauta.mp4');
                 break;
+            case 6:
+                game.load.video('video', 'assets/videos/creditos.mp4');
+                break;
             default:
                 break;
         }

@@ -2,9 +2,9 @@ var realPlayer, player, playerFire, planet, cursors, bordersWin, bordersLost, te
 RutaEspectral.Level1 = function (game) {};
 RutaEspectral.Level1.prototype = {
     preload: function () {
-        //game.load.audio('passLevel', 'assets/audios/cambioDeNivel.mp3');
-
         game.load.image('background', 'assets/level1/background.png');
+        game.load.image('pauseBackground', 'assets/backgrounds/pauseBackground.png');
+
         game.load.image('rocket', 'assets/level1/rocket.png');
         game.load.image('rocketFire', 'assets/level1/rocketFire.png');
         game.load.image('moon', 'assets/level1/moon.png');
@@ -45,6 +45,7 @@ RutaEspectral.Level1.prototype = {
         game.load.image('foot2', 'assets/level1/elementsSuit/foot2.png');
         game.load.image('bgSpaceSuit', 'assets/level1/elementsSuit/bgSpaceSuit.png');
 
+        game.load.spritesheet('pauseBtn', 'assets/buttons/pauseBtn.png', (57 / 2), 32);
         game.load.spritesheet('playBtn', 'assets/buttons/play2Btn.png', 134, 78);
         game.load.spritesheet('continueBtn', 'assets/buttons/continueBtn.png', 136, 79);
         game.load.spritesheet('closeBtn', 'assets/buttons/closeBtn.png', 40, 40);
@@ -76,7 +77,7 @@ RutaEspectral.Level1.prototype = {
         winFlag.body.immovable = true;
         borderV.body.immovable = true;
         stbackround = game.add.group();
-        var st1 = game.add.image(640, 0, 'bgLives');
+        var st1 = game.add.image(610, 0, 'bgLives');
         var st2 = game.add.image(0, 0, 'bgLives');
         var st3 = game.add.image(0, 30, 'bgSpaceSuit');
         st1.scale.set(2, 1);

@@ -1,6 +1,7 @@
 var player, bioHSprite, platforms, elements, bottomLine, cursors, enemies, enemiesBio, line, roadLine, bFinish;
 var carsSprite = [],
-    biosSprite = [];
+    biosSprite = [],
+    bgGreen = [];
 var initLVl4 = false,
     isLeftCar = true,
     isLeftTruck = true,
@@ -12,7 +13,7 @@ var countPhone = 0,
     countRadio = 0,
     countWifi = 0;
 var increment = -120;
-var signal, bgGreen = [];
+var signal;
 var btnRadio, btnTV, btnPhone;
 RutaEspectral.Level4 = function (game) {};
 RutaEspectral.Level4.prototype = {

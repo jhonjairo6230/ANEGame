@@ -1,6 +1,7 @@
 var player, bioHSprite, platforms, elements, cursors, enemies, enemiesBio, mountain, timeI;
 var fishesSprite = [],
-    biosSprite = [];
+    biosSprite = [],
+    bgGreen = [];
 var initLVl3 = false,
     isUp = true,
     isLeft = true,
@@ -16,8 +17,8 @@ RutaEspectral.Level3 = function (game) {};
 RutaEspectral.Level3.prototype = {
     preload: function () {
         game.load.image('background', 'assets/level3/backgroundLVL3.png');
-        game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
-        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 31 + '.png', spriteSizes[31].width / 11, spriteSizes[14].height);
+        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
+        game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 31 + '.png', spriteSizes[31].width / 11, spriteSizes[14].height);
         game.load.spritesheet('spriteFish', 'assets/level3/fishSprite.png', (207 / 4), 80);
         game.load.spritesheet('spriteBio', 'assets/level3/bioSprite.png', (120 / 3), 40);
         game.load.image('platformL', 'assets/level3/platformL.png');
@@ -54,6 +55,8 @@ RutaEspectral.Level3.prototype = {
         game.load.image('humoInf', 'assets/level3/humoInf.png');
         game.load.image('cuernoInf', 'assets/level3/cuernoInf.png');
         game.load.image('winFlag', 'assets/level1/winFlag.png');
+
+        game.load.image('bgLivesG', 'assets/level4/bgLives.png');
     },
     create: function () {
         levelState = 3;
@@ -87,6 +90,9 @@ RutaEspectral.Level3.prototype = {
         st2.fixedToCamera = true;
         for (n = 0; n < 4; n++) {
             game.add.image(200 + (n * 100), 0, 'bgLives').fixedToCamera = true;
+            bgGreen[n] = game.add.sprite(200 + (n * 100), 0, 'bgLivesG')
+            bgGreen[n].fixedToCamera = true;
+            bgGreen[n].visible = false;
             game.add.image(240 + (n * 100), 4, 's' + n).fixedToCamera = true;
         }
 
@@ -208,6 +214,19 @@ RutaEspectral.Level3.prototype = {
                 this.die();
             }
             //game.debug.text(player.position.x, 15, 18, "#2565e5");
+            if (countHorn == 10) {
+                bgGreen[0].visible = true;
+            }
+            if (countRadio == 10) {
+                bgGreen[1].visible = true;
+            }
+
+            if (countSmoke == 10) {
+                bgGreen[2].visible = true;
+            }
+            if (countTelegraph == 10) {
+                bgGreen[3].visible = true;
+            }
             game.debug.text(countHorn + "x", 220, 18, "#2565e5");
             game.debug.text(countRadio + "x", 320, 18, "#2565e5");
             game.debug.text(countSmoke + "x", 420, 18, "#2565e5");

@@ -12,5 +12,5 @@
     game.state.add('Level4_2', RutaEspectral.Level4_2);
     game.state.add('Level5', RutaEspectral.Level5);
     game.state.add('finalLevel', RutaEspectral.finalLevel);
-    game.state.start('Level1');
+    game.state.start('Splash');
 })();

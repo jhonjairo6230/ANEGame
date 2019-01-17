@@ -58,8 +58,12 @@ var pauseAction = function () {
             bgSoundBtn = game.add.button(bgSoundConfigTxt.position.x + 180, 200, 'bgSoundBtn', silenceBgSound, this, 1, 2, 2);
         }
         soundConfigTxt = game.add.text(game.camera.view.x + 260, 270, 'Sonidos: ', style);
-        SoundBtn = game.add.button(soundConfigTxt.position.x + 180, 270, 'SoundBtn', playGame, this, 1, 0, 1);
+        if (isSound) {
+            SoundBtn = game.add.button(soundConfigTxt.position.x + 180, 270, 'SoundBtn', silenceAllSounds, this, 1, 0, 1);
+        } else {
+            SoundBtn = game.add.button(soundConfigTxt.position.x + 180, 270, 'SoundBtn', silenceAllSounds, this, 1, 2, 2);
 
+        }
         controlConfigTxt = game.add.text(game.camera.view.x + 260, 340, 'Controles: ', style);
         levelConfigTxt = game.add.text(game.camera.view.x + 260, 410, 'Niveles: ', style);
         closePausebtn = game.add.button(game.camera.view.x + 520, 140, 'closeBtn', playGame, this, 1, 1, 0);
@@ -97,13 +101,27 @@ var silenceBgSound = function () {
     }
 }
 
+var silenceAllSounds = function () {
+    if (isSound) {
+        isSound = false;
+        SoundBtn.kill();
+        SoundBtn = game.add.button(soundConfigTxt.position.x + 180, 270, 'SoundBtn', silenceAllSounds, this, 1, 2, 2);
+    } else {
+        isSound = true;
+        SoundBtn.kill();
+        SoundBtn = game.add.button(soundConfigTxt.position.x + 180, 270, 'SoundBtn', silenceAllSounds, this, 1, 0, 1);
+    }
+}
+
 //************************************** */
 //************************************** */
 //***************LEVEL 1**************** */
 //************************************** */
 //************************************** */
 var closeAdvLvl1 = function (e) {
-    document.getElementById("click").play();
+    if (isSound) {
+        document.getElementById("click").play();
+    }
     if (!isSuitCollected) {
         if (playerFire) {
             playerFire.kill();
@@ -124,7 +142,9 @@ var closeAdvLvl1 = function (e) {
 
 };
 var initLevel1 = function (e) {
-    document.getElementById("click").play();
+    if (isSound) {
+        document.getElementById("click").play();
+    }
     if (!isPaused) {
         isInitLVL1 = true;
         this.resetPlayer(200, 200);
@@ -140,9 +160,11 @@ var initLevel1 = function (e) {
         realPlayer.kill();
         spaceSuitPhysics = true;
     }
-    var mainTheme = document.getElementById("mainTheme")
-    mainTheme.volume = 0.3;
-    mainTheme.play();
+    if (isBgSound) {
+        var mainTheme = document.getElementById("mainTheme")
+        mainTheme.volume = 0.3;
+        mainTheme.play();
+    }
 };
 
 var resetPlayer = function (x, y) {
@@ -359,7 +381,9 @@ var addSuitElements = function () {
     foot2.visible = false;
 };
 var buildSpaceSuit = function (element) {
-    document.getElementById("collect").play();
+    if (isSound) {
+        document.getElementById("collect").play();
+    }
     switch (element) {
         case 0:
             helmet.visible = true;
@@ -393,8 +417,9 @@ var buildSpaceSuit = function (element) {
 //************************************** */
 //************************************** */
 var closeAdvLvl2 = function () {
-    document.getElementById("click").play();
-
+    if (isSound) {
+        document.getElementById("click").play();
+    }
     game.paused = false;
     initLVl2 = true;
     if (collectGls) {
@@ -620,7 +645,9 @@ var addPlanets = function (planet) {
 }
 
 var collectGlasses = function (player, glasses) {
-    document.getElementById("collect").play();
+    if (isSound) {
+        document.getElementById("collect").play();
+    }
     glasses.kill();
     collectGls = true;
     game.paused = true;
@@ -960,7 +987,9 @@ var setCollectableElements = function () {
 }
 
 var collectElements = function (player, collectable) {
-    document.getElementById("collect").play();
+    if (isSound) {
+        document.getElementById("collect").play();
+    }
     switch (levelState) {
         case 3:
             switch (collectable.key) {
@@ -1081,7 +1110,9 @@ var removeMsg = function (pic) {
 }
 
 var initLevel = function () {
-    document.getElementById("click").play();
+    if (isSound) {
+        document.getElementById("click").play();
+    }
     switch (levelState) {
         case 3:
             initLVl3 = true;
@@ -1162,7 +1193,9 @@ var closeDialog = function (e) {
             levelState = 3;
             countLives += 1;
             //showLives();
-            document.getElementById("changeLevel").play();
+            if (isSound) {
+                document.getElementById("changeLevel").play();
+            }
             game.state.start('PassLevel');
         }
     }

@@ -120,9 +120,11 @@ RutaEspectral.Level5.prototype = {
         }
         if (cursors.up.isDown && player.body.touching.down) {
             if (hitRoadLine || hitPlatform) {
-                var jumpS = document.getElementById("jump");
-                jumpS.volume = 0.4;
-                jumpS.play();
+                if (isSound) {
+                    var jumpS = document.getElementById("jump");
+                    jumpS.volume = 0.4;
+                    jumpS.play();
+                }
             }
 
             player.body.velocity.y = -velocityLevel2.firstPart;
@@ -161,12 +163,16 @@ RutaEspectral.Level5.prototype = {
         }
     },
     finalMessage: function (sl) {
-        document.getElementById("changeLevel").play();
+        if (isSound) {
+            document.getElementById("changeLevel").play();
+        }
         stateLavel = sl;
         game.state.start('finalLevel');
     },
     die: function () {
-        document.getElementById("lostLive").play();
+        if (isSound) {
+            document.getElementById("lostLive").play();
+        }
         countRadio = countTv = countPhone = 0;
         initLVl5 = false;
         countLives -= 1;

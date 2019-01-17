@@ -109,15 +109,19 @@ RutaEspectral.Level4_2.prototype = {
             player.frame = 5;
         }
         if (cursors.up.isDown) {
-            var jumpS = document.getElementById("jump");
-            jumpS.volume = 0.4;
-            jumpS.play();
+            if (isSound) {
+                var jumpS = document.getElementById("jump");
+                jumpS.volume = 0.4;
+                jumpS.play();
+            }
             player.body.velocity.y = -velocityLevel2.firstPart;
 
         }
     },
     die: function () {
-        document.getElementById("lostLive").play();
+        if (isSound) {
+            document.getElementById("lostLive").play();
+        }
         countRadio = countTv = countPhone = 0;
         initLVl4 = false;
         countLives -= 1;
@@ -133,7 +137,9 @@ RutaEspectral.Level4_2.prototype = {
         levelState = 4;
         initLVl4 = false;
         game.paused = false;
-        document.getElementById("changeLevel").play();
+        if (isSound) {
+            document.getElementById("changeLevel").play();
+        }
         game.state.start('PassLevel');
     },
     message: function () {

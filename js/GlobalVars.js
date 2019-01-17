@@ -1,4 +1,5 @@
-var isBgSound = true;
+var isBgSound = true,
+    isSound = true;
 var game, bgPaused, soundConfigTxt, controlConfigTxt, levelConfigTxt, titlePauseTxt, bgSoundConfigTxt;
 var closePausebtn, bgSoundBtn, soundConfigBtn, levelConfigBtn, controlConfigBtn;
 //Total de vidas iniciales del juego

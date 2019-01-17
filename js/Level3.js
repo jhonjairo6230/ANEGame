@@ -180,10 +180,11 @@ RutaEspectral.Level3.prototype = {
             player.frame = 5;
         }
         if (cursors.up.isDown && player.body.touching.down) {
-            // document.getElementById("jump").play();
-            var jumpS = document.getElementById("jump");
-            jumpS.volume = 0.4;
-            jumpS.play();
+            if (isSound) {
+                var jumpS = document.getElementById("jump");
+                jumpS.volume = 0.4;
+                jumpS.play();
+            }
             if (player.position.x > 2100) {
                 player.body.velocity.y = -velocityLevel2.secondPart;
             } else {
@@ -192,7 +193,9 @@ RutaEspectral.Level3.prototype = {
         }
     },
     die: function () {
-        document.getElementById("lostLive").play();
+        if (isSound) {
+            document.getElementById("lostLive").play();
+        }
         countHorn = countRadio = countSmoke = countTelegraph = 0;
         initLVl3 = false;
         countLives -= 1;

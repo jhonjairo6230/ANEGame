@@ -130,7 +130,9 @@ RutaEspectral.Level1.prototype = {
                 });
             }
             if (lostLive || planetCollition) {
-                document.getElementById("shipCrash").play();
+                if (isSound) {
+                    document.getElementById("shipCrash").play();
+                }
                 countLives -= 1;
                 if (countLives == 0) {
                     isInit = false;
@@ -156,11 +158,15 @@ RutaEspectral.Level1.prototype = {
                 var planetC = game.physics.arcade.collide(spaceA, planet);
                 var winLevel = game.physics.arcade.collide(spaceA, bordersWin);
                 if (winLevel) {
-                    document.getElementById("changeLevel").play();
+                    if (isSound) {
+                        document.getElementById("changeLevel").play();
+                    }
                     game.state.start('PassLevel');
                 }
                 if (lostLive || planetC) {
-                    document.getElementById("shipCrash").play();
+                    if (isSound) {
+                        document.getElementById("shipCrash").play();
+                    }
                     countLives -= 1;
                     if (countLives == 0) {
                         isInit = false;
@@ -263,7 +269,9 @@ RutaEspectral.Level1.prototype = {
                 game.debug.text(formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000)), 15, 18, "#2565e5");
             } else {
                 isInitLVL1 = false;
-                document.getElementById("shipCrash").play();
+                if (isSound) {
+                    document.getElementById("shipCrash").play();
+                }
                 countLives -= 1;
                 if (countLives == 0) {
                     isInit = false;

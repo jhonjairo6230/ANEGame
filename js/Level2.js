@@ -191,7 +191,9 @@ RutaEspectral.Level2.prototype = {
             shootingExplotion();
         }
         if (lostLive || lostLPlanet) {
-            document.getElementById("lostLive").play();
+            if (isSound) {
+                document.getElementById("lostLive").play();
+            }
             initLVl2 = false;
             countLives -= 1;
             if (countLives == 0) {
@@ -221,7 +223,9 @@ RutaEspectral.Level2.prototype = {
             levelState = 2;
             countLives += 1;
             showLives();
-            document.getElementById("changeLevel").play();
+            if (isSound) {
+                document.getElementById("changeLevel").play();
+            }
             game.state.start('PassLevel');
         }
         cursors = game.input.keyboard.createCursorKeys();
@@ -237,9 +241,11 @@ RutaEspectral.Level2.prototype = {
             player.frame = 5;
         }
         if (cursors.up.isDown && player.body.touching.down) {
-            var jumpS = document.getElementById("jump");
-            jumpS.volume = 0.4;
-            jumpS.play();
+            if (isSound) {
+                var jumpS = document.getElementById("jump");
+                jumpS.volume = 0.4;
+                jumpS.play();
+            }
             if (player.position.x > 2100) {
                 player.body.velocity.y = -velocityLevel2.secondPart;
             } else {
@@ -248,7 +254,9 @@ RutaEspectral.Level2.prototype = {
         }
     },
     test: function () {
-        document.getElementById("lostLive").play();
+        if (isSound) {
+            document.getElementById("lostLive").play();
+        }
         initLVl2 = false;
         countLives -= 1;
         if (countLives == 0) {
@@ -287,7 +295,9 @@ RutaEspectral.Level2.prototype = {
                 game.debug.text(formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000)), 15, 18, "#2565e5");
             } else {
                 initLVl2 = false;
-                document.getElementById("lostLive").play();
+                if (isSound) {
+                    document.getElementById("lostLive").play();
+                }
                 countLives -= 1;
                 if (countLives == 0) {
                     countLives = 3;

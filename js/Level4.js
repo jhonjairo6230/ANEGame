@@ -154,9 +154,11 @@ RutaEspectral.Level4.prototype = {
         }
         if (cursors.up.isDown && player.body.touching.down) {
             if (hitRoadLine || hitPlatform) {
-                var jumpS = document.getElementById("jump");
-                jumpS.volume = 0.4;
-                jumpS.play();
+                if (isSound) {
+                    var jumpS = document.getElementById("jump");
+                    jumpS.volume = 0.4;
+                    jumpS.play();
+                }
             }
 
             player.body.velocity.y = -velocityLevel2.firstPart;
@@ -170,7 +172,9 @@ RutaEspectral.Level4.prototype = {
         }
     },
     die: function () {
-        document.getElementById("lostLive").play();
+        if (isSound) {
+            document.getElementById("lostLive").play();
+        }
         countRadio = countTv = countPhone = 0;
         initLVl4 = false;
         countLives -= 1;

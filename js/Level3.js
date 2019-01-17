@@ -18,10 +18,15 @@ RutaEspectral.Level3.prototype = {
     preload: function () {
         game.load.image('background', 'assets/level3/backgroundLVL3.png');
         game.load.image('pauseBackground', 'assets/backgrounds/pauseBackground.png');
-        //game.load.spritesheet('pauseBtn', 'assets/buttons/pauseBtn.png', (57 / 2), 32);
+        game.load.spritesheet('pauseBtn', 'assets/buttons/pauseBtn.png', (57 / 2), 32);
+        game.load.spritesheet('bgSoundBtn', 'assets/buttons/soundBgBtn.png', (186 / 3), 62);
+        game.load.spritesheet('SoundBtn', 'assets/buttons/soundBtn.png', (186 / 3), 62);
+        game.load.spritesheet('ControlBtn', 'assets/buttons/controlsBtn.png', (341 / 4), 61);
+
+        this.load.spritesheet('gamepad', 'assets/dpad.png', 100, 100);
 
         game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
-        game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 31 + '.png', spriteSizes[31].width / 11, spriteSizes[14].height);
+        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 31 + '.png', spriteSizes[31].width / 11, spriteSizes[14].height);
         game.load.spritesheet('spriteFish', 'assets/level3/fishSprite.png', (207 / 4), 80);
         game.load.spritesheet('spriteBio', 'assets/level3/bioSprite.png', (120 / 3), 40);
         game.load.image('platformL', 'assets/level3/platformL.png');
@@ -105,15 +110,17 @@ RutaEspectral.Level3.prototype = {
         enemies.enableBody = true;
         addFishSprite(enemies);
 
-        // timeI = game.add.group();
-        // timeI.enableBody = true;
-
-
         setCollectableElements();
         game.paused = true;
         infoText(message15, '20px', game.camera.view.x + 200, 200, 400, 150, function () {
             initLevel();
         });
+        gamepad = game.plugins.add(Phaser.Plugin.VirtualGamepad);
+        addGamePad(true);
+        removeGamePad();
+        if (joystickVisible) {
+            showGamePad();
+        }
     },
     update: function () {
         var hitPlatform = game.physics.arcade.collide(player, platforms);
@@ -167,28 +174,58 @@ RutaEspectral.Level3.prototype = {
         if (losLive0 || losLive1) {
             this.die();
         }
-        cursors = game.input.keyboard.createCursorKeys();
         player.body.velocity.x = 0;
-        if (cursors.left.isDown) {
-            player.body.velocity.x = -velocityLevel2.moveX;
-            player.animations.play('left');
-        } else if (cursors.right.isDown) {
-            player.body.velocity.x = velocityLevel2.moveX;
-            player.animations.play('right');
-        } else {
-            player.animations.stop();
-            player.frame = 5;
-        }
-        if (cursors.up.isDown && player.body.touching.down) {
-            if (isSound) {
-                var jumpS = document.getElementById("jump");
-                jumpS.volume = 0.4;
-                jumpS.play();
-            }
-            if (player.position.x > 2100) {
-                player.body.velocity.y = -velocityLevel2.secondPart;
+        if (joystickVisible) {
+            gamepad.joystickPad.visible = true;
+            gamepad.joystick.visible = true;
+            if (joystick.properties.left) {
+                player.body.velocity.x = -velocityLevel2.moveX;
+                player.animations.play('left');
+            } else if (joystick.properties.right) {
+                player.body.velocity.x = velocityLevel2.moveX;
+                player.animations.play('right');
             } else {
-                player.body.velocity.y = -velocityLevel2.firstPart;
+                player.animations.stop();
+                player.frame = 5;
+            }
+            if (button.isDown && player.body.touching.down) {
+                if (isSound) {
+                    var jumpS = document.getElementById("jump");
+                    jumpS.volume = 0.4;
+                    jumpS.play();
+                }
+                if (player.position.x > 2100) {
+                    player.body.velocity.y = -velocityLevel2.secondPart;
+                } else {
+                    player.body.velocity.y = -velocityLevel2.firstPart;
+                }
+            }
+            if (joystick.properties.down) {
+                player.body.velocity.y = velocityLevel2.firstPart;
+            }
+        } else {
+            cursors = game.input.keyboard.createCursorKeys();
+            if (cursors.left.isDown) {
+                player.body.velocity.x = -velocityLevel2.moveX;
+                player.animations.play('left');
+            } else if (cursors.right.isDown) {
+                player.body.velocity.x = velocityLevel2.moveX;
+                player.animations.play('right');
+            } else {
+                player.animations.stop();
+                player.frame = 5;
+            }
+            if (cursors.up.isDown && player.body.touching.down) {
+                if (isSound) {
+                    var jumpS = document.getElementById("jump");
+                    jumpS.volume = 0.4;
+                    jumpS.play();
+                }
+                if (player.position.x > 2100) {
+                    player.body.velocity.y = -velocityLevel2.secondPart;
+                } else {
+                    player.body.velocity.y = -velocityLevel2.firstPart;
+                }
             }
         }
     },

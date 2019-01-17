@@ -1,4 +1,4 @@
-var game, bgPaused, soundConfigTxt, controlConfigTxt, levelConfigTxt, titlePauseTxt;
+var game, bgPaused, soundConfigTxt, controlConfigTxt, levelConfigTxt, titlePauseTxt, bgSoundConfigTxt;
 var closePausebtn, soundConfigBtn, levelConfigBtn, controlConfigBtn;
 //Total de vidas iniciales del juego
 var countLives = 3;

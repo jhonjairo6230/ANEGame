@@ -63,6 +63,7 @@ var pauseAction = function () {
 
 var playGame = function (e) {
     titlePauseTxt.kill();
+    bgSoundConfigTxt.kill();
     soundConfigTxt.kill();
     controlConfigTxt.kill();
     levelConfigTxt.kill();

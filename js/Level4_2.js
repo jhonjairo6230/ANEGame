@@ -40,7 +40,7 @@ RutaEspectral.Level4_2.prototype = {
     create: function () {
         //signal = 0;
         levelState = 4;
-        game.add.tileSprite(0, 0, 1491, 600, 'background');
+        game.add.image(0, 0, 'background');
         game.world.setBounds(0, 0, 1491, 600);
         game.renderer.roundPixels = true;
         game.physics.startSystem(Phaser.Physics.ARCADE);

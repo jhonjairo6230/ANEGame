@@ -21,8 +21,8 @@ RutaEspectral.Level5.prototype = {
         game.load.spritesheet('ControlBtn', 'assets/buttons/controlsBtn.png', (341 / 4), 61);
         this.load.spritesheet('gamepad', 'assets/dpad.png', 100, 100);
 
-        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 22 + '.png', spriteSizes[22].width / 11, spriteSizes[14].height);
-        game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
+        game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 22 + '.png', spriteSizes[22].width / 11, spriteSizes[14].height);
+        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
 
         game.load.spritesheet('spriteBio', 'assets/level3/bioSprite.png', (120 / 3), 40);
         game.load.image('platformS', 'assets/level3/platformSky.png');
@@ -55,7 +55,7 @@ RutaEspectral.Level5.prototype = {
     },
     create: function () {
         levelState = 5;
-        game.add.tileSprite(0, 0, 8609, 600, 'background');
+        game.add.image(0, 0, 'background');
         game.world.setBounds(0, 0, 8609, 600);
         game.renderer.roundPixels = true;
         game.physics.startSystem(Phaser.Physics.ARCADE);

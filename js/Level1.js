@@ -59,6 +59,8 @@ RutaEspectral.Level1.prototype = {
     create: function () {
         game.add.tileSprite(0, 0, 10000, 600, 'background');
         game.world.setBounds(0, 0, 10000, 600);
+        game.stage.scaleMode = Phaser.StageScaleMode.SHOW_ALL; //resize your window to see the stage resize toogame.stage.scale.setShowAll();game.stage.scale.refresh();
+
         game.renderer.roundPixels = true;
         game.physics.startSystem(Phaser.Physics.ARCADE);
         planet = game.add.group();

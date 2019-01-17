@@ -89,7 +89,7 @@ var pauseAction = function () {
         if (joystickVisible) {
             controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 330, 'ControlBtn', manageGamePad, this, 3, 2, 3);
         } else {
-            controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 330, 'ControlBtn', manageGamePad, this, 1, 0, 0);
+            controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 330, 'ControlBtn', manageGamePad, this, 1, 0, 1);
         }
         levelConfigTxt = game.add.text(game.camera.view.x + 260, 410, 'Niveles: ', style);
         closePausebtn = game.add.button(game.camera.view.x + 520, 140, 'closeBtn', playGame, this, 1, 1, 0);
@@ -131,12 +131,12 @@ var silenceBgSound = function () {
 var manageGamePad = function () {
     if (joystickVisible) {
         controlConfigBtn.kill();
-        controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 330, 'ControlBtn', manageGamePad, this, 3, 2, 3);
+        controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 330, 'ControlBtn', manageGamePad, this, 1, 0, 1);
         joystickVisible = false;
         removeGamePad();
     } else {
         controlConfigBtn.kill();
-        controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 330, 'ControlBtn', manageGamePad, this, 0, 1, 1);
+        controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 330, 'ControlBtn', manageGamePad, this, 3, 2, 3);
         joystickVisible = true;
         if (levelState == 1) {
             button.visible = false;

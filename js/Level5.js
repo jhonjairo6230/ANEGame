@@ -14,9 +14,12 @@ var btnRadio, btnTV, btnPhone;
 RutaEspectral.Level5 = function (game) {};
 RutaEspectral.Level5.prototype = {
     preload: function () {
-        game.load.image('background', 'assets/level5/bg5.png');
         game.load.image('pauseBackground', 'assets/backgrounds/pauseBackground.png');
         game.load.spritesheet('pauseBtn', 'assets/buttons/pauseBtn.png', (57 / 2), 32);
+        game.load.spritesheet('bgSoundBtn', 'assets/buttons/soundBgBtn.png', (186 / 3), 62);
+        game.load.spritesheet('SoundBtn', 'assets/buttons/soundBtn.png', (186 / 3), 62);
+        game.load.spritesheet('ControlBtn', 'assets/buttons/controlsBtn.png', (341 / 4), 61);
+        this.load.spritesheet('gamepad', 'assets/dpad.png', 100, 100);
 
         //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 22 + '.png', spriteSizes[22].width / 11, spriteSizes[14].height);
         game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
@@ -48,6 +51,7 @@ RutaEspectral.Level5.prototype = {
         game.load.image('message0', 'assets/level5/message0.png');
         game.load.image('message1', 'assets/level5/message1.png');
         game.load.image('antennaC', 'assets/level5/antennaC.png');
+        game.load.image('background', 'assets/level5/bg5.png');
     },
     create: function () {
         levelState = 5;
@@ -84,6 +88,12 @@ RutaEspectral.Level5.prototype = {
         btnHorn = game.add.button(8100, 350, 'testBtn', this.antena, this, 1, 1, 0);
         game.paused = true;
         game.add.image(0, 0, 'bgLives').fixedToCamera = true;
+        gamepad = game.plugins.add(Phaser.Plugin.VirtualGamepad);
+        addGamePad(true);
+        removeGamePad();
+        if (joystickVisible) {
+            showGamePad();
+        }
         infoText(message20, '20px', game.camera.view.x + 200, 200, 400, 150, function () {
             initLevel();
         });
@@ -105,36 +115,68 @@ RutaEspectral.Level5.prototype = {
         if (losLive0 || losLive1) {
             this.die();
         }
-
-        cursors = game.input.keyboard.createCursorKeys();
         player.body.velocity.x = 0;
-        if (cursors.left.isDown) {
-            player.body.velocity.x = -velocityLevel2.moveX;
-            player.animations.play('left');
-        } else if (cursors.right.isDown) {
-            player.body.velocity.x = velocityLevel2.moveX;
-            player.animations.play('right');
-        } else {
-            player.animations.stop();
-            player.frame = 5;
-        }
-        if (cursors.up.isDown && player.body.touching.down) {
-            if (hitRoadLine || hitPlatform) {
+        if (joystickVisible) {
+            gamepad.joystickPad.visible = true;
+            gamepad.joystick.visible = true;
+            if (joystick.properties.left) {
+                player.body.velocity.x = -velocityLevel2.moveX;
+                player.animations.play('left');
+            } else if (joystick.properties.right) {
+                player.body.velocity.x = velocityLevel2.moveX;
+                player.animations.play('right');
+            } else {
+                player.animations.stop();
+                player.frame = 5;
+            }
+            if (button.isDown && player.body.touching.down) {
                 if (isSound) {
                     var jumpS = document.getElementById("jump");
                     jumpS.volume = 0.4;
                     jumpS.play();
                 }
+                if (player.position.x > 2100) {
+                    player.body.velocity.y = -velocityLevel2.secondPart;
+                } else {
+                    player.body.velocity.y = -velocityLevel2.firstPart;
+                }
             }
+            roadLine.body.checkCollision.up = true;
+            if (joystick.properties.down) {
+                hitRoadLine = false;
+                roadLine.body.checkCollision.up = false;
+                player.body.velocity.y = velocityLevel2.firstPart;
+            }
+        } else {
+            cursors = game.input.keyboard.createCursorKeys();
+            if (cursors.left.isDown) {
+                player.body.velocity.x = -velocityLevel2.moveX;
+                player.animations.play('left');
+            } else if (cursors.right.isDown) {
+                player.body.velocity.x = velocityLevel2.moveX;
+                player.animations.play('right');
+            } else {
+                player.animations.stop();
+                player.frame = 5;
+            }
+            if (cursors.up.isDown && player.body.touching.down) {
+                if (hitRoadLine || hitPlatform) {
+                    if (isSound) {
+                        var jumpS = document.getElementById("jump");
+                        jumpS.volume = 0.4;
+                        jumpS.play();
+                    }
+                }
 
-            player.body.velocity.y = -velocityLevel2.firstPart;
+                player.body.velocity.y = -velocityLevel2.firstPart;
 
-        }
-        roadLine.body.checkCollision.up = true;
-        if (cursors.down.isDown && hitRoadLine) {
-            hitRoadLine = false;
-            roadLine.body.checkCollision.up = false;
-            player.body.velocity.y = velocityLevel2.firstPart;
+            }
+            roadLine.body.checkCollision.up = true;
+            if (cursors.down.isDown && hitRoadLine) {
+                hitRoadLine = false;
+                roadLine.body.checkCollision.up = false;
+                player.body.velocity.y = velocityLevel2.firstPart;
+            }
         }
     },
     antena: function (e) {

@@ -1,6 +1,7 @@
 var isBgSound = true,
     isSound = true,
-    joystickVisible = false;
+    joystickVisible = false,
+    isMobile = false;
 var gamepad, joystick, button;
 var game, bgPaused, soundConfigTxt, controlConfigTxt, levelConfigTxt, titlePauseTxt, bgSoundConfigTxt;
 var closePausebtn, bgSoundBtn, soundConfigBtn, levelConfigBtn, controlConfigBtn;

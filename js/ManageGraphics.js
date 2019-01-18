@@ -9,6 +9,7 @@ var starts, stbackround, bar;
 var helmet, body, arm1, arm2, pant, foot1, foot2;
 var elementsCollected = 0;
 var randomObstructions = (Math.floor(Math.random() * (60 - 50) + 50));
+var askMobileBg, titleAskMobile, yesBtn, noBtn;
 
 var infoText = function (txt, letterSize, x, y, width, height, action) {
     bar = game.add.graphics();
@@ -158,6 +159,40 @@ var silenceAllSounds = function () {
         SoundBtn.kill();
         SoundBtn = game.add.button(soundConfigTxt.position.x + 180, 270, 'SoundBtn', silenceAllSounds, this, 1, 0, 1);
     }
+}
+
+var askMobile = function () {
+    askMobileBg = game.add.image(0, 0, 'askMobile');
+    var style = {
+        font: "20px Myriad",
+        fill: "#662d91",
+        align: "left",
+    };
+    askMobile = game.add.text(260, 230, '¿Juegas con una pantalla táctil?', style);
+    yesBtn = game.add.button(310, 300, 'YesBtn', ynAction, this, 0, 1, 1);
+    noBtn = game.add.button(400, 300, 'NoBtn', ynAction, this, 2, 3, 3);
+}
+
+var ynAction = function (e) {
+    askMobileBg.kill();
+    askMobile.kill();
+    yesBtn.kill();
+    noBtn.kill();
+    if (e.key == 'YesBtn') {
+        isMobile = true;
+        game.state.start('Level1');
+    } else {
+        document.getElementById("click").play();
+        var keys = game.add.sprite(150, 100, 'tutoKeys');
+        keys.animations.add('full', [0, 1, 2, 3, 4], 4, true);
+        keys.animations.play('full');
+        game.time.events.add(2500, goToVideos, this, '');
+        // game.state.start('Videos');
+    }
+}
+
+var goToVideos = function () {
+    game.state.start('Videos');
 }
 
 //************************************** */

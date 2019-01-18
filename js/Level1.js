@@ -2,6 +2,7 @@ var realPlayer, player, playerFire, planet, cursors, bordersWin, bordersLost, te
 RutaEspectral.Level1 = function (game) {};
 RutaEspectral.Level1.prototype = {
     preload: function () {
+        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         game.load.image('background', 'assets/level1/background.png');
         game.load.image('pauseBackground', 'assets/backgrounds/pauseBackground.png');
         game.load.spritesheet('pauseBtn', 'assets/buttons/pauseBtn.png', (57 / 2), 32);
@@ -59,8 +60,6 @@ RutaEspectral.Level1.prototype = {
     create: function () {
         game.add.tileSprite(0, 0, 10000, 600, 'background');
         game.world.setBounds(0, 0, 10000, 600);
-        game.stage.scaleMode = Phaser.StageScaleMode.SHOW_ALL; //resize your window to see the stage resize toogame.stage.scale.setShowAll();game.stage.scale.refresh();
-
         game.renderer.roundPixels = true;
         game.physics.startSystem(Phaser.Physics.ARCADE);
         planet = game.add.group();
@@ -103,7 +102,11 @@ RutaEspectral.Level1.prototype = {
         addSuitElements();
         gamepad = game.plugins.add(Phaser.Plugin.VirtualGamepad);
         addGamePad(false);
-        removeGamePad();
+        if (isMobile) {
+            joystickVisible = true;
+        } else {
+            removeGamePad();
+        }
     },
     update: function () {
         //this.buildSpaceSuit();

@@ -180,7 +180,7 @@ var ynAction = function (e) {
     noBtn.kill();
     if (e.key == 'YesBtn') {
         isMobile = true;
-        game.state.start('Level1');
+        game.state.start('Videos');
     } else {
         document.getElementById("click").play();
         var keys = game.add.sprite(150, 100, 'tutoKeys');

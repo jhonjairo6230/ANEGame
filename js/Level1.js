@@ -3,6 +3,8 @@ RutaEspectral.Level1 = function (game) {};
 RutaEspectral.Level1.prototype = {
     preload: function () {
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        game.scale.pageAlignHorizontally = true;
+        game.scale.pageAlignVertically = true;
         game.load.image('background', 'assets/level1/background.png');
         game.load.image('pauseBackground', 'assets/backgrounds/pauseBackground.png');
         game.load.spritesheet('pauseBtn', 'assets/buttons/pauseBtn.png', (57 / 2), 32);
@@ -216,18 +218,18 @@ RutaEspectral.Level1.prototype = {
                     gamepad.joystickPad.visible = true;
                     gamepad.joystick.visible = true;
                     if (joystick.properties.left) {
-                        spaceA.body.velocity.x = -velocityLevel1.ship;
+                        spaceA.body.velocity.x = -velocityLevel1.mobile;
                         spaceA.animations.play('left');
                     }
                     if (joystick.properties.right) {
-                        spaceA.body.velocity.x = velocityLevel1.ship;
+                        spaceA.body.velocity.x = velocityLevel1.mobile;
                         spaceA.animations.play('right');
                     }
                     if (joystick.properties.up) {
-                        spaceA.body.velocity.y = -velocityLevel1.ship;
+                        spaceA.body.velocity.y = -velocityLevel1.mobile;
                     }
                     if (joystick.properties.down) {
-                        spaceA.body.velocity.y = velocityLevel1.ship;
+                        spaceA.body.velocity.y = velocityLevel1.mobile;
                     }
                 }
             } else {
@@ -279,23 +281,23 @@ RutaEspectral.Level1.prototype = {
                     gamepad.joystickPad.visible = true;
                     gamepad.joystick.visible = true;
                     if (joystick.properties.left) {
-                        player.body.velocity.x = -velocityLevel1.ship;
-                        realPlayer.body.velocity.x = -velocityLevel1.ship;
+                        player.body.velocity.x = -velocityLevel1.mobile;
+                        realPlayer.body.velocity.x = -velocityLevel1.mobile;
                     }
                     if (joystick.properties.right) {
-                        player.body.velocity.x = velocityLevel1.ship;
-                        realPlayer.body.velocity.x = velocityLevel1.ship;
+                        player.body.velocity.x = velocityLevel1.mobile;
+                        realPlayer.body.velocity.x = velocityLevel1.mobile;
                     }
                     if (joystick.properties.up) {
-                        player.body.velocity.y = -velocityLevel1.ship;
+                        player.body.velocity.y = -velocityLevel1.mobile;
                         if (player.position.y != 0) {
-                            realPlayer.body.velocity.y = -velocityLevel1.ship;
+                            realPlayer.body.velocity.y = -velocityLevel1.mobile;
                         }
                     }
                     if (joystick.properties.down) {
-                        player.body.velocity.y = velocityLevel1.ship;
+                        player.body.velocity.y = velocityLevel1.mobile;
                         if (player.position.y != 546) {
-                            realPlayer.body.velocity.y = velocityLevel1.ship;
+                            realPlayer.body.velocity.y = velocityLevel1.mobile;
                         }
                     }
                 }

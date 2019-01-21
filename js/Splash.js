@@ -1,6 +1,9 @@
 RutaEspectral.Splash = function (game) {};
 RutaEspectral.Splash.prototype = {
     preload: function () {
+        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        game.scale.pageAlignHorizontally = true;
+        game.scale.pageAlignVertically = true;
         game.load.image('backgroundS', 'assets/backgrounds/backgroundSpl.png');
         game.load.spritesheet('playBtn', 'assets/buttons/playBtn.png', 164, 79);
 

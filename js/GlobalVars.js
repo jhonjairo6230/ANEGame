@@ -129,17 +129,29 @@ var RutaEspectral = {
     },
 };
 var headSelected, hairSelected, footSelected, armSelected;
-var velocityLevel1 = {
-    ship: 80,
-    suit: 70
-};
+if (isMobile) {
+    var velocityLevel1 = {
+        ship: 80,
+        suit: 70
+    };
 
-var velocityLevel2 = {
-    moveX: 170,
-    firstPart: 280,
-    secondPart: 320
-};
+    var velocityLevel2 = {
+        moveX: 170,
+        firstPart: 280,
+        secondPart: 320
+    };
+} else {
+    var velocityLevel1 = {
+        ship: 170,
+        suit: 170
+    };
 
+    var velocityLevel2 = {
+        moveX: 170,
+        firstPart: 280,
+        secondPart: 320
+    };
+}
 var spriteSizes = [{
     name: "sprite0",
     widthHS: 234,

@@ -11,7 +11,7 @@ RutaEspectral.Videos.prototype = {
     preload: function () {
         switch (levelState) {
             case 1:
-                for (var i = 0; i < 130; i++) {
+                for (var i = 0; i < 110; i++) {
                     if (i < 10) {
                         game.load.image('nave_00' + i, 'assets/naveAnim/nave_00' + i + '.jpg');
                     } else if (i < 100) {
@@ -22,7 +22,7 @@ RutaEspectral.Videos.prototype = {
                 }
                 break;
             case 2:
-                for (var i = 0; i < 130; i++) {
+                for (var i = 0; i < 110; i++) {
                     if (i < 10) {
                         game.load.image('astronauta_00' + i, 'assets/astronauta/astronauta_00' + i + '.jpg');
                     } else if (i < 100) {
@@ -70,7 +70,7 @@ RutaEspectral.Videos.prototype = {
         } else {
             game.add.image(0, 50, 'nave_' + k);
         }
-        if (k == 130) {
+        if (k == 108) {
             k = 0;
             game.state.start('Level1');
         }
@@ -84,7 +84,7 @@ RutaEspectral.Videos.prototype = {
         } else {
             game.add.image(0, 50, 'astronauta_' + k);
         }
-        if (k == 130) {
+        if (k == 108) {
             k = 0;
             game.state.start('Level2');
         }

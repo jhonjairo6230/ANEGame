@@ -58,7 +58,7 @@ RutaEspectral.Level1.prototype = {
         game.load.spritesheet('spriteA', 'assets/sprites/spriteA.png', spriteSizes[spriteSizes.length - 1].width / 11, spriteSizes[spriteSizes.length - 1].height);
     },
     create: function () {
-        game.add.tileSprite(0, 0, 10000, 600, 'background');
+        game.add.image(0, 0, 'background');
         game.world.setBounds(0, 0, 10000, 600);
         game.renderer.roundPixels = true;
         game.physics.startSystem(Phaser.Physics.ARCADE);

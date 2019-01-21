@@ -68,6 +68,9 @@ var clicked = false;
 RutaEspectral.AvatarConfig = function (game) {};
 RutaEspectral.AvatarConfig.prototype = {
     preload: function () {
+        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        game.scale.pageAlignHorizontally = true;
+        game.scale.pageAlignVertically = true;
         for (var i = 0; i < 6; i++) {
             if (i < 2) {
                 game.load.spritesheet('armBtn' + i, 'assets/buttons/ArmBtn' + i + '.png', buttonSize.width, buttonSize.height);

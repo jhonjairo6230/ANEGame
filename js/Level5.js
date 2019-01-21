@@ -15,6 +15,8 @@ RutaEspectral.Level5 = function (game) {};
 RutaEspectral.Level5.prototype = {
     preload: function () {
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        game.scale.pageAlignHorizontally = true;
+        game.scale.pageAlignVertically = true;
         game.load.image('pauseBackground', 'assets/backgrounds/pauseBackground.png');
         game.load.spritesheet('pauseBtn', 'assets/buttons/pauseBtn.png', (57 / 2), 32);
         game.load.spritesheet('bgSoundBtn', 'assets/buttons/soundBgBtn.png', (186 / 3), 62);

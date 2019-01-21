@@ -3,6 +3,8 @@ RutaEspectral.Level4_2 = function (game) {};
 RutaEspectral.Level4_2.prototype = {
     preload: function () {
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        game.scale.pageAlignHorizontally = true;
+        game.scale.pageAlignVertically = true;
         //game.load.image('background', 'assets/level4/background4_2.png');
         game.load.image('background', 'assets/level4/bg4_2.png');
         game.load.image('pauseBackground', 'assets/backgrounds/pauseBackground.png');

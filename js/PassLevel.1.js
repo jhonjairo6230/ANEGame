@@ -3,6 +3,9 @@ var player, platforms, elements, cursors, bordersWin, waveCollition;
 RutaEspectral.PassLevel = function (game) {};
 RutaEspectral.PassLevel.prototype = {
     preload: function () {
+        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        game.scale.pageAlignHorizontally = true;
+        game.scale.pageAlignVertically = true;
         game.load.image('background', 'assets/bgPassLevel.png');
         game.load.image('starPrize', 'assets/starPrize.png');
         game.load.spritesheet('continueBtn', 'assets/buttons/continueBtn.png', 136, 79);

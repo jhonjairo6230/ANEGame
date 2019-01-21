@@ -9,6 +9,9 @@ RutaEspectral.Videos = function (game) {
 };
 RutaEspectral.Videos.prototype = {
     preload: function () {
+        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        game.scale.pageAlignHorizontally = true;
+        game.scale.pageAlignVertically = true;
         switch (levelState) {
             case 1:
                 for (var i = 0; i < 110; i++) {

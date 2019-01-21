@@ -5,6 +5,9 @@ RutaEspectral.AvatarSelected = function (game) {
 };
 RutaEspectral.AvatarSelected.prototype = {
     preload: function () {
+        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        game.scale.pageAlignHorizontally = true;
+        game.scale.pageAlignVertically = true;
         game.load.image('background', 'assets/backgrounds/Background1.png');
         game.load.image('askMobile', 'assets/backgrounds/askMobileBg.png');
         game.load.spritesheet('YesBtn', 'assets/buttons/yesNoBtn.png', (341 / 4), 61);

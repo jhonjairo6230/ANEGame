@@ -130,8 +130,8 @@ var RutaEspectral = {
 };
 var headSelected, hairSelected, footSelected, armSelected;
 var velocityLevel1 = {
-    ship: 80,
-    suit: 70,
+    ship: 140,
+    suit: 160,
     mobile: 140
 };
 

@@ -73,26 +73,25 @@ var pauseAction = function () {
             align: "left",
         };
         titlePauseTxt = game.add.text(game.camera.view.x + 280, 160, 'Selecciona una opción', style);
-        bgSoundConfigTxt = game.add.text(game.camera.view.x + 260, 210, 'Música fondo: ', style);
+        bgSoundConfigTxt = game.add.text(game.camera.view.x + 260, 230, 'Música fondo: ', style);
         if (isBgSound) {
-            bgSoundBtn = game.add.button(bgSoundConfigTxt.position.x + 180, 200, 'bgSoundBtn', silenceBgSound, this, 1, 0, 1);
+            bgSoundBtn = game.add.button(bgSoundConfigTxt.position.x + 180, 220, 'bgSoundBtn', silenceBgSound, this, 1, 0, 1);
         } else {
-            bgSoundBtn = game.add.button(bgSoundConfigTxt.position.x + 180, 200, 'bgSoundBtn', silenceBgSound, this, 1, 2, 2);
+            bgSoundBtn = game.add.button(bgSoundConfigTxt.position.x + 180, 220, 'bgSoundBtn', silenceBgSound, this, 1, 2, 2);
         }
-        soundConfigTxt = game.add.text(game.camera.view.x + 260, 270, 'Sonidos: ', style);
+        soundConfigTxt = game.add.text(game.camera.view.x + 260, 300, 'Sonidos: ', style);
         if (isSound) {
-            SoundBtn = game.add.button(soundConfigTxt.position.x + 180, 270, 'SoundBtn', silenceAllSounds, this, 1, 0, 1);
+            SoundBtn = game.add.button(soundConfigTxt.position.x + 180, 290, 'SoundBtn', silenceAllSounds, this, 1, 0, 1);
         } else {
-            SoundBtn = game.add.button(soundConfigTxt.position.x + 180, 270, 'SoundBtn', silenceAllSounds, this, 1, 2, 2);
-
+            SoundBtn = game.add.button(soundConfigTxt.position.x + 180, 290, 'SoundBtn', silenceAllSounds, this, 1, 2, 2);
         }
-        controlConfigTxt = game.add.text(game.camera.view.x + 260, 345, 'Controles: ', style);
+        controlConfigTxt = game.add.text(game.camera.view.x + 260, 375, 'Controles: ', style);
         if (joystickVisible) {
-            controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 330, 'ControlBtn', manageGamePad, this, 3, 2, 3);
+            controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 360, 'ControlBtn', manageGamePad, this, 3, 2, 3);
         } else {
-            controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 330, 'ControlBtn', manageGamePad, this, 1, 0, 1);
+            controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 360, 'ControlBtn', manageGamePad, this, 1, 0, 1);
         }
-        levelConfigTxt = game.add.text(game.camera.view.x + 260, 410, 'Niveles: ', style);
+        //levelConfigTxt = game.add.text(game.camera.view.x + 260, 410, 'Niveles: ', style);
         closePausebtn = game.add.button(game.camera.view.x + 520, 140, 'closeBtn', playGame, this, 1, 1, 0);
     } else {
         playGame();
@@ -107,7 +106,7 @@ var playGame = function (e) {
     SoundBtn.kill();
     controlConfigTxt.kill();
     controlConfigBtn.kill();
-    levelConfigTxt.kill();
+    //levelConfigTxt.kill();
     closePausebtn.kill();
     bgPaused.kill();
     game.paused = false;
@@ -132,12 +131,13 @@ var silenceBgSound = function () {
 var manageGamePad = function () {
     if (joystickVisible) {
         controlConfigBtn.kill();
-        controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 330, 'ControlBtn', manageGamePad, this, 1, 0, 1);
+        controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 360, 'ControlBtn', manageGamePad, this, 1, 0, 1);
         joystickVisible = false;
+        isMobile = false;
         removeGamePad();
     } else {
         controlConfigBtn.kill();
-        controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 330, 'ControlBtn', manageGamePad, this, 3, 2, 3);
+        controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 360, 'ControlBtn', manageGamePad, this, 3, 2, 3);
         joystickVisible = true;
         if (levelState == 1) {
             button.visible = false;
@@ -261,9 +261,9 @@ var resetPlayer = function (x, y) {
     game.physics.arcade.enable(player);
     game.physics.arcade.enable(realPlayer);
     player.body.bounce.y = 0.2;
-    //player.body.gravity.y = 200;
+    player.body.gravity.y = 300;
     realPlayer.body.bounce.y = 0.2;
-    //realPlayer.body.gravity.y = 200;
+    realPlayer.body.gravity.y = 300;
     player.body.collideWorldBounds = true;
     realPlayer.body.collideWorldBounds = true;
     game.camera.follow(realPlayer, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
@@ -297,7 +297,7 @@ var setSpaceSuit = function (x, y) {
     spaceA.animations.add('left', [0, 1, 2, 3], 8, true);
     game.physics.arcade.enable(spaceA);
     spaceA.body.bounce.y = 0.4;
-    spaceA.body.gravity.y = 300;
+    spaceA.body.gravity.y = 130;
     spaceA.body.collideWorldBounds = true;
     game.camera.follow(spaceA, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 };

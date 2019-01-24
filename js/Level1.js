@@ -236,8 +236,8 @@ RutaEspectral.Level1.prototype = {
                 player.checkWorldBounds = true;
                 realPlayer.body.velocity.x = 0;
                 player.body.velocity.x = 0;
-                realPlayer.body.velocity.y = 0;
-                player.body.velocity.y = 0;
+                realPlayer.body.velocity.y = 30;
+                player.body.velocity.y = 30;
                 if (player.position.x > 590 && player.position.x < 600) {
                     shootingStart(1);
                 }

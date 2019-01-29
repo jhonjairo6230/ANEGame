@@ -534,7 +534,7 @@ function setPlayer() {
             break;
         case 5:
             //player = game.add.sprite(8000, 400, 'spritePlayer');
-            player = game.add.sprite(6320, 400, 'spritePlayer');
+            player = game.add.sprite(320, 400, 'spritePlayer');
             break;
         default:
             break;
@@ -1458,12 +1458,45 @@ var addRocks = function (signal) {
 }
 
 var setAntenas = function (number) {
-    var antennas = game.add.group();
-    antennas.enableBody = true;
+    antenas = game.add.group();
+    antenas.enableBody = true;
     var antenna = [7963, 7847, 7827, 7903, 8328, 8402, 8338];
     var antennaV = [350, 360, 230, 230, 350, 330, 200];
     for (var h = 0; h < number; h++) {
-        var a = antennas.create(antenna[h], antennaV[h], 'antennaC');
+        var a = antenas.create(antenna[h], antennaV[h], 'antennaC');
         a.body.immovable = true;
     }
+    game.physics.arcade.enable(signal);
+    if (number > 0) {
+        antenaL = game.add.sprite(8200, 200, 'leftSprite');
+        game.physics.arcade.enable(antenaL);
+        antenaL.body.collideWorldBounds = true;
+        antenaR = game.add.sprite(7975, 200, 'rigthSprite');
+        switch (number) {
+            case 7:
+                antenaL.animations.add('left', [3, 2, 1, 0], 5, true);
+                antenaR.animations.add('rigth', [0, 1, 2, 3], 5, true);
+                break;
+            case 4:
+                antenaL.animations.add('left', [2, 1], 5, true);
+                antenaR.animations.add('rigth', [1, 2], 5, true);
+                break;
+            case 2:
+                antenaL.animations.add('left', [2], 5, true);
+                antenaR.animations.add('rigth', [1], 5, true);
+                break;
+            default:
+                break;
+        }
+        game.physics.arcade.enable(antenaR);
+        antenaR.body.collideWorldBounds = true;
+        antenaL.animations.play('left');
+        antenaR.animations.play('rigth');
+    }
+}
+
+var killAntenas = function () {
+    antenas.kill();
+    antenaL.kill();
+    antenaR.kill();
 }

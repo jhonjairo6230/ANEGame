@@ -7,6 +7,7 @@ var initLVl5 = false,
     isLeftTruck = true,
     isLeftBio0 = true,
     isLeftBio2 = true;
+var antenas, antenaL, antenaR;
 var collectables, messageInfo, messageRadio, sTV, sRadio, sPhone, signal;
 var countAntennas = 0;
 var increment = -120;
@@ -25,8 +26,8 @@ RutaEspectral.Level5.prototype = {
         game.load.spritesheet('ControlBtn', 'assets/buttons/controlsBtn.png', (341 / 4), 61);
         this.load.spritesheet('gamepad', 'assets/dpad.png', 100, 100);
 
-        game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 22 + '.png', spriteSizes[22].width / 11, spriteSizes[14].height);
-        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
+        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 22 + '.png', spriteSizes[22].width / 11, spriteSizes[14].height);
+        game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
 
         game.load.spritesheet('spriteBio', 'assets/level3/bioSprite.png', (120 / 3), 40);
         game.load.image('platformS', 'assets/level3/platformSky.png');
@@ -56,6 +57,8 @@ RutaEspectral.Level5.prototype = {
         game.load.image('message1', 'assets/level5/message1.png');
         game.load.image('antennaC', 'assets/level5/antennaC.png');
         game.load.image('background', 'assets/level5/bg5.png');
+        game.load.spritesheet('leftSprite', 'assets/level5/leftSprite.png', (280 / 4), 100);
+        game.load.spritesheet('rigthSprite', 'assets/level5/rigthSprite.png', (280 / 4), 100);
         game.load.image('Lpx', 'assets/Level2/lineSun.png');
     },
     create: function () {
@@ -204,10 +207,12 @@ RutaEspectral.Level5.prototype = {
             setAntenas(7);
         } else if (countAntennas > 10) {
             setAntenas(4);
-        } else {
+        } else if (countAntennas > 0) {
             setAntenas(2);
+        } else {
+            setAntenas(0);
         }
-        game.time.events.add(1500, this.testSignal, this, "");
+        game.time.events.add(1000, this.testSignal, this, "");
     },
     testSignal: function () {
         if (countAntennas > 18) {
@@ -220,6 +225,7 @@ RutaEspectral.Level5.prototype = {
     },
     removePicture: function (pic) {
         pic.visible = false;
+        killAntenas();
         if (pic.key == 'message1') {
             game.time.events.add(30, this.finalMessage, this, 5);
         }

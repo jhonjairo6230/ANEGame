@@ -1216,7 +1216,7 @@ var collectElements = function (player, collectable) {
 
 var showDescript = function (pic) {
     messageR = game.add.sprite(game.camera.view.x + 200, 200, pic);
-    game.time.events.add(1000, removeMsg, this, pic);
+    game.time.events.add(1500, removeMsg, this, pic);
 }
 
 var removeMsg = function (pic) {

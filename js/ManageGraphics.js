@@ -811,6 +811,23 @@ var addBioSprite = function () {
     enemiesBio.enableBody = true;
     game.physics.arcade.enable(enemiesBio);
     switch (levelState) {
+        case 2:
+            var bios = [2984, 3407, 4834, 5942, 6504,
+                7154
+            ];
+            var bh = [440, 330, 440, 180, 330, 500];
+            for (var i = 0; i < bios.length; i++) {
+                biosSprite[i] = game.add.sprite(bios[i], bh[i], 'spriteAlienShip');
+                biosSprite[i].animations.add('left', [4, 3, 2, 1, 0], 5, true);
+                biosSprite[i].animations.add('right', [0, 1, 2, 3, 4], 5, true);
+                game.physics.arcade.enable(biosSprite[i]);
+                biosSprite[i].body.bounce.y = 0.2;
+                biosSprite[i].body.setCircle(20)
+                //biosSprite[i].body.gravity.y = 300;
+                biosSprite[i].body.collideWorldBounds = true;
+                enemiesBio.add(biosSprite[i]);
+            }
+            break;
         case 3:
             var bios = [1550, 1600, 2984, 4407, 4457, 5834, 5884, 7242, 7292, 10104,
                 10154, 11535, 11657, 8783
@@ -885,6 +902,21 @@ var addBioSprite = function () {
 
 var animateBio = function () {
     switch (levelState) {
+        case 2:
+            for (var i = 0; i < biosSprite.length; i++) {
+                if (biosSprite[0].position.x > 2500 && isLeft) {
+                    isLeft = true;
+                    biosSprite[i].animations.play('left');
+                    biosSprite[i].body.velocity.setTo(-120, 0);
+                } else if (biosSprite[0].position.x < 3200) {
+                    isLeft = false;
+                    biosSprite[i].animations.play('right');
+                    biosSprite[i].body.velocity.setTo(120, 0);
+                } else {
+                    isLeft = true;
+                }
+            }
+            break;
         case 3:
             for (var i = 0; i < biosSprite.length; i++) {
                 if (i < 12) {

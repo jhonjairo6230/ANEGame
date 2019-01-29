@@ -4,6 +4,8 @@ var glasses, closeBtn, obstructions, st, planet, bEarth, bEarthH, liveUpGroup, c
 var isError = false,
     showFinish = false;
 var message0, message1;
+var biosSprite = [];
+var enemiesBio;
 RutaEspectral.Level2 = function (game) {};
 RutaEspectral.Level2.prototype = {
     preload: function () {
@@ -20,6 +22,8 @@ RutaEspectral.Level2.prototype = {
         this.load.spritesheet('gamepad', 'assets/dpad.png', 100, 100);
 
         game.load.spritesheet('spriteA', 'assets/sprites/spriteA.png', spriteSizes[spriteSizes.length - 1].width / 11, spriteSizes[spriteSizes.length - 1].height);
+        game.load.spritesheet('spriteAlienShip', 'assets/level2/spriteNave.png', (409 / 5), 60);
+
         game.load.image('wave', 'assets/level2/wave.png');
         game.load.image('platform', 'assets/level2/platform.png');
         game.load.image('platformF0', 'assets/level2/platformFloor0.png');
@@ -89,7 +93,7 @@ RutaEspectral.Level2.prototype = {
         glass.body.immovable = true;
         liveUpGroup = game.add.group();
         liveUpGroup.enableBody = true;
-        var liveUp = liveUpGroup.create(1700, 50, 'liveUp');
+        var liveUp = liveUpGroup.create(6800, 380, 'liveUp');
         liveUp.body.immovable = true;
         setPlatforms(elements, pMoveGroup);
         addObstructions();
@@ -118,6 +122,7 @@ RutaEspectral.Level2.prototype = {
                 closeAdvLvl2();
             });
         }
+        addBioSprite();
         gamepad = game.plugins.add(Phaser.Plugin.VirtualGamepad);
         addGamePad(true);
         removeGamePad();
@@ -131,11 +136,15 @@ RutaEspectral.Level2.prototype = {
         var hitSun = game.physics.arcade.collide(player, bSun);
         var finish = game.physics.arcade.collide(player, bordersWin);
         var lostLive = game.physics.arcade.collide(player, obstructions);
+        var losLive1 = game.physics.arcade.collide(player, enemiesBio);
         var circle = game.physics.arcade.collide(player, circleT);
         var movementV = game.physics.arcade.collide(player, pMoveGroup.children[0]);
         var movementH = game.physics.arcade.collide(player, pMoveGroup.children[1]);
         player.checkWorldBounds = true;
         player.events.onOutOfBounds.add(this.test, this);
+        if (player.position.x > 2500) {
+            animateBio();
+        }
         if (player.position.x > 7344 && player.position.x < 7349 && !showFinish) {
             // if () {
             isError = false;
@@ -203,7 +212,7 @@ RutaEspectral.Level2.prototype = {
         if (player.position.x > 1210 && player.position.x < 1220) {
             shootingExplotion();
         }
-        if (lostLive || lostLPlanet) {
+        if (lostLive || lostLPlanet || losLive1) {
             if (isSound) {
                 document.getElementById("lostLive").play();
             }

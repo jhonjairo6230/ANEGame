@@ -280,8 +280,40 @@ var showLives = function () {
             var star = stars.create(738 - w, 5, 'star');
             w += 22;
         }
+
     }
+    var stLvl = game.add.button(90, 2, 'levelSt', showHelp, this, 1, 1, 0);
+    stLvl.animations.add('show', [0, 1], 1, true);
+    stLvl.fixedToCamera = true;
+    stLvl.animations.play('show');
 };
+
+var showHelp = function () {
+    game.paused = true;
+    var msg = '';
+    switch (levelState) {
+        case 1:
+            msg = 'Recolecta todos los elementos del traje espacial, después sigue avanzando hasta encontrar la bandera de entrada';
+            break;
+        case 2:
+            msg = 'Encuentra las gafas para que puedas mirar el espectro electromagnetico, después intenta ingresar a la tierra por el camino adecuado';
+            break;
+        case 3:
+            msg = 'Debes comunicarte con una lejana ciudad, recolecta al menos 10 iconos de la misma señal para poder probar.¡Solo con la señal indicada podrás comunicarte!';
+            break;
+        case 4:
+            msg = 'Debes ingresar a la autopista de las telecomunicaciones, para esto recolecta 5 iconos de la misma señal.¡Recuerda algunas señales no tienen suficiente alcance!';
+            break;
+        case 5:
+            msg = 'Debes comunicar dos ciudades lejanas, para ello recolecta todas los iconos de antenas y al final pulsa el boton comunicarse para probar';
+            break;
+        default:
+            break;
+    }
+    infoText(msg, '20px', game.camera.view.x + 200, 200, 300, 180, function () {
+        game.paused = false;
+    });
+}
 
 var endTimer = function () {
     timerL1.stop();

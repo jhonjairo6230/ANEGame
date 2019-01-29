@@ -57,6 +57,7 @@ RutaEspectral.Level1.prototype = {
         game.load.spritesheet('playBtn', 'assets/buttons/play2Btn.png', 134, 78);
         game.load.spritesheet('continueBtn', 'assets/buttons/continueBtn.png', 136, 79);
         game.load.spritesheet('closeBtn', 'assets/buttons/closeBtn.png', 40, 40);
+        game.load.spritesheet('levelSt', 'assets/levelSt.png', 126 / 2, 25);
         game.load.spritesheet('spriteA', 'assets/sprites/spriteA.png', spriteSizes[spriteSizes.length - 1].width / 11, spriteSizes[spriteSizes.length - 1].height);
     },
     create: function () {
@@ -328,6 +329,7 @@ RutaEspectral.Level1.prototype = {
             if (timerL1.running) {
                 timeRest = formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000));
                 game.debug.text(formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000)), 15, 18, "#2565e5");
+                game.debug.text('Nivel ' + levelState, 92, 18, "#2565e5");
             } else {
                 isInitLVL1 = false;
                 if (isSound) {

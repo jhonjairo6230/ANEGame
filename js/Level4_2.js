@@ -218,6 +218,7 @@ RutaEspectral.Level4_2.prototype = {
         // btncls = game.add.button(game.camera.view.x + 100 + 460, 100, 'closeBtn', this.die, this, 1, 1, 0);
     },
     render() {
+        game.debug.text('Nivel ' + levelState, 92, 18, "#2565e5");
         //game.debug.text(player.position.x + "-" + player.position.y, 15, 18, "#2565e5");
     }
 }

@@ -345,6 +345,7 @@ RutaEspectral.Level2.prototype = {
             if (timerL1.running) {
                 timeRest = formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000));
                 game.debug.text(formatTime(Math.round((timerEvent.delay - timerL1.ms) / 1000)), 15, 18, "#2565e5");
+                game.debug.text('Nivel ' + levelState, 92, 18, "#2565e5");
             } else {
                 initLVl2 = false;
                 if (isSound) {

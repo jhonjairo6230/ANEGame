@@ -25,3 +25,4 @@ var message18 = ' ¡Recolecta cinco elementos del mismo tipo para viajar por la 
 var message19 = 'Recolecta cinco elementos para poder continuar';
 //level 5
 var message20 = 'Nivel final, llena la barra de señal recolectando todas las antenas que encuentres para poder comunicar dos ciudades distantes';
+var message21 = 'Adelante encontrás un botón con el que puedes probar la comunicación entre las dos ciudades. Recuerda, ¡entre más antenas recolectes más posibilidades tienes!';

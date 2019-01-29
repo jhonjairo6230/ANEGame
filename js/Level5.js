@@ -1,4 +1,5 @@
-var player, bioHSprite, platforms, elements, bottomLine, cursors, enemies, enemiesBio, line, roadLine, bFinish;
+var player, bioHSprite, platforms, elements, bottomLine,
+    cursors, enemies, enemiesBio, line, roadLine, bFinish, finishLine;
 var carsSprite = [],
     biosSprite = [];
 var initLVl5 = false,
@@ -24,8 +25,8 @@ RutaEspectral.Level5.prototype = {
         game.load.spritesheet('ControlBtn', 'assets/buttons/controlsBtn.png', (341 / 4), 61);
         this.load.spritesheet('gamepad', 'assets/dpad.png', 100, 100);
 
-        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 22 + '.png', spriteSizes[22].width / 11, spriteSizes[14].height);
-        game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
+        game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 22 + '.png', spriteSizes[22].width / 11, spriteSizes[14].height);
+        //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
 
         game.load.spritesheet('spriteBio', 'assets/level3/bioSprite.png', (120 / 3), 40);
         game.load.image('platformS', 'assets/level3/platformSky.png');
@@ -55,6 +56,7 @@ RutaEspectral.Level5.prototype = {
         game.load.image('message1', 'assets/level5/message1.png');
         game.load.image('antennaC', 'assets/level5/antennaC.png');
         game.load.image('background', 'assets/level5/bg5.png');
+        game.load.image('Lpx', 'assets/Level2/lineSun.png');
     },
     create: function () {
         levelState = 5;
@@ -91,6 +93,12 @@ RutaEspectral.Level5.prototype = {
         btnHorn = game.add.button(8100, 350, 'testBtn', this.antena, this, 1, 1, 0);
         game.paused = true;
         game.add.image(0, 0, 'bgLives').fixedToCamera = true;
+
+        finishLine = game.add.group();
+        finishLine.enableBody = true;
+        var borderS = finishLine.create(7057, 1, 'Lpx');
+        borderS.body.immovable = true;
+
         gamepad = game.plugins.add(Phaser.Plugin.VirtualGamepad);
         addGamePad(true);
         removeGamePad();
@@ -108,12 +116,21 @@ RutaEspectral.Level5.prototype = {
         var losLive0 = game.physics.arcade.collide(player, enemies);
         var losLive1 = game.physics.arcade.collide(player, enemiesBio);
         var finish = game.physics.arcade.collide(player, bFinish);
+        var endMessage = game.physics.arcade.collide(player, finishLine);
         game.physics.arcade.overlap(player, collectables, collectElements, null, this);
 
         player.checkWorldBounds = true;
 
         animateCarsMove();
         animateBio();
+
+        if (endMessage) {
+            finishLine.kill();
+            game.paused = true;
+            infoText(message21, '20px', game.camera.view.x + 200, 200, 400, 150, function () {
+                game.paused = false;
+            });
+        }
 
         if (losLive0 || losLive1) {
             this.die();

@@ -28,7 +28,14 @@ RutaEspectral.Level4.prototype = {
         game.load.spritesheet('SoundBtn', 'assets/buttons/soundBtn.png', (186 / 3), 62);
         game.load.spritesheet('ControlBtn', 'assets/buttons/controlsBtn.png', (341 / 4), 61);
         this.load.spritesheet('gamepad', 'assets/dpad.png', 100, 100);
-
+        game.load.spritesheet('LevelBtn', 'assets/buttons/levelBtn.png', (194 / 2), 40);
+        game.load.image('bgLevel', 'assets/bgLevel.png');
+        game.load.spritesheet('AvatarBtn', 'assets/buttons/avatarBtn.png', (300 / 2), 95);
+        game.load.spritesheet('Level1Btn', 'assets/buttons/level1Btn.png', (300 / 2), 94);
+        game.load.spritesheet('Level2Btn', 'assets/buttons/level2Btn.png', (300 / 2), 94);
+        game.load.spritesheet('Level3Btn', 'assets/buttons/level3Btn.png', (300 / 2), 94);
+        game.load.spritesheet('Level4Btn', 'assets/buttons/level4Btn.png', (300 / 2), 95);
+        game.load.spritesheet('Level5Btn', 'assets/buttons/level5Btn.png', (300 / 2), 95);
         game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
         //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 8 + '.png', spriteSizes[8].width / 11, spriteSizes[14].height);
         game.load.spritesheet('spriteBio', 'assets/level3/bioSprite.png', (120 / 3), 40);
@@ -59,11 +66,12 @@ RutaEspectral.Level4.prototype = {
         game.load.image('bgLives', 'assets/level1/bgLives.png');
         game.load.image('bgLivesG', 'assets/level4/bgLives.png');
         game.load.image('star', 'assets/star.png');
-
+        game.load.spritesheet('levelSt', 'assets/levelSt.png', 126 / 2, 25);
         game.load.spritesheet('closeBtn', 'assets/buttons/closeBtn.png', 40, 40);
     },
     create() {
         levelState = 4;
+        player = "";
         game.add.image(0, 0, 'background');
         game.world.setBounds(0, 0, 7056, 600);
         game.renderer.roundPixels = true;
@@ -77,7 +85,7 @@ RutaEspectral.Level4.prototype = {
         enemies = game.add.group();
         enemies.enableBody = true;
         addCarSprite(enemies);
-        addBioSprite();
+        addBioSprite(biosSprite);
         var stbackround = game.add.image(610, 0, 'bgLives');
         stbackround.fixedToCamera = true;
         stbackround.scale.set(2, 1);
@@ -123,7 +131,7 @@ RutaEspectral.Level4.prototype = {
         player.checkWorldBounds = true;
 
         animateCarsMove();
-        animateBio();
+        animateBio(biosSprite);
         if (losLive0 || losLive1) {
             this.die();
         }

@@ -13,7 +13,14 @@ RutaEspectral.Level4_2.prototype = {
         game.load.spritesheet('SoundBtn', 'assets/buttons/soundBtn.png', (186 / 3), 62);
         game.load.spritesheet('ControlBtn', 'assets/buttons/controlsBtn.png', (341 / 4), 61);
         this.load.spritesheet('gamepad', 'assets/dpad.png', 100, 100);
-
+        game.load.spritesheet('LevelBtn', 'assets/buttons/levelBtn.png', (194 / 2), 40);
+        game.load.image('bgLevel', 'assets/bgLevel.png');
+        game.load.spritesheet('AvatarBtn', 'assets/buttons/avatarBtn.png', (300 / 2), 95);
+        game.load.spritesheet('Level1Btn', 'assets/buttons/level1Btn.png', (300 / 2), 94);
+        game.load.spritesheet('Level2Btn', 'assets/buttons/level2Btn.png', (300 / 2), 94);
+        game.load.spritesheet('Level3Btn', 'assets/buttons/level3Btn.png', (300 / 2), 94);
+        game.load.spritesheet('Level4Btn', 'assets/buttons/level4Btn.png', (300 / 2), 95);
+        game.load.spritesheet('Level5Btn', 'assets/buttons/level5Btn.png', (300 / 2), 95);
         game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + selectedSprite + '.png', spriteSizes[selectedSprite].width / 11, spriteSizes[selectedSprite].height);
         //game.load.spritesheet('spritePlayer', 'assets/sprites/sprite' + 14 + '.png', spriteSizes[14].width / 11, spriteSizes[14].height);
         game.load.image('messageInfo0', 'assets/level4/messageInfo0.png');
@@ -39,6 +46,7 @@ RutaEspectral.Level4_2.prototype = {
         game.load.image('star', 'assets/star.png');
         game.load.spritesheet('closeBtn', 'assets/buttons/closeBtn.png', 40, 40);
         game.load.spritesheet('winBtn', 'assets/buttons/closeBtn.png', 40, 40);
+        game.load.spritesheet('levelSt', 'assets/levelSt.png', 126 / 2, 25);
     },
     create: function () {
         //signal = 0;
@@ -184,6 +192,7 @@ RutaEspectral.Level4_2.prototype = {
         if (isSound) {
             document.getElementById("changeLevel").play();
         }
+        biosSprite = [];
         game.state.start('PassLevel');
     },
     message: function () {

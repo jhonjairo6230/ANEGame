@@ -3,10 +3,18 @@ var isBgSound = true,
     joystickVisible = false,
     isMobile = false;
 var gamepad, joystick, button;
-var game, bgPaused, soundConfigTxt, controlConfigTxt, levelConfigTxt, titlePauseTxt, bgSoundConfigTxt;
+var game, bgPaused, soundConfigTxt, controlConfigTxt, levelConfigTxt, titlePauseTxt, bgSoundConfigTxt, bgLevel;
 var closePausebtn, bgSoundBtn, soundConfigBtn, levelConfigBtn, controlConfigBtn;
+var avatarBtn, level1Btn, level2Btn, level3Btn, level4Btn, level5Btn;
+var titleLevel, avatarTxt, level1Txt, level2Txt, level3Txt, level4Txt, level5Txt;
+//Level1
+//var realPlayer, player, playerFire, planet, cursors, bordersWin, bordersLost, text, music, elements, spaceS, spaceSuit;
+
+
+
 //Total de vidas iniciales del juego
 var countLives = 3;
+var levelWin = 0;
 //tiempo para pasar el  nivel 
 var minuteConfig = 3,
     secondsConfig = 0;

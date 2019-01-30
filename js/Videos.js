@@ -73,7 +73,7 @@ RutaEspectral.Videos.prototype = {
         } else {
             game.add.image(0, 50, 'nave_' + k);
         }
-        if (k == 165) {
+        if (k == 164) {
             k = 0;
             game.state.start('Level1');
         }

@@ -18,6 +18,14 @@ RutaEspectral.Level2.prototype = {
         game.load.spritesheet('bgSoundBtn', 'assets/buttons/soundBgBtn.png', (186 / 3), 62);
         game.load.spritesheet('SoundBtn', 'assets/buttons/soundBtn.png', (186 / 3), 62);
         game.load.spritesheet('ControlBtn', 'assets/buttons/controlsBtn.png', (341 / 4), 61);
+        game.load.spritesheet('LevelBtn', 'assets/buttons/levelBtn.png', (194 / 2), 40);
+        game.load.image('bgLevel', 'assets/bgLevel.png');
+        game.load.spritesheet('AvatarBtn', 'assets/buttons/avatarBtn.png', (300 / 2), 95);
+        game.load.spritesheet('Level1Btn', 'assets/buttons/level1Btn.png', (300 / 2), 94);
+        game.load.spritesheet('Level2Btn', 'assets/buttons/level2Btn.png', (300 / 2), 94);
+        game.load.spritesheet('Level3Btn', 'assets/buttons/level3Btn.png', (300 / 2), 94);
+        game.load.spritesheet('Level4Btn', 'assets/buttons/level4Btn.png', (300 / 2), 95);
+        game.load.spritesheet('Level5Btn', 'assets/buttons/level5Btn.png', (300 / 2), 95);
 
         this.load.spritesheet('gamepad', 'assets/dpad.png', 100, 100);
 
@@ -52,9 +60,12 @@ RutaEspectral.Level2.prototype = {
         game.load.image('finishLine', 'assets/level2/finishLine.png');
         game.load.image('message0', 'assets/level2/message0.png');
         game.load.image('message1', 'assets/level2/message1.png');
+        game.load.spritesheet('levelSt', 'assets/levelSt.png', 126 / 2, 25);
     },
     create: function () {
         levelState = 2;
+        biosSprite = [];
+        player = "";
         game.add.image(0, 0, 'background');
         game.world.setBounds(0, 0, 7900, 600);
         game.renderer.roundPixels = true;
@@ -122,7 +133,7 @@ RutaEspectral.Level2.prototype = {
                 closeAdvLvl2();
             });
         }
-        addBioSprite();
+        addBioSprite(biosSprite);
         gamepad = game.plugins.add(Phaser.Plugin.VirtualGamepad);
         addGamePad(true);
         removeGamePad();
@@ -143,7 +154,7 @@ RutaEspectral.Level2.prototype = {
         player.checkWorldBounds = true;
         player.events.onOutOfBounds.add(this.test, this);
         if (player.position.x > 2500) {
-            animateBio();
+            animateBio(biosSprite);
         }
         if (player.position.x > 7344 && player.position.x < 7349 && !showFinish) {
             // if () {
@@ -248,6 +259,7 @@ RutaEspectral.Level2.prototype = {
             if (isSound) {
                 document.getElementById("changeLevel").play();
             }
+            collectGls = false;
             game.state.start('PassLevel');
         }
         cursors = game.input.keyboard.createCursorKeys();

@@ -11,6 +11,14 @@ RutaEspectral.Level1.prototype = {
         game.load.spritesheet('bgSoundBtn', 'assets/buttons/soundBgBtn.png', (186 / 3), 62);
         game.load.spritesheet('SoundBtn', 'assets/buttons/soundBtn.png', (186 / 3), 62);
         game.load.spritesheet('ControlBtn', 'assets/buttons/controlsBtn.png', (341 / 4), 61);
+        game.load.spritesheet('LevelBtn', 'assets/buttons/levelBtn.png', (194 / 2), 40);
+        game.load.image('bgLevel', 'assets/bgLevel.png');
+        game.load.spritesheet('AvatarBtn', 'assets/buttons/avatarBtn.png', (300 / 2), 95);
+        game.load.spritesheet('Level1Btn', 'assets/buttons/level1Btn.png', (300 / 2), 94);
+        game.load.spritesheet('Level2Btn', 'assets/buttons/level2Btn.png', (300 / 2), 94);
+        game.load.spritesheet('Level3Btn', 'assets/buttons/level3Btn.png', (300 / 2), 94);
+        game.load.spritesheet('Level4Btn', 'assets/buttons/level4Btn.png', (300 / 2), 95);
+        game.load.spritesheet('Level5Btn', 'assets/buttons/level5Btn.png', (300 / 2), 95);
 
         this.load.spritesheet('gamepad', 'assets/dpad.png', 100, 100);
 
@@ -175,6 +183,10 @@ RutaEspectral.Level1.prototype = {
                     if (isSound) {
                         document.getElementById("changeLevel").play();
                     }
+                    spaceSuitPhysics = false;
+                    isSuitCollected = false;
+                    collected = false;
+                    elementsCollected = 0;
                     game.state.start('PassLevel');
                 }
                 if (lostLive || planetC) {

@@ -61,7 +61,7 @@ var headPositions = {
 }
 
 var headBtn0, headBtn1, headBtn2, headBtn3;
-var head0, head1, head2, head3, hair0, hair1, hair2, hair3, hair4, hair5;
+var head0, head1, head2, head3, hair0, hair1, hair2, hair3, hair4, hair5, play;
 var foot0, arm0;
 var menuBtn0, menuBtn1, menuBtn2, menuBtn3, backBtn;
 var clicked = false;
@@ -71,6 +71,8 @@ RutaEspectral.AvatarConfig.prototype = {
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
+        game.load.image('background', 'assets/backgrounds/Background1.png');
+        game.load.spritesheet('playBtn', 'assets/buttons/playBtn.png', 329 / 2, 79);
         for (var i = 0; i < 6; i++) {
             if (i < 2) {
                 game.load.spritesheet('armBtn' + i, 'assets/buttons/ArmBtn' + i + '.png', buttonSize.width, buttonSize.height);
@@ -87,12 +89,11 @@ RutaEspectral.AvatarConfig.prototype = {
                 game.load.image('hair' + i, 'assets/avatarOptions/hair' + i + '.png');
             }
         }
-        game.load.image('background', 'assets/backgrounds/Background1.png');
-        game.load.spritesheet('playBtn', 'assets/buttons/playBtn.png', 164, 79);
     },
     create: function () {
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        game.add.sprite(0, 0, 'background');
+        game.add.image(0, 0, 'background');
+        play = game.add.button(250, 500, 'playBtn', this.playAction, this, 1, 1, 0);
         head0 = game.add.sprite(headPositions.headX0, headPositions.headY0, 'head0');
         headSelected = head0;
         foot0 = game.add.sprite(footPositions.fx3, footPositions.fy3, 'foot3');
@@ -112,7 +113,6 @@ RutaEspectral.AvatarConfig.prototype = {
             font: 'Myriad pro'
         });
         this.optionsBtns();
-        game.add.button((game.world.width / 2) - 140, 500, 'playBtn', this.playAction, this, 1, 1, 0);
     },
     optionsBtns: function () {
         //head Buttons
@@ -123,8 +123,6 @@ RutaEspectral.AvatarConfig.prototype = {
         //arm Buttons
         game.add.button(buttonPosition.initPosBtnX, buttonPosition.initPosBtnY + buttonPosition.distanceSectionBtn + (2 * buttonPosition.distanceBtn), 'armBtn0', this.actionArm, this, 1, 1, 0);
         game.add.button(buttonPosition.initPosBtnX + buttonPosition.distanceBtn, buttonPosition.initPosBtnY + buttonPosition.distanceSectionBtn + (2 * buttonPosition.distanceBtn), 'armBtn1', this.actionArm, this, 1, 1, 0);
-        // game.add.button(buttonPosition.initPosBtnX + (2 * buttonPosition.distanceBtn) + buttonPosition.distanceSectionBtn, buttonPosition.initPosBtnY + buttonPosition.distanceSectionBtn + (2 * buttonPosition.distanceBtn), 'armBtn2', this.actionArm, this, 1, 1, 0);
-        // game.add.button(buttonPosition.initPosBtnX + (3 * buttonPosition.distanceBtn) + buttonPosition.distanceSectionBtn, buttonPosition.initPosBtnY + buttonPosition.distanceSectionBtn + (2 * buttonPosition.distanceBtn), 'armBtn3', this.actionArm, this, 1, 1, 0);
         //foot Buttons
         game.add.button(buttonPosition.initPosBtnX, buttonPosition.initPosBtnY + (buttonPosition.distanceSectionBtn * 2) + (3 * buttonPosition.distanceBtn), 'footBtn0', this.actionFoot, this, 1, 1, 0);
         game.add.button(buttonPosition.initPosBtnX + buttonPosition.distanceBtn, buttonPosition.initPosBtnY + (buttonPosition.distanceSectionBtn * 2) + (3 * buttonPosition.distanceBtn), 'footBtn1', this.actionFoot, this, 1, 1, 0);

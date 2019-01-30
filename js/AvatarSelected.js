@@ -29,7 +29,7 @@ RutaEspectral.AvatarSelected.prototype = {
     },
     create: function () {
         game.add.sprite(0, 0, 'background');
-        game.add.button((game.world.width / 2) - 140, 500, 'playBtn', this.playGame, this, 1, 1, 0);
+        game.add.button(250, 500, 'playBtn', this.playGame, this, 1, 1, 0);
         game.add.button(80, 500, 'backBtn', this.backPress, this, 1, 1, 0);
         if (selectedSprite != -1) {
             var player = game.add.sprite(80, 130, 'sprite' + selectedSprite);
@@ -44,7 +44,7 @@ RutaEspectral.AvatarSelected.prototype = {
         game.add.image(380, 200, 'msgAvatar');
     },
     playGame: function (e) {
-        askMobile();
+        askMobileDlg();
         // document.getElementById("click").play();
         // this.state.start('Videos');
     },

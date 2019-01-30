@@ -73,29 +73,156 @@ var pauseAction = function () {
             align: "left",
         };
         titlePauseTxt = game.add.text(game.camera.view.x + 280, 160, 'Selecciona una opción', style);
-        bgSoundConfigTxt = game.add.text(game.camera.view.x + 260, 230, 'Música fondo: ', style);
+        bgSoundConfigTxt = game.add.text(game.camera.view.x + 260, 210, 'Música fondo: ', style);
         if (isBgSound) {
-            bgSoundBtn = game.add.button(bgSoundConfigTxt.position.x + 180, 220, 'bgSoundBtn', silenceBgSound, this, 1, 0, 1);
+            bgSoundBtn = game.add.button(bgSoundConfigTxt.position.x + 180, 200, 'bgSoundBtn', silenceBgSound, this, 1, 0, 1);
         } else {
-            bgSoundBtn = game.add.button(bgSoundConfigTxt.position.x + 180, 220, 'bgSoundBtn', silenceBgSound, this, 1, 2, 2);
+            bgSoundBtn = game.add.button(bgSoundConfigTxt.position.x + 180, 200, 'bgSoundBtn', silenceBgSound, this, 1, 2, 2);
         }
-        soundConfigTxt = game.add.text(game.camera.view.x + 260, 300, 'Sonidos: ', style);
+        soundConfigTxt = game.add.text(game.camera.view.x + 260, 280, 'Sonidos: ', style);
         if (isSound) {
-            SoundBtn = game.add.button(soundConfigTxt.position.x + 180, 290, 'SoundBtn', silenceAllSounds, this, 1, 0, 1);
+            SoundBtn = game.add.button(soundConfigTxt.position.x + 180, 270, 'SoundBtn', silenceAllSounds, this, 1, 0, 1);
         } else {
-            SoundBtn = game.add.button(soundConfigTxt.position.x + 180, 290, 'SoundBtn', silenceAllSounds, this, 1, 2, 2);
+            SoundBtn = game.add.button(soundConfigTxt.position.x + 180, 270, 'SoundBtn', silenceAllSounds, this, 1, 2, 2);
         }
-        controlConfigTxt = game.add.text(game.camera.view.x + 260, 375, 'Controles: ', style);
+        controlConfigTxt = game.add.text(game.camera.view.x + 260, 335, 'Controles: ', style);
         if (joystickVisible) {
-            controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 360, 'ControlBtn', manageGamePad, this, 3, 2, 3);
+            controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 330, 'ControlBtn', manageGamePad, this, 3, 2, 3);
         } else {
-            controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 360, 'ControlBtn', manageGamePad, this, 1, 0, 1);
+            controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 330, 'ControlBtn', manageGamePad, this, 1, 0, 1);
         }
-        //levelConfigTxt = game.add.text(game.camera.view.x + 260, 410, 'Niveles: ', style);
+        levelConfigTxt = game.add.text(game.camera.view.x + 260, 390, 'Niveles: ', style);
+        levelConfigBtn = game.add.button(levelConfigTxt.position.x + 180, 390, 'LevelBtn', showLevelGrid, this, 1, 0, 1);
         closePausebtn = game.add.button(game.camera.view.x + 520, 140, 'closeBtn', playGame, this, 1, 1, 0);
     } else {
         playGame();
     }
+}
+
+var showLevelGrid = function () {
+    var style = {
+        font: "25px Myriad",
+        fill: "#662d91",
+        align: "left",
+    };
+    bgLevel = game.add.image(game.camera.view.x, 0, 'bgLevel');
+    titleLevel = game.add.text(game.camera.view.x + 250, 140, 'Selecciona una opción', style);
+    game.add.button(game.camera.view.x + 710, 110, 'closeBtn', closeLevelGrid, this, 1, 1, 0);
+    avatarTxt = game.add.text(game.camera.view.x + 180, 310, 'Avatar', style);
+    level1Txt = game.add.text(game.camera.view.x + 350, 310, 'Nivel 1', style);
+    level2Txt = game.add.text(game.camera.view.x + 500, 310, 'Nivel 2', style);
+    level3Txt = game.add.text(game.camera.view.x + 180, 450, 'Nivel 3', style);
+    level4Txt = game.add.text(game.camera.view.x + 350, 450, 'Nivel 4', style);
+    level5Txt = game.add.text(game.camera.view.x + 500, 450, 'Nivel 5', style);
+    switch (levelState) {
+        case 1:
+            avatarBtn = game.add.button(game.camera.view.x + 150, 210, 'AvatarBtn', levelSelected, this, 1, 0, 1);
+            level1Btn = game.add.button(game.camera.view.x + 310, 210, 'Level1Btn', levelSelected, this, 1, 0, 1);
+            level2Btn = game.add.button(game.camera.view.x + 470, 210, 'Level2Btn', "", this, 1, 1, 0);
+            level3Btn = game.add.button(game.camera.view.x + 150, 350, 'Level3Btn', "", this, 1, 1, 0);
+            level4Btn = game.add.button(game.camera.view.x + 310, 350, 'Level4Btn', "", this, 1, 1, 0);
+            level5Btn = game.add.button(game.camera.view.x + 470, 350, 'Level5Btn', "", this, 1, 1, 0);
+            break;
+        case 2:
+            avatarBtn = game.add.button(game.camera.view.x + 50, 210, 'AvatarBtn', levelSelected, this, 1, 0, 1);
+            level1Btn = game.add.button(game.camera.view.x + 310, 210, 'Level1Btn', levelSelected, this, 1, 0, 1);
+            level2Btn = game.add.button(game.camera.view.x + 470, 210, 'Level2Btn', levelSelected, this, 1, 0, 1);
+            level3Btn = game.add.button(game.camera.view.x + 150, 350, 'Level3Btn', "", this, 1, 1, 0);
+            level4Btn = game.add.button(game.camera.view.x + 310, 350, 'Level4Btn', "", this, 1, 1, 0);
+            level5Btn = game.add.button(game.camera.view.x + 470, 350, 'Level5Btn', "", this, 1, 1, 0);
+            break;
+        case 3:
+            avatarBtn = game.add.button(game.camera.view.x + 150, 210, 'AvatarBtn', levelSelected, this, 1, 0, 1);
+            level1Btn = game.add.button(game.camera.view.x + 310, 210, 'Level1Btn', levelSelected, this, 1, 0, 1);
+            level2Btn = game.add.button(game.camera.view.x + 470, 210, 'Level2Btn', levelSelected, this, 1, 0, 1);
+            level3Btn = game.add.button(game.camera.view.x + 150, 350, 'Level3Btn', levelSelected, this, 1, 0, 1);
+            level4Btn = game.add.button(game.camera.view.x + 310, 350, 'Level4Btn', "", this, 1, 1, 0);
+            level5Btn = game.add.button(game.camera.view.x + 470, 350, 'Level5Btn', "", this, 1, 1, 0);
+            break;
+        case 4:
+            avatarBtn = game.add.button(game.camera.view.x + 150, 210, 'AvatarBtn', levelSelected, this, 1, 0, 1);
+            level1Btn = game.add.button(game.camera.view.x + 310, 210, 'Level1Btn', levelSelected, this, 1, 0, 1);
+            level2Btn = game.add.button(game.camera.view.x + 470, 210, 'Level2Btn', levelSelected, this, 1, 0, 1);
+            level3Btn = game.add.button(game.camera.view.x + 150, 350, 'Level3Btn', levelSelected, this, 1, 0, 1);
+            level4Btn = game.add.button(game.camera.view.x + 310, 350, 'Level4Btn', levelSelected, this, 1, 0, 1);
+            level5Btn = game.add.button(game.camera.view.x + 470, 350, 'Level5Btn', "", this, 1, 1, 0);
+            break;
+        case 5:
+            avatarBtn = game.add.button(game.camera.view.x + 150, 210, 'AvatarBtn', levelSelected, this, 1, 0, 1);
+            level1Btn = game.add.button(game.camera.view.x + 310, 210, 'Level1Btn', levelSelected, this, 1, 0, 1);
+            level2Btn = game.add.button(game.camera.view.x + 470, 210, 'Level2Btn', levelSelected, this, 1, 0, 1);
+            level3Btn = game.add.button(game.camera.view.x + 150, 350, 'Level3Btn', levelSelected, this, 1, 0, 1);
+            level4Btn = game.add.button(game.camera.view.x + 310, 350, 'Level4Btn', levelSelected, this, 1, 0, 1);
+            level5Btn = game.add.button(game.camera.view.x + 470, 350, 'Level5Btn', levelSelected, this, 1, 0, 1);
+            break;
+        default:
+            break;
+    }
+}
+
+var levelSelected = function (e) {
+    game.paused = false;
+    timerL1.stop();
+    isInitLVL1 = false;
+    initLVl2 = false;
+    initLVl3 = false;
+    initLVl4 = false;
+    initLVl5 = false;
+
+    isInit = false;
+    countLives = 3;
+    isSuitCollected = false;
+    spaceSuitPhysics = false;
+    elementsCollected = 0;
+    collectGls = false;
+    countHorn = countRadio = countSmoke = countTelegraph = countRadio = countTv = countPhone = countRadio = countTv = countPhone = 0;
+    switch (e.key) {
+        case 'Level1Btn':
+            levelState = 1;
+            game.state.start('Level1', true, true, "");
+            break;
+        case 'Level2Btn':
+            levelState = 2;
+
+            game.state.start('Level2', true, true, "");
+            break;
+        case 'Level3Btn':
+            levelState = 3;
+            game.state.start('Level3', true, true, "");
+            break;
+        case 'Level4Btn':
+            levelState = 4;
+            game.state.start('Level4', true, true, "");
+            break;
+        case 'Level5Btn':
+            levelState = 5;
+            game.state.start('Level5', true, true, "");
+            break;
+        case 'AvatarBtn':
+            levelState = 1;
+            game.state.start('AvatarConfig', true, true, e);
+            break;
+        default:
+            break;
+    }
+}
+
+var closeLevelGrid = function (e) {
+    e.kill();
+    bgLevel.kill();
+    titleLevel.kill();
+    avatarBtn.kill();
+    avatarTxt.kill();
+    level1Btn.kill();
+    level1Txt.kill();
+    level2Btn.kill();
+    level2Txt.kill();
+    level3Btn.kill();
+    level3Txt.kill();
+    level4Btn.kill();
+    level4Txt.kill();
+    level5Btn.kill();
+    level5Txt.kill();
 }
 
 var playGame = function (e) {
@@ -106,9 +233,10 @@ var playGame = function (e) {
     SoundBtn.kill();
     controlConfigTxt.kill();
     controlConfigBtn.kill();
-    //levelConfigTxt.kill();
+    levelConfigTxt.kill();
     closePausebtn.kill();
     bgPaused.kill();
+    levelConfigBtn.kill();
     game.paused = false;
 }
 
@@ -131,13 +259,13 @@ var silenceBgSound = function () {
 var manageGamePad = function () {
     if (joystickVisible) {
         controlConfigBtn.kill();
-        controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 360, 'ControlBtn', manageGamePad, this, 1, 0, 1);
+        controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 330, 'ControlBtn', manageGamePad, this, 1, 0, 1);
         joystickVisible = false;
         isMobile = false;
         removeGamePad();
     } else {
         controlConfigBtn.kill();
-        controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 360, 'ControlBtn', manageGamePad, this, 3, 2, 3);
+        controlConfigBtn = game.add.button(controlConfigTxt.position.x + 180, 330, 'ControlBtn', manageGamePad, this, 3, 2, 3);
         joystickVisible = true;
         if (levelState == 1) {
             button.visible = false;
@@ -161,7 +289,7 @@ var silenceAllSounds = function () {
     }
 }
 
-var askMobile = function () {
+var askMobileDlg = function () {
     askMobileBg = game.add.image(0, 0, 'askMobile');
     var style = {
         font: "20px Myriad",
@@ -838,7 +966,7 @@ var addFishSprite = function (enemies) {
 
 }
 
-var addBioSprite = function () {
+var addBioSprite = function (biosSprite) {
     enemiesBio = game.add.group();
     enemiesBio.enableBody = true;
     game.physics.arcade.enable(enemiesBio);
@@ -882,7 +1010,7 @@ var addBioSprite = function () {
             break;
         case 4:
             var bios = [892, 945, 2384, 3546, 5810];
-            biosSprite = [];
+            // biosSprite = [];
             for (var i = 0; i < bios.length; i++) {
                 if (i < 2) {
                     biosSprite[i] = game.add.sprite(bios[i], 231, 'spriteBio');
@@ -905,7 +1033,7 @@ var addBioSprite = function () {
             break;
         case 5:
             var bios = [892, 945, 2384, 3546, 5810];
-            biosSprite = [];
+            // biosSprite = [];
             for (var i = 0; i < bios.length; i++) {
                 if (i < 2) {
                     biosSprite[i] = game.add.sprite(bios[i], 231, 'spriteBio');
@@ -932,7 +1060,7 @@ var addBioSprite = function () {
 }
 
 
-var animateBio = function () {
+var animateBio = function (biosSprite) {
     switch (levelState) {
         case 2:
             for (var i = 0; i < biosSprite.length; i++) {
@@ -1338,6 +1466,7 @@ var closeDialog = function (e) {
         if (messageRadio) {
             levelState = 3;
             countLives += 1;
+            biosSprite = [];
             //showLives();
             if (isSound) {
                 document.getElementById("changeLevel").play();

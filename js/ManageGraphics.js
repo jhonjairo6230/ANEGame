@@ -100,6 +100,7 @@ var pauseAction = function () {
 }
 
 var showLevelGrid = function () {
+    playGame();
     var style = {
         font: "25px Myriad",
         fill: "#662d91",
@@ -124,7 +125,7 @@ var showLevelGrid = function () {
             level5Btn = game.add.button(game.camera.view.x + 470, 350, 'Level5Btn', "", this, 1, 1, 0);
             break;
         case 2:
-            avatarBtn = game.add.button(game.camera.view.x + 50, 210, 'AvatarBtn', levelSelected, this, 1, 0, 1);
+            avatarBtn = game.add.button(game.camera.view.x + 150, 210, 'AvatarBtn', levelSelected, this, 1, 0, 1);
             level1Btn = game.add.button(game.camera.view.x + 310, 210, 'Level1Btn', levelSelected, this, 1, 0, 1);
             level2Btn = game.add.button(game.camera.view.x + 470, 210, 'Level2Btn', levelSelected, this, 1, 0, 1);
             level3Btn = game.add.button(game.camera.view.x + 150, 350, 'Level3Btn', "", this, 1, 1, 0);
@@ -223,6 +224,7 @@ var closeLevelGrid = function (e) {
     level4Txt.kill();
     level5Btn.kill();
     level5Txt.kill();
+    pauseAction();
 }
 
 var playGame = function (e) {

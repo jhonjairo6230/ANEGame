@@ -64,6 +64,9 @@ RutaEspectral.Level2.prototype = {
     },
     create: function () {
         levelState = 2;
+        if (levelWin <= levelState) {
+            levelWin = 2;
+        }
         biosSprite = [];
         player = "";
         game.add.image(0, 0, 'background');

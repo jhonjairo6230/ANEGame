@@ -14,7 +14,7 @@ var titleLevel, avatarTxt, level1Txt, level2Txt, level3Txt, level4Txt, level5Txt
 
 //Total de vidas iniciales del juego
 var countLives = 3;
-var levelWin = 0;
+var levelWin = 1;
 //tiempo para pasar el  nivel 
 var minuteConfig = 3,
     secondsConfig = 0;

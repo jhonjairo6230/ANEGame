@@ -115,7 +115,7 @@ var showLevelGrid = function () {
     level3Txt = game.add.text(game.camera.view.x + 180, 450, 'Nivel 3', style);
     level4Txt = game.add.text(game.camera.view.x + 350, 450, 'Nivel 4', style);
     level5Txt = game.add.text(game.camera.view.x + 500, 450, 'Nivel 5', style);
-    switch (levelState) {
+    switch (levelWin) {
         case 1:
             avatarBtn = game.add.button(game.camera.view.x + 150, 210, 'AvatarBtn', levelSelected, this, 1, 0, 1);
             level1Btn = game.add.button(game.camera.view.x + 310, 210, 'Level1Btn', levelSelected, this, 1, 0, 1);
@@ -193,10 +193,12 @@ var levelSelected = function (e) {
             break;
         case 'Level4Btn':
             levelState = 4;
+            biosSprite = [];
             game.state.start('Level4', true, true, "");
             break;
         case 'Level5Btn':
             levelState = 5;
+            biosSprite = [];
             game.state.start('Level5', true, true, "");
             break;
         case 'AvatarBtn':

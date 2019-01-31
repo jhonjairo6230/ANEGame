@@ -71,6 +71,9 @@ RutaEspectral.Level4.prototype = {
     },
     create() {
         levelState = 4;
+        if (levelWin <= levelState) {
+            levelWin = 4;
+        }
         player = "";
         game.add.image(0, 0, 'background');
         game.world.setBounds(0, 0, 7056, 600);

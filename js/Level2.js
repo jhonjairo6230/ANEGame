@@ -346,7 +346,7 @@ RutaEspectral.Level2.prototype = {
                 closeTextInfo();
             });
         } else {
-            infoText(message21, '20px', game.camera.view.x + 200, 200, 300, 200, function () {
+            infoText(message23, '20px', game.camera.view.x + 200, 200, 300, 200, function () {
                 game.paused = false;
                 closeTextInfo();
             });

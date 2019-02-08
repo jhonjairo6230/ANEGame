@@ -36,15 +36,16 @@ RutaEspectral.Videos.prototype = {
                 }
                 break;
             case 6:
-                for (var i = 0; i < 299; i++) {
-                    if (i < 10) {
-                        game.load.image('creditos_00' + i, 'assets/creditos/creditos_00' + i + '.jpg');
-                    } else if (i < 100) {
-                        game.load.image('creditos_0' + i, 'assets/creditos/creditos_0' + i + '.jpg');
-                    } else {
-                        game.load.image('creditos_' + i, 'assets/creditos/creditos_' + i + '.jpg');
-                    }
-                }
+                // for (var i = 0; i < 299; i++) {
+                //     if (i < 10) {
+                //         game.load.image('creditos_00' + i, 'assets/creditos/creditos_00' + i + '.jpg');
+                //     } else if (i < 100) {
+                //         game.load.image('creditos_0' + i, 'assets/creditos/creditos_0' + i + '.jpg');
+                //     } else {
+                //         game.load.image('creditos_' + i, 'assets/creditos/creditos_' + i + '.jpg');
+                //     }
+                // }
+                game.load.image('Creditos', 'assets/Creditos.jpg');
                 break;
             default:
                 break;
@@ -94,18 +95,19 @@ RutaEspectral.Videos.prototype = {
         game.time.events.add(50, this.increment, this, 0);
     },
     showCredits: function () {
-        if (k < 10) {
-            game.add.image(0, 50, 'creditos_00' + k);
-        } else if (k < 100) {
-            game.add.image(0, 50, 'creditos_0' + k);
-        } else {
-            game.add.image(0, 50, 'creditos_' + k);
-        }
+        // if (k < 10) {
+        //     game.add.image(0, 50, 'creditos_00' + k);
+        // } else if (k < 100) {
+        //     game.add.image(0, 50, 'creditos_0' + k);
+        // } else {
+        //     game.add.image(0, 50, 'creditos_' + k);
+        // }
         // if (k == 130) {
         //     k = 0;
         //     game.state.start('Level2');
         // }
-        game.time.events.add(50, this.increment, this, 0);
+        game.add.image(0, 0, 'Creditos');
+        game.time.events.add(60000, this.goToSplash, this, 0);
     },
     increment: function () {
         k++;
@@ -124,6 +126,9 @@ RutaEspectral.Videos.prototype = {
             default:
                 break;
         }
+    },
+    goToSplash: function () {
+        location.reload();
     },
     render: function () {
 

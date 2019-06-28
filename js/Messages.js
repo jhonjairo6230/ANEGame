@@ -2,8 +2,9 @@
 var message1 = '¡Viajemos juntos!, Sube a la nave para encontrar tu traje espacial';
 var message2 = 'Sabias que el azul del cielo es una parte del espectro electromagnético, ya que el cielo es un arco iris gigantesco, y el único color que vemos es el azul, pero encima de ese azul están todos los colores del arco iris, el rojo, el amarillo, verde, violeta. (luz visible)';
 var message3 = '¡Debes encontrar el traje espacial!';
-var message4 = '¡¡No olvides cuidarte! De la luz visible, luz infrarroja, rayos ultravioletas, rayos X, rayos gamma por cuanto esta radiación puede causar daños a tu salud.';
+var message4 = '¡No olvides cuidarte! De la luz visible, luz infrarroja, rayos ultravioletas, rayos X, rayos gamma por cuanto esta radiación puede causar daños a tu salud.';
 var message5 = '¡No te choques con planetas o asteroides!';
+var message24 = 'Felicidades, ya cuentas con el traje espacial continúa hasta encontrar la bandera de meta';
 //Level 2
 var message6 = 'La capa de ozono. Creo que ya has escuchado de la capa de ozono y que ella es la que rodea la tierra y nos protege de la radiación del sol especialmente de la dañina radiación ultravioleta';
 var message7 = '¡Felicidades! encontraste las gafas, ahora puedes mirar el espectro electromagnético';
@@ -11,7 +12,7 @@ var message8 = 'Ahora te enseñare que es frecuencia de onda; es un movimiento r
 var message9 = 'Clases de radiaciones: El espectro electromagnético, se encuentra dividido en radiación ionizante radiación no ionizante';
 var message10 = 'Si deseas elegir el camino correcto debes encontrar las gafas';
 var message11 = 'No te choques Asteroides, satellites o planetas';
-var message12 = 'Mantente sobre las plataformas';
+var message12 = 'Desplazate sobre las plataformas';
 var message13 = 'Se te acabó el tiempo :(';
 var message23 = 'En este camino no podrás llegar por la capa de ozono, pues bloquea los rayos que son nocivos para la salud como los rayos ultravioleta tipo UV-C por esta razon no puedes llegar a la tierra';
 var message22 = '¡Excelente!, la capa de ozono solo permite los rayos ultra violeta UV-A, el necesario para la vida en la tierra, y este camino te llevará a la tierra';

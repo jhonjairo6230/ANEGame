@@ -128,12 +128,16 @@ RutaEspectral.Level2.prototype = {
         game.paused = true;
         if (!collectGls) {
             infoText(message6, '20px', 200, 200, 380, 190, function () {
-                closeAdvLvl2();
+                infoText(message12, '20px', game.camera.view.x + 200, 200, 300, 80, function () {
+                    closeAdvLvl2();
+                });
             });
         } else {
             game.camera.view.x = 1900;
             infoText(message6, '20px', 2100, 200, 380, 190, function () {
-                closeAdvLvl2();
+                infoText(message12, '20px', game.camera.view.x + 200, 200, 300, 80, function () {
+                    closeAdvLvl2();
+                });
             });
         }
         addBioSprite(biosSprite);

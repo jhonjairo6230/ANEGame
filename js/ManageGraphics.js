@@ -460,8 +460,8 @@ var setSpaceSuit = function (x, y) {
     spaceA.animations.add('right', [7, 8, 9, 10], 8, true);
     spaceA.animations.add('left', [0, 1, 2, 3], 8, true);
     game.physics.arcade.enable(spaceA);
-    spaceA.body.bounce.y = 0.4;
-    spaceA.body.gravity.y = 130;
+    spaceA.body.bounce.y = 0.5;
+    spaceA.body.gravity.y = 170;
     spaceA.body.collideWorldBounds = true;
     game.camera.follow(spaceA, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 };
@@ -707,8 +707,13 @@ function setPlayer() {
     player.animations.add('right', [7, 8, 9, 10], 8, true);
     player.animations.add('left', [0, 1, 2, 3], 8, true);
     game.physics.arcade.enable(player);
-    player.body.bounce.y = 0.1;
-    player.body.gravity.y = 300;
+    if (levelState != 2) {
+        player.body.bounce.y = 0.1;
+        player.body.gravity.y = 300;
+    } else {
+        player.body.bounce.y = 0.4;
+        player.body.gravity.y = 200;
+    }
     player.body.collideWorldBounds = true;
     game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 }

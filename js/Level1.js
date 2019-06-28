@@ -107,7 +107,9 @@ RutaEspectral.Level1.prototype = {
         stars.fixedToCamera = true;
         showLives();
         infoText(message2, '20px', 150, 150, 520, 180, function () {
-            initLevel1();
+            infoText(message5, '20px', game.camera.view.x + 300, 200, 300, 80, function () {
+                initLevel1();
+            });
         });
         // this.infoText(message2, '20px', false, 150, 150, 520, 180);
         addSuitElements();
@@ -148,7 +150,9 @@ RutaEspectral.Level1.prototype = {
                 realPlayer.body.velocity.y = 0;
                 collected = false;
                 infoText(message4, '20px', player.position.x - 50, 200, 380, 150, function () {
-                    initLevel1();
+                    infoText(message24, '20px', player.position.x - 50, 200, 380, 150, function () {
+                        initLevel1();
+                    });
                 });
             }
             if (lostLive || planetCollition) {
